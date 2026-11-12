@@ -7,7 +7,9 @@ export type Cuento = CollectionEntry<'cuentos'>;
 
 export async function todosLosCuentos(): Promise<Cuento[]> {
   const cuentos = await getCollection('cuentos', ({ data }) => !data.borrador);
-  return cuentos.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  return cuentos.sort((a, b) =>
+    b.data.date.getTime() - a.data.date.getTime() || (b.data.parte ?? 0) - (a.data.parte ?? 0),
+  );
 }
 
 export async function cuentosOrdenados(): Promise<Cuento[]> {

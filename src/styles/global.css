@@ -1,27 +1,41 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-crema: #fff8f0;
-  --color-crema-2: #fdf1e4;
-  --color-crema-3: #f7e8d8;
-  --color-vino: #7a1236;
-  --color-vino-fuerte: #7a1236;
-  --color-vino-oscuro: #560b26;
-  --color-superficie: #ffffff;
-  --color-vino-claro: #f5e3e9;
-  --color-ambar: #e9a23b;
-  --color-ambar-claro: #fdf0d8;
-  --color-teal: #1f7a6f;
-  --color-tinta: #2b2118;
-  --color-tinta-suave: #6b5b4d;
-  --color-borde: #e7d8c7;
+  /* Paleta real del Elementor kit */
+  --color-papel: #faf6ef;
+  --color-papel-2: #f3eadf;
+  --color-papel-3: #ece3d8;
+  --color-superficie: #fffdf8;
+  --color-tinta: #241820;
+  --color-tinta-suave: #5d4c56;
+  --color-morado: #5f0f40;
+  --color-morado-fuerte: #4a0b32;
+  --color-carmesi: #9a031e;
+  --color-naranja: #e36414;
+  --color-naranja-2: #fb8b24;
+  --color-verde: #0f4c5c;
+  --color-linea: #ded2c6;
+  --color-linea-suave: #ece3d8;
 
-  --font-titulo: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
-  --font-cuerpo: 'Nunito Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  /* Alias para no romper lo existente */
+  --color-crema: #faf6ef;
+  --color-crema-2: #f3eadf;
+  --color-crema-3: #ece3d8;
+  --color-vino: #5f0f40;
+  --color-vino-fuerte: #9a031e;
+  --color-vino-oscuro: #4a0b32;
+  --color-vino-claro: #f0e6e9;
+  --color-ambar: #e36414;
+  --color-ambar-claro: #fbe9dd;
+  --color-teal: #0f4c5c;
+  --color-borde: #ded2c6;
 
-  --radius-tarjeta: 1rem;
-  --shadow-suave: 0 1px 2px rgb(43 33 24 / 0.04), 0 8px 24px -12px rgb(43 33 24 / 0.12);
-  --shadow-alta: 0 2px 4px rgb(43 33 24 / 0.05), 0 18px 40px -18px rgb(43 33 24 / 0.22);
+  --font-titulo: 'Bitter Variable', Georgia, 'Times New Roman', serif;
+  --font-cuerpo: 'Atkinson Hyperlegible', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-tarjeta: 3px;
+  --shadow-suave: none;
+  --shadow-alta: 0 30px 60px -50px rgb(95 15 64 / 0.4);
 }
 
 @layer base {
@@ -32,21 +46,33 @@
 
   [data-tema='noche'] {
     color-scheme: dark;
-    --color-crema: #17110d;
-    --color-crema-2: #211915;
-    --color-crema-3: #2c2219;
-    --color-vino: #f0a8bf;
-    --color-vino-fuerte: #7a1236;
-    --color-vino-oscuro: #4a0a20;
-    --color-superficie: #211915;
-    --color-vino-claro: #3a1f2a;
-    --color-ambar: #f2b95e;
-    --color-ambar-claro: #3a2b14;
-    --color-teal: #7fd1c4;
-    --color-tinta: #f6ece2;
-    --color-tinta-suave: #c9b8a8;
-    --color-borde: #3a2d24;
-    --shadow-suave: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.5);
+    --color-papel: #171014;
+    --color-papel-2: #211820;
+    --color-papel-3: #2a1f26;
+    --color-superficie: #211820;
+    --color-tinta: #f4ece6;
+    --color-tinta-suave: #c6b6ad;
+    --color-morado: #f0b7cf;
+    --color-morado-fuerte: #3a0a26;
+    --color-carmesi: #c2264a;
+    --color-naranja: #f08a3e;
+    --color-naranja-2: #ffb066;
+    --color-verde: #7fc7bd;
+    --color-linea: #3a2d35;
+    --color-linea-suave: #2f242b;
+
+    --color-crema: #171014;
+    --color-crema-2: #211820;
+    --color-crema-3: #2a1f26;
+    --color-vino: #f0b7cf;
+    --color-vino-fuerte: #c2264a;
+    --color-vino-oscuro: #3a0a26;
+    --color-vino-claro: #35212c;
+    --color-ambar: #f08a3e;
+    --color-ambar-claro: #3a2a1e;
+    --color-teal: #7fc7bd;
+    --color-borde: #3a2d35;
+    --shadow-alta: 0 30px 60px -50px rgb(0 0 0 / 0.8);
   }
 
   html {
@@ -54,13 +80,30 @@
   }
 
   body {
-    background-color: var(--color-crema);
+    background-color: var(--color-papel);
     color: var(--color-tinta);
     font-family: var(--font-cuerpo);
-    font-size: 1.0625rem;
+    font-size: 17px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Grano de papel, muy sutil */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  [data-tema='noche'] body::before {
+    opacity: 0.02;
+    mix-blend-mode: screen;
   }
 
   h1,
@@ -72,7 +115,7 @@
     line-height: 1.12;
     letter-spacing: -0.015em;
     text-wrap: balance;
-    color: var(--color-vino);
+    color: var(--color-morado);
   }
 
   p {
@@ -88,141 +131,124 @@
   }
 
   ::selection {
-    background: var(--color-ambar);
-    color: #2b2118;
+    background: var(--color-naranja-2);
+    color: #241820;
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-ambar);
+    outline: 2px solid var(--color-naranja);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
 }
 
 @layer components {
   .contenedor {
     width: 100%;
-    max-width: 78rem;
+    max-width: 1180px;
     margin-inline: auto;
-    padding-inline: 1.25rem;
-  }
-
-  @media (min-width: 768px) {
-    .contenedor {
-      padding-inline: 2rem;
-    }
+    padding-inline: 32px;
   }
 
   .contenedor-lectura {
     width: 100%;
     max-width: 44rem;
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding-inline: 24px;
   }
 
   .boton {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    border-radius: 0.75rem;
-    padding: 0.8rem 1.25rem;
-    font-weight: 800;
-    font-size: 0.975rem;
+    gap: 8px;
+    border-radius: 4px;
+    padding: 11px 18px;
+    font-family: var(--font-cuerpo);
+    font-weight: 700;
+    font-size: 14px;
     line-height: 1;
     text-decoration: none;
-    transition:
-      background-color 0.15s ease,
-      color 0.15s ease,
-      transform 0.15s ease,
-      box-shadow 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
     cursor: pointer;
   }
 
-  .boton:active {
-    transform: translateY(1px);
-  }
-
   .boton-primario {
-    background: var(--color-vino-fuerte);
+    background: var(--color-carmesi);
     color: #fff;
-    box-shadow: 0 6px 16px -8px rgb(122 18 54 / 0.6);
   }
 
   .boton-primario:hover {
-    background: var(--color-vino-oscuro);
+    background: #7d0218;
   }
 
   .boton-secundario {
-    background: var(--color-crema-2);
-    color: var(--color-vino);
-    border: 1px solid var(--color-borde);
+    background: transparent;
+    color: var(--color-morado);
+    border: 1px solid var(--color-linea);
   }
 
   .boton-secundario:hover {
-    background: var(--color-crema-3);
+    border-color: var(--color-morado);
   }
 
   .boton-fantasma {
-    color: var(--color-vino);
-    padding-inline: 0.5rem;
+    color: var(--color-carmesi);
+    padding-inline: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    padding-bottom: 2px;
   }
 
   .boton-fantasma:hover {
-    text-decoration: underline;
+    border-color: var(--color-carmesi);
+  }
+
+  .enlace-flecha {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-carmesi);
+    border-bottom: 2px solid var(--color-carmesi);
+    padding-bottom: 3px;
+  }
+
+  .enlace-flecha:hover {
+    color: var(--color-morado);
+    border-color: var(--color-morado);
   }
 
   .etiqueta {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    border-radius: 999px;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: var(--color-naranja);
   }
 
   .etiqueta-ambar {
-    background: var(--color-ambar-claro);
-    color: #7a4a00;
-  }
-
-  [data-tema='noche'] .etiqueta-ambar {
-    color: var(--color-ambar);
+    color: var(--color-naranja);
   }
 
   .etiqueta-vino {
-    background: var(--color-vino-claro);
-    color: var(--color-vino);
+    color: var(--color-carmesi);
   }
 
   .etiqueta-teal {
-    background: color-mix(in srgb, var(--color-teal) 12%, transparent);
-    color: var(--color-teal);
+    color: var(--color-verde);
   }
 
   .tarjeta {
-    background: #fff;
-    border: 1px solid var(--color-borde);
-    border-radius: var(--radius-tarjeta);
-    overflow: hidden;
-    box-shadow: var(--shadow-suave);
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  [data-tema='noche'] .tarjeta {
-    background: #211915;
-  }
-
-  .tarjeta:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-alta);
-    border-color: color-mix(in srgb, var(--color-vino) 25%, var(--color-borde));
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
   }
 
   .enlace-titulo {
@@ -238,8 +264,8 @@
   }
 
   .lectura p {
-    margin-block: 1.15em;
-    font-size: clamp(1.125rem, 0.4vw + 1.05rem, 1.25rem);
+    margin-block: 1.1em;
+    font-size: clamp(1.15rem, 0.4vw + 1.05rem, 1.25rem);
     line-height: 1.85;
     color: var(--color-tinta);
   }
@@ -247,26 +273,25 @@
   .lectura p:first-child::first-letter {
     float: left;
     font-family: var(--font-titulo);
-    font-size: 3.6em;
-    line-height: 0.82;
-    padding: 0.08em 0.12em 0 0;
-    color: var(--color-vino);
-    font-weight: 700;
+    font-size: 3.5em;
+    line-height: 0.85;
+    padding: 0.06em 0.12em 0 0;
+    color: var(--color-morado);
+    font-weight: 600;
   }
 
   .lectura img {
-    border-radius: 0.75rem;
+    border-radius: 2px;
     margin: 2rem auto;
-    box-shadow: var(--shadow-suave);
   }
 
   .lectura a {
-    color: var(--color-teal);
+    color: var(--color-verde);
     text-decoration: underline;
   }
 
   .prosa-enlace a {
-    color: var(--color-teal);
+    color: var(--color-verde);
     text-decoration: underline;
   }
 
@@ -287,10 +312,10 @@
     left: 1rem;
     top: -100px;
     z-index: 100;
-    background: var(--color-vino);
+    background: var(--color-carmesi);
     color: #fff;
     padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: 4px;
     font-weight: 700;
   }
 
@@ -300,19 +325,700 @@
 
   .cuadricula-cuentos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 34px 28px;
   }
 
-  .decoracion-hero {
-    background:
-      radial-gradient(60% 60% at 15% 20%, rgb(233 162 59 / 0.14), transparent 70%),
-      radial-gradient(50% 50% at 90% 0%, rgb(122 18 54 / 0.1), transparent 70%),
-      var(--color-crema);
+  .linea-arriba {
+    border-top: 1px solid var(--color-linea);
+  }
+
+  /* ---------- barra de novedad ---------- */
+  .topbar {
+    background: var(--color-naranja);
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .topbar-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 38px;
+    padding: 7px 0;
+    text-align: center;
+  }
+
+  .topbar strong {
+    font-weight: 700;
+  }
+
+  .topbar a {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.45);
+    text-underline-offset: 3px;
+  }
+
+  .topbar a:hover {
+    text-decoration-color: #fff;
+  }
+
+  /* ---------- header ---------- */
+  .header {
+    background: var(--color-papel);
+    border-bottom: 1px solid var(--color-linea-suave);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 86px;
+  }
+
+  .logo {
+    display: block;
+    color: var(--color-morado);
+  }
+
+  .logo svg {
+    height: 66px;
+    width: auto;
+  }
+
+  .logoHeader .logoFull01,
+  .logoHeader .logoFull02,
+  .logoHeader .logoFull03 {
+    fill: var(--color-verde);
+  }
+
+  .logoHeader .logoFull04 {
+    fill: var(--color-morado);
+  }
+
+  .logoFooter .logoFull01,
+  .logoFooter .logoFull02,
+  .logoFooter .logoFull03,
+  .logoFooter .logoFull04 {
+    fill: var(--color-morado);
+  }
+
+  .marca-agua .logoFull01,
+  .marca-agua .logoFull02,
+  .marca-agua .logoFull03 {
+    fill: #fff;
+  }
+
+  .nav-principal {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-morado);
+  }
+
+  .nav-principal a {
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    color: var(--color-morado);
+    text-decoration: none;
+  }
+
+  .nav-principal a:hover {
+    border-color: var(--color-naranja);
+  }
+
+  .nav-principal a[aria-current='page'] {
+    border-color: var(--color-carmesi);
+  }
+
+  .acciones-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .boton-icono {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--color-linea);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--color-morado);
+    cursor: pointer;
+  }
+
+  .boton-icono:hover {
+    border-color: var(--color-morado);
+  }
+
+  /* ---------- libro abierto ---------- */
+  .hero {
+    padding: 56px 0 64px;
+  }
+
+  .libro {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-linea);
+    box-shadow: var(--shadow-alta);
+  }
+
+  .libro-texto {
+    padding: 58px 56px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .libro-portada {
+    position: relative;
+    overflow: hidden;
+    border-left: 1px solid var(--color-linea-suave);
+    box-shadow: inset 22px 0 26px -20px rgb(95 15 64 / 0.45);
+    min-height: 460px;
+  }
+
+  .libro-portada img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cinta {
+    position: absolute;
+    top: 0;
+    left: 26px;
+    width: 20px;
+    height: 78px;
+    background: var(--color-naranja);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.15);
+    z-index: 2;
+  }
+
+  .libro-titulo {
+    font-size: clamp(2.4rem, 3.4vw, 3.5rem);
+    margin-bottom: 18px;
+  }
+
+  .libro-lead {
+    font-size: 17px;
+    color: var(--color-tinta-suave);
+    max-width: 44ch;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .libro-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-verde);
+    letter-spacing: 0.02em;
+  }
+
+  .libro-acciones {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-top: 28px;
+  }
+
+  .slider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 22px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--color-tinta-suave);
+    text-transform: uppercase;
+  }
+
+  .slider button {
+    border: 0;
+    background: transparent;
+    color: var(--color-morado);
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0 4px;
+  }
+
+  .slider .puntos {
+    display: flex;
+    gap: 6px;
+  }
+
+  .slider .punto {
+    width: 26px;
+    height: 3px;
+    background: var(--color-linea);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .slider .punto.activo {
+    background: var(--color-naranja);
+  }
+
+  /* ---------- secciones ---------- */
+  .seccion {
+    padding: 54px 0 58px;
+    border-top: 1px solid var(--color-linea);
+  }
+
+  .seccion-cabeza {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+  }
+
+  .seccion-cabeza h2 {
+    font-size: clamp(1.7rem, 2.4vw, 2.2rem);
+  }
+
+  .seccion-cabeza .ojal {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-naranja);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .seccion-cabeza .mas {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-carmesi);
+    white-space: nowrap;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+
+  .seccion-cabeza .mas:hover {
+    border-color: var(--color-carmesi);
+  }
+
+  /* ---------- tarjeta de cuento (estante) ---------- */
+  .cuento {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cuento-portada {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--color-papel-2);
+  }
+
+  .cuento-portada img {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .cuento:hover .cuento-portada img {
+    transform: scale(1.03);
+  }
+
+  .cuento-parte {
+    display: block;
+    margin-top: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-naranja);
+  }
+
+  .cuento h3 {
+    font-size: 20px;
+    margin-top: 6px;
+    line-height: 1.25;
+    color: var(--color-morado);
+  }
+
+  .cuento:hover h3 {
+    color: var(--color-carmesi);
+  }
+
+  .cuento-meta {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-verde);
+  }
+
+  /* ---------- sagas ---------- */
+  .sagas {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 28px;
+  }
+
+  .saga-grande {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 34px;
+    color: #fff;
+  }
+
+  .saga-grande img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: transform 0.5s ease;
+  }
+
+  .saga-grande::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to top, rgb(36 12 30 / 0.92), rgb(36 12 30 / 0.25) 62%, rgb(36 12 30 / 0.05));
+  }
+
+  .saga-grande > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .saga-grande:hover img {
+    transform: scale(1.04);
+  }
+
+  .saga-grande h3 {
+    color: #fff;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+  }
+
+  .saga-grande p {
+    color: rgb(255 255 255 / 0.8);
+    margin-top: 10px;
+    max-width: 42ch;
+  }
+
+  .saga-grande .conteo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-naranja-2);
+    margin-bottom: 12px;
+  }
+
+  .saga-lista {
+    display: grid;
+    gap: 28px;
+  }
+
+  .saga-pequena {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    background: var(--color-superficie);
+    border: 1px solid var(--color-linea);
+    border-radius: 2px;
+    overflow: hidden;
+    min-height: 176px;
+  }
+
+  .saga-pequena img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .saga-pequena .txt {
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .saga-pequena h3 {
+    font-size: 22px;
+  }
+
+  .saga-pequena p {
+    font-size: 14px;
+    color: var(--color-tinta-suave);
+    margin-top: 6px;
+  }
+
+  .saga-pequena .conteo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-naranja);
+    margin-bottom: 6px;
+  }
+
+  .saga-pequena:hover {
+    border-color: var(--color-morado);
+  }
+
+  /* ---------- personajes ---------- */
+  .personajes-tira {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    align-items: end;
+    padding-top: 26px;
+    border-bottom: 1px solid var(--color-linea);
+  }
+
+  .personaje-ficha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .personaje-ficha img {
+    height: 190px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.35s ease;
+  }
+
+  .personaje-ficha:hover img {
+    transform: translateY(-5px);
+  }
+
+  .personaje-ficha .nombre {
+    margin-top: 14px;
+    font-family: var(--font-titulo);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-morado);
+  }
+
+  .personaje-ficha .rol {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-verde);
+    margin: 2px 0 18px;
+  }
+
+  /* ---------- filosofía ---------- */
+  .filosofia {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-morado-fuerte);
+    color: #fff;
+    padding: 88px 0 82px;
+  }
+
+  .filosofia .contenedor {
+    position: relative;
+    z-index: 2;
+  }
+
+  .filosofia .frase {
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 3.4vw, 2.9rem);
+    line-height: 1.18;
+    color: #fff;
+    max-width: 22ch;
+    letter-spacing: -0.02em;
+  }
+
+  .filosofia .texto {
+    margin-top: 24px;
+    max-width: 56ch;
+    color: rgb(255 255 255 / 0.78);
+    font-size: 17px;
+  }
+
+  .filosofia .firma {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--color-naranja-2);
+    font-weight: 700;
+  }
+
+  .filosofia .firma span {
+    width: 42px;
+    height: 1px;
+    background: rgb(251 139 36 / 0.5);
+  }
+
+  .marca-agua {
+    position: absolute;
+    right: -90px;
+    bottom: -70px;
+    width: 640px;
+    opacity: 0.07;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .marca-agua svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* ---------- lectura ---------- */
+  #progreso-lectura {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-naranja-2), var(--color-carmesi));
+    z-index: 60;
+    transition: width 0.1s linear;
+  }
+
+  .control-lectura {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    padding: 6px 9px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-tinta-suave);
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+    cursor: pointer;
+  }
+
+  .control-lectura:hover {
+    border-color: var(--color-linea);
+    color: var(--color-morado);
+  }
+
+  .control-activo {
+    background: var(--color-morado);
+    color: #fff;
+  }
+
+  .control-activo:hover {
+    background: var(--color-morado-fuerte);
+    color: #fff;
+  }
+
+  /* ---------- footer ---------- */
+  .footer {
+    background: var(--color-papel);
+    padding: 34px 0 38px;
+  }
+
+  .footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-linea);
+  }
+
+  .footer .logo svg {
+    height: 58px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 22px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-morado);
+  }
+
+  .footer-links a:hover {
+    color: var(--color-carmesi);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 8px;
+  }
+
+  .footer-social a {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--color-linea);
+    border-radius: 50%;
+    color: var(--color-morado);
+  }
+
+  .footer-social a:hover {
+    border-color: var(--color-morado);
+    background: var(--color-papel-2);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 18px;
+    font-size: 12.5px;
+    color: var(--color-tinta-suave);
+  }
+
+  .footer-bottom a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 }
 
-/* Iconos del conmutador de tema */
+/* Ajustes de lectura */
+[data-lectura='grande'] .lectura p {
+  font-size: 1.4rem;
+  line-height: 1.9;
+}
+
+[data-lectura='pequena'] .lectura p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
 [data-tema='noche'] [data-icono='luna'] {
   display: none;
 }
@@ -321,36 +1027,198 @@
   display: block;
 }
 
-/* Barra de progreso de lectura */
-#progreso-lectura {
-  position: fixed;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  height: 3px;
-  width: 0%;
-  background: linear-gradient(90deg, var(--color-ambar), var(--color-vino));
-  z-index: 60;
-  transition: width 0.1s linear;
-}
-
-/* Ajustes de lectura: tamaño de letra */
-[data-lectura='grande'] .lectura p {
-  font-size: 1.4rem;
-  line-height: 1.9;
-}
-
-[data-lectura='pequena'] .lectura p {
-  font-size: 1.0625rem;
-  line-height: 1.75;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@media (max-width: 1000px) {
+  .libro {
+    grid-template-columns: 1fr;
   }
+  .libro-portada {
+    border-left: 0;
+    border-top: 1px solid var(--color-linea-suave);
+    min-height: 320px;
+  }
+  .nav-principal,
+  .busqueda-header {
+    display: none;
+  }
+  .sagas {
+    grid-template-columns: 1fr;
+  }
+  .personajes-tira {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .personaje-ficha img {
+    height: 150px;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 16px;
+  }
+  .contenedor {
+    padding-inline: 20px;
+  }
+  .topbar {
+    font-size: 12px;
+  }
+  .topbar-inner {
+    flex-wrap: wrap;
+    gap: 2px 6px;
+    padding: 7px 0;
+  }
+  .header-inner {
+    height: 66px;
+    gap: 10px;
+  }
+  .logo svg {
+    height: 48px;
+  }
+  .acciones-header .boton-primario {
+    display: none;
+  }
+  .boton-icono {
+    width: 34px;
+    height: 34px;
+  }
+  .hero {
+    padding: 28px 0 36px;
+  }
+  .libro-texto {
+    padding: 34px 24px 30px;
+  }
+  .libro-titulo {
+    font-size: 2.1rem;
+  }
+  .libro-lead {
+    font-size: 16px;
+  }
+  .libro-acciones {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .libro-portada {
+    min-height: 220px;
+  }
+  .slider {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-top: 16px;
+  }
+  .seccion {
+    padding: 36px 0 40px;
+  }
+  .seccion-cabeza {
+    margin-bottom: 22px;
+  }
+  .seccion-cabeza h2 {
+    font-size: 1.7rem;
+  }
+  .seccion-cabeza .mas {
+    font-size: 12px;
+  }
+  .cuadricula-cuentos {
+    gap: 26px 18px;
+  }
+  .cuento h3 {
+    font-size: 17px;
+  }
+  .saga-grande {
+    min-height: 280px;
+    padding: 24px;
+  }
+  .saga-grande h3 {
+    font-size: 1.9rem;
+  }
+  .saga-pequena {
+    grid-template-columns: 38% 1fr;
+    min-height: 140px;
+  }
+  .saga-pequena h3 {
+    font-size: 18px;
+  }
+  .personajes-tira {
+    padding-top: 10px;
+  }
+  .personaje-ficha img {
+    height: 120px;
+  }
+  .personaje-ficha .nombre {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+  .personaje-ficha .rol {
+    margin-bottom: 12px;
+  }
+  .filosofia {
+    padding: 52px 0 48px;
+  }
+  .filosofia .frase {
+    font-size: 2rem;
+  }
+  .filosofia .texto {
+    font-size: 15px;
+  }
+  .marca-agua {
+    width: 420px;
+    opacity: 0.06;
+  }
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+@media print {
+  header,
+  footer,
+  .topbar,
+  #progreso-lectura,
+  .sticky {
+    display: none !important;
+  }
+  .lectura p {
+    font-size: 12pt;
+  }
+}
+
+/* pila de diapositivas del libro */
+.libro-pila {
+  display: grid;
+}
+
+.libro-slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease;
+}
+
+.libro-slide.activo {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+[data-tema='noche'] .topbar {
+  background: var(--color-carmesi);
+}
+
+[data-tema='noche'] .logoHeader .logoFull01,
+[data-tema='noche'] .logoHeader .logoFull02,
+[data-tema='noche'] .logoHeader .logoFull03 {
+  fill: var(--color-naranja-2);
+}
+
+[data-tema='noche'] .logoHeader .logoFull04 {
+  fill: #f4ece6;
 }

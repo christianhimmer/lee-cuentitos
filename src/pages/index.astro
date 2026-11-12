@@ -2,33 +2,27 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
+import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
-import Icon from '../components/Icon.astro';
+import Logo from '../components/Logo.astro';
 import StoryCard from '../components/StoryCard.astro';
-import PersonajeAvatar from '../components/PersonajeAvatar.astro';
+import BookHero from '../components/BookHero.astro';
 import AdSlot from '../components/AdSlot.astro';
-import { todosLosCuentos, sagas, personajes, nombreSaga } from '../lib/cuentos';
-import { imagen, portadaDe } from '../lib/imagenes';
+import { todosLosCuentos, sagas, personajes } from '../lib/cuentos';
+import { imagen, portadaDe, retrato } from '../lib/imagenes';
 
 const cuentos = await todosLosCuentos();
-const destacado = cuentos.find((c) => c.data.destacado) ?? cuentos[0];
-const ultimos = cuentos.filter((c) => c.data.slug !== destacado.data.slug).slice(0, 4);
-const empezar = [
-  'el-misterio-del-lago-espejo-parte-01',
-  'la-aventura-en-el-bosque-encantado',
-  'la-aventura-de-damian-en-la-mina-misteriosa',
-  'el-gran-juego-de-guijarro-la-aventura-de-guillermo-y-sus-amigos',
-  'el-misterio-del-arbol-luminoso',
-  'el-secreto-del-reloj-encantado',
-]
-  .map((slug) => cuentos.find((c) => c.data.slug === slug))
-  .filter((c): c is (typeof cuentos)[number] => Boolean(c));
+const sagaLago = cuentos
+  .filter((c) => c.data.arco === 'el-misterio-del-lago-espejo' && c.data.parte && c.data.parte >= 2 && c.data.parte <= 5)
+  .sort((a, b) => (a.data.parte ?? 0) - (b.data.parte ?? 0));
+const recientes = cuentos.slice(0, 6);
 
 const conteoSagas = sagas.map((s) => ({
   ...s,
   total: cuentos.filter((c) => c.data.saga === s.slug).length,
 }));
 
+const [sagaPrincipal, ...sagasSecundarias] = conteoSagas;
 const personajesDestacados = personajes.slice(0, 6);
 
 const jsonLd = [
@@ -52,10 +46,7 @@ const jsonLd = [
       '@type': 'Organization',
       name: 'Lee Cuentitos',
       url: 'https://leecuentitos.com/',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://leecuentitos.com/favicon.svg',
-      },
+      logo: { '@type': 'ImageObject', url: 'https://leecuentitos.com/favicon.svg' },
     },
   },
   {
@@ -74,233 +65,144 @@ const jsonLd = [
 <Base
   titulo="Lee Cuentitos — Cuentos infantiles para leer en familia"
   descripcion="Cuentos infantiles ilustrados en español para practicar la lectura y leer en familia. Sagas de aventuras con Tom, Lucas y Max, Damián y el mundo de Guijarro. Gratis y sin registro."
-  imagen={portadaDe(destacado.data.portada).src}
+  imagen={portadaDe(cuentos[0].data.portada).src}
   jsonLd={jsonLd}
 >
+  <TopBar slot="header" />
   <Header slot="header" />
   <Footer slot="footer" />
 
-  <!-- HERO -->
-  <section class="decoracion-hero border-b border-borde">
-    <div class="contenedor grid items-center gap-12 py-12 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-20">
-      <div class="min-w-0">
-        <p class="mb-4 inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-ambar">
-          <Icon nombre="chispa" tamano={15} />
-          Cuentos para leer en familia
-        </p>
-        <h1 class="font-titulo text-[2.7rem] leading-[1.03] sm:text-6xl lg:text-[4.1rem]">
-          Aventuras que se leen juntas
-        </h1>
-        <p class="mt-5 max-w-xl text-[1.15rem] leading-relaxed text-tinta-suave">
-          Historias de magia, amistad y valentía para practicar la lectura y soñar antes de dormir.
-          Elige un cuento, acomódate y empieza la aventura.
-        </p>
+  <h1 class="solo-lectura">Lee Cuentitos — cuentos infantiles para leer en familia</h1>
 
-        <form action="/buscar/" method="get" role="search" class="mt-7 max-w-xl">
-          <label for="busqueda-hero" class="solo-lectura">Buscar un cuento, personaje o saga</label>
-          <div class="flex items-center gap-2 rounded-2xl border border-borde bg-superficie p-2 shadow-[var(--shadow-suave)] focus-within:border-vino/40">
-            <span class="pl-2 text-tinta-suave"><Icon nombre="buscar" tamano={20} /></span>
-            <input
-              id="busqueda-hero"
-              type="search"
-              name="q"
-              placeholder="Busca un cuento, personaje o saga…"
-              autocomplete="off"
-              class="min-w-0 flex-1 bg-transparent px-1 py-2.5 text-[1rem] text-tinta outline-none placeholder:text-tinta-suave/70"
-            />
-            <button type="submit" class="boton boton-primario shrink-0">Buscar</button>
-          </div>
-        </form>
+  <BookHero />
 
-        <div class="mt-4 flex flex-wrap items-center gap-2">
-          <span class="text-[0.8rem] font-bold text-tinta-suave">Popular:</span>
-          {['Tom y Lucas', 'Lago Espejo', 'Damián', 'Guijarro'].map((t) => (
-            <a
-              href={`/buscar/?q=${encodeURIComponent(t)}`}
-              class="rounded-full border border-borde bg-superficie/80 px-3 py-1 text-[0.82rem] font-bold text-tinta-suave transition-colors hover:border-vino/30 hover:text-vino"
-            >
-              {t}
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="seccion-cabeza">
+        <div>
+          <span class="ojal">La saga continúa</span>
+          <h2>Sigue la aventura</h2>
+        </div>
+        <a class="mas" href="/cuentos/">Ver todos los cuentos →</a>
+      </div>
+      <div class="cuadricula-cuentos">
+        {sagaLago.map((c, i) => <StoryCard cuento={c} prioridad={i === 0} compacta />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="seccion-cabeza">
+        <div>
+          <span class="ojal">Tres mundos</span>
+          <h2>Explora por saga</h2>
+        </div>
+        <a class="mas" href="/sagas/">Todas las sagas →</a>
+      </div>
+
+      <div class="sagas">
+        <a class="saga-grande" href={`/sagas/${sagaPrincipal.slug}/`}>
+          <Image
+            src={imagen(sagaPrincipal.portada)}
+            alt=""
+            width={900}
+            height={600}
+            widths={[600, 1000]}
+            sizes="(min-width: 900px) 62vw, 92vw"
+            loading="lazy"
+          />
+          <span class="conteo">{sagaPrincipal.total} cuentos</span>
+          <h3>{sagaPrincipal.nombre}</h3>
+          <p>{sagaPrincipal.lema}</p>
+        </a>
+
+        <div class="saga-lista">
+          {sagasSecundarias.map((s) => (
+            <a class="saga-pequena" href={`/sagas/${s.slug}/`}>
+              <Image
+                src={imagen(s.portada)}
+                alt=""
+                width={420}
+                height={300}
+                widths={[300, 520]}
+                sizes="(min-width: 900px) 22vw, 38vw"
+                loading="lazy"
+              />
+              <div class="txt">
+                <span class="conteo">{s.total} cuentos</span>
+                <h3>{s.nombre}</h3>
+                <p>{s.lema}</p>
+              </div>
             </a>
           ))}
         </div>
-
-        <p class="mt-6 text-[0.85rem] font-semibold text-teal">
-          {cuentos.length} cuentos · {sagas.length} sagas · {personajes.length} personajes · gratis para siempre
-        </p>
-      </div>
-
-      <div class="relative min-w-0">
-        <div class="absolute -inset-3 -z-10 rotate-2 rounded-[1.6rem] bg-ambar/15"></div>
-        <article class="tarjeta relative overflow-hidden">
-          <a href={`/${destacado.data.slug}/`} class="block overflow-hidden" tabindex="-1" aria-hidden="true">
-            <Image
-              src={portadaDe(destacado.data.portada)}
-              alt={destacado.data.portadaAlt ?? destacado.data.title}
-              widths={[640, 960, 1280]}
-              format="webp"
-              sizes="(min-width: 1024px) 560px, 92vw"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              class="aspect-[16/9] w-full object-cover"
-            />
-          </a>
-          <div class="absolute left-4 top-4 flex gap-2">
-            <span class="etiqueta bg-ambar text-[#3a2a08] shadow-sm">Saga · {nombreSaga(destacado.data.saga)}</span>
-            <span class="etiqueta bg-superficie text-vino shadow-sm">Nuevo</span>
-          </div>
-          <div class="p-6">
-            <h2 class="font-titulo text-[1.75rem] leading-tight">
-              <a href={`/${destacado.data.slug}/`} class="enlace-titulo hover:underline hover:decoration-vino/30">
-                {destacado.data.title.replace(/\s*\(Parte \d+\)$/, '')}
-              </a>
-            </h2>
-            <p class="mt-1 text-[0.9rem] font-bold text-teal">
-              Parte {String(destacado.data.parte ?? '').padStart(2, '0')} de 11 · {destacado.data.minutos} min de lectura
-            </p>
-            <p class="mt-3 line-clamp-2 text-[0.98rem] leading-relaxed text-tinta-suave">{destacado.data.resumen}</p>
-            <a href={`/${destacado.data.slug}/`} class="boton boton-primario mt-5 w-full sm:w-auto">
-              Seguir leyendo <Icon nombre="flecha" tamano={17} />
-            </a>
-          </div>
-        </article>
       </div>
     </div>
   </section>
 
-  <!-- SIGUE LA AVENTURA -->
-  <section class="contenedor py-14">
-    <div class="mb-7 flex flex-wrap items-end justify-between gap-3">
-      <div>
-        <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Recién salidos del bosque</p>
-        <h2 class="mt-1 text-[2rem] sm:text-[2.4rem]">Sigue la aventura</h2>
-      </div>
-      <a href="/cuentos/" class="boton boton-fantasma font-bold">Ver todos los cuentos <Icon nombre="flecha" tamano={16} /></a>
-    </div>
-
-    <div class="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
-      {ultimos.map((c) => (
-        <div class="w-[78vw] shrink-0 snap-start sm:w-auto">
-          <StoryCard cuento={c} compacta />
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- SAGAS -->
-  <section class="contenedor py-10">
-    <div class="mb-7 flex flex-wrap items-end justify-between gap-3">
-      <div>
-        <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Mundos completos</p>
-        <h2 class="mt-1 text-[2rem] sm:text-[2.4rem]">Explora por saga</h2>
-      </div>
-      <a href="/sagas/" class="boton boton-fantasma font-bold">Todas las sagas <Icon nombre="flecha" tamano={16} /></a>
-    </div>
-
-    <div class="grid gap-5 md:grid-cols-3">
-      {conteoSagas.map((s) => (
-        <a href={`/sagas/${s.slug}/`} class="group relative isolate flex min-h-[15rem] flex-col justify-end overflow-hidden rounded-2xl border border-borde p-6 text-white shadow-[var(--shadow-suave)] transition-transform hover:-translate-y-1">
-          <Image
-            src={imagen(s.portada)}
-            alt=""
-            width={640}
-            height={360}
-            widths={[480, 800]}
-            format="webp"
-            sizes="(min-width: 768px) 30vw, 92vw"
-            loading="lazy"
-            class="absolute inset-0 -z-20 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <div class="absolute inset-0 -z-10 bg-gradient-to-t from-vino-oscuro via-vino-oscuro/55 to-vino/10"></div>
-          <span class="etiqueta mb-2 w-fit bg-white/20 text-white backdrop-blur">{s.total} cuentos</span>
-          <h3 class="font-titulo text-[1.65rem] leading-tight text-white">{s.nombre}</h3>
-          <p class="mt-1 line-clamp-2 text-[0.9rem] text-white/80">{s.lema}</p>
-          <span class="mt-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition-colors group-hover:bg-ambar group-hover:text-[#3a2a08]" aria-hidden="true">
-            <Icon nombre="flecha" tamano={18} />
-          </span>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- PERSONAJES -->
-  <section class="border-y border-borde bg-crema-2 py-14">
+  <section class="seccion">
     <div class="contenedor">
-      <div class="mb-7 flex flex-wrap items-end justify-between gap-3">
+      <div class="seccion-cabeza">
         <div>
-          <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Quiénes viven estas historias</p>
-          <h2 class="mt-1 text-[2rem] sm:text-[2.4rem]">Personajes</h2>
+          <span class="ojal">Quiénes viven estas historias</span>
+          <h2>Conoce a los personajes</h2>
         </div>
-        <a href="/personajes/" class="boton boton-fantasma font-bold">Conocerlos todos <Icon nombre="flecha" tamano={16} /></a>
+        <a class="mas" href="/personajes/">Ver todos →</a>
       </div>
-
-      <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+      <div class="personajes-tira">
         {personajesDestacados.map((p) => (
-          <a href={`/personajes/${p.slug}/`} class="group flex flex-col items-center gap-3 rounded-2xl p-3 text-center transition-colors hover:bg-superficie">
-            <PersonajeAvatar personaje={p} clase="h-24 w-24 sm:h-28 sm:w-28 transition-transform group-hover:scale-105" tamano={140} />
-            <span class="font-titulo text-[1.05rem] font-semibold leading-tight text-tinta group-hover:text-vino">{p.nombre}</span>
-            <span class="-mt-2 text-[0.75rem] font-semibold text-tinta-suave">{p.especie}</span>
+          <a class="personaje-ficha" href={`/personajes/${p.slug}/`}>
+            {p.foto ? (
+              <Image
+                src={retrato(p.foto)!}
+                alt={p.nombre}
+                width={220}
+                height={220}
+                widths={[180, 260]}
+                sizes="190px"
+                loading="lazy"
+                class="h-[190px] w-auto object-contain"
+              />
+            ) : (
+              <span class="grid h-[190px] w-[120px] place-items-center font-titulo text-3xl text-morado">{p.iniciales}</span>
+            )}
+            <span class="nombre">{p.nombre}</span>
+            <span class="rol">{p.etiqueta}</span>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- ÚLTIMOS -->
-  <section id="ultimos" class="contenedor py-14">
-    <div class="mb-7 flex flex-wrap items-end justify-between gap-3">
-      <div>
-        <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Para empezar hoy</p>
-        <h2 class="mt-1 text-[2rem] sm:text-[2.4rem]">Elige por dónde empezar</h2>
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="seccion-cabeza">
+        <div>
+          <span class="ojal">Recién publicados</span>
+          <h2>Últimos cuentos</h2>
+        </div>
+        <a class="mas" href="/cuentos/">Ir a la biblioteca →</a>
       </div>
-      <a href="/cuentos/" class="boton boton-fantasma font-bold">Ver la biblioteca <Icon nombre="flecha" tamano={16} /></a>
-    </div>
-
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {empezar.map((c) => <StoryCard cuento={c} />)}
-    </div>
-
-    <div class="mt-10">
-      <AdSlot formato="horizontal" />
+      <div class="grid grid-cols-1 gap-x-7 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+        {recientes.map((c) => <StoryCard cuento={c} />)}
+      </div>
+      <div class="mt-14">
+        <AdSlot formato="horizontal" />
+      </div>
     </div>
   </section>
 
-  <!-- POR QUÉ -->
-  <section class="border-t border-borde bg-crema-2 py-16">
+  <section class="filosofia">
     <div class="contenedor">
-      <div class="mx-auto mb-10 max-w-2xl text-center">
-        <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Hecho para leer juntos</p>
-        <h2 class="mt-1 text-[2rem] sm:text-[2.5rem]">¿Por qué Lee Cuentitos?</h2>
-      </div>
-      <div class="grid gap-8 md:grid-cols-3">
-        <div class="text-center">
-          <span class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-vino-claro text-vino">
-            <Icon nombre="libro" tamano={28} />
-          </span>
-          <h3 class="text-xl">Práctica de lectura</h3>
-          <p class="mt-2 text-[0.98rem] leading-relaxed text-tinta-suave">
-            Capítulos cortos, letra grande y vocabulario amable. Ideal para quienes están empezando a leer solos.
-          </p>
-        </div>
-        <div class="text-center">
-          <span class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-vino-claro text-vino">
-            <Icon nombre="corazon" tamano={28} />
-          </span>
-          <h3 class="text-xl">Para leer en familia</h3>
-          <p class="mt-2 text-[0.98rem] leading-relaxed text-tinta-suave">
-            Perfectos para la hora del cuento. Puedes leer en voz alta, turnarse los párrafos o escuchar el video.
-          </p>
-        </div>
-        <div class="text-center">
-          <span class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-vino-claro text-vino">
-            <Icon nombre="chispa" tamano={28} />
-          </span>
-          <h3 class="text-xl">Cuentos con valores</h3>
-          <p class="mt-2 text-[0.98rem] leading-relaxed text-tinta-suave">
-            Amistad, curiosidad, valentía y trabajo en equipo, sin moralejas pesadas ni sermones.
-          </p>
-        </div>
-      </div>
+      <p class="frase">Cada cuento nació porque un niño pidió otro.</p>
+      <p class="texto">
+        Lee Cuentitos empezó como una tarea de lectura y terminó siendo un mundo. No hay
+        registro, no hay costo y no hay prisa: solo historias para leer en voz alta,
+        practicar y volver a pedir.
+      </p>
+      <p class="firma"><span></span> Christian, papá de Damián</p>
     </div>
+    <Logo variante="agua" />
   </section>
 </Base>

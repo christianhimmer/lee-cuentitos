@@ -7,6 +7,7 @@ export type Personaje = {
   color: string;
   iniciales: string;
   especie: string;
+  etiqueta: string;
   foto?: string;
 };
 
@@ -21,6 +22,7 @@ export const personajes: Personaje[] = [
     color: '#7A1236',
     iniciales: 'T',
     especie: 'Adulto',
+    etiqueta: 'Mentor',
     foto: 'tom.webp',
   },
   {
@@ -33,6 +35,7 @@ export const personajes: Personaje[] = [
     color: '#1F7A6F',
     iniciales: 'L',
     especie: 'Niño',
+    etiqueta: 'El cerebro',
     foto: 'lucas.webp',
   },
   {
@@ -45,6 +48,7 @@ export const personajes: Personaje[] = [
     color: '#B26A00',
     iniciales: 'M',
     especie: 'Perro',
+    etiqueta: 'Perro guardián',
     foto: 'max.webp',
   },
   {
@@ -57,6 +61,7 @@ export const personajes: Personaje[] = [
     color: '#6A4C93',
     iniciales: 'Lí',
     especie: 'Niña',
+    etiqueta: 'La que ve',
     foto: 'lia.webp',
   },
   {
@@ -69,6 +74,7 @@ export const personajes: Personaje[] = [
     color: '#2A6F97',
     iniciales: 'F',
     especie: 'Niño',
+    etiqueta: 'Explorador',
     foto: 'finn.webp',
   },
   {
@@ -81,6 +87,7 @@ export const personajes: Personaje[] = [
     color: '#1D3557',
     iniciales: 'G',
     especie: 'Guardián',
+    etiqueta: 'Del lago',
     foto: 'guardian.webp',
   },
   {
@@ -93,6 +100,7 @@ export const personajes: Personaje[] = [
     color: '#C1440E',
     iniciales: 'D',
     especie: 'Niño',
+    etiqueta: 'Aventurero',
   },
   {
     slug: 'sader',
@@ -104,6 +112,7 @@ export const personajes: Personaje[] = [
     color: '#5C5470',
     iniciales: 'S',
     especie: 'Lobo',
+    etiqueta: 'Lobo fiel',
   },
   {
     slug: 'ollie',
@@ -115,6 +124,7 @@ export const personajes: Personaje[] = [
     color: '#8A5A00',
     iniciales: 'O',
     especie: 'Búho',
+    etiqueta: 'Búho sabio',
   },
   {
     slug: 'joaquin',
@@ -126,6 +136,7 @@ export const personajes: Personaje[] = [
     color: '#2A6F97',
     iniciales: 'J',
     especie: 'Niño',
+    etiqueta: 'El del guijarro',
   },
   {
     slug: 'guillermo',
@@ -137,6 +148,7 @@ export const personajes: Personaje[] = [
     color: '#4F772D',
     iniciales: 'G',
     especie: 'Gusano',
+    etiqueta: 'Guerrero',
   },
   {
     slug: 'juana',
@@ -148,6 +160,7 @@ export const personajes: Personaje[] = [
     color: '#588157',
     iniciales: 'Ju',
     especie: 'Tortuga',
+    etiqueta: 'Sabia',
   },
   {
     slug: 'jasper',
@@ -159,6 +172,7 @@ export const personajes: Personaje[] = [
     color: '#B5651D',
     iniciales: 'Ja',
     especie: 'Duende',
+    etiqueta: 'Travieso',
   },
 ];
 

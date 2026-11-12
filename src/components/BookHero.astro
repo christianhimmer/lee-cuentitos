@@ -1,0 +1,141 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { todosLosCuentos, nombreSaga } from '../lib/cuentos';
+import { portadaDe } from '../lib/imagenes';
+
+const cuentos = await todosLosCuentos();
+const porSlug = new Map(cuentos.map((c) => [c.data.slug, c]));
+
+const diapositivas = [
+  {
+    slug: 'el-misterio-del-lago-espejo-parte-01',
+    pista: 'Empieza por el principio',
+    cta: 'Leer el primer capítulo',
+    titulo: 'El Misterio del Lago Espejo',
+  },
+  {
+    slug: 'la-aventura-de-damian-en-la-mina-misteriosa',
+    pista: 'Un cuento suelto',
+    cta: 'Leer el cuento',
+    titulo: 'La Mina Misteriosa',
+  },
+  {
+    slug: 'el-gran-juego-de-guijarro-la-aventura-de-guillermo-y-sus-amigos',
+    pista: 'Otro mundo',
+    cta: 'Leer el cuento',
+    titulo: 'El Gran Juego de Guijarro',
+  },
+]
+  .map((d) => {
+    const cuento = porSlug.get(d.slug);
+    if (!cuento) return null;
+    return {
+      ...d,
+      cuento,
+      titulo: d.titulo,
+      saga: nombreSaga(cuento.data.saga),
+    };
+  })
+  .filter((x): x is NonNullable<typeof x> => Boolean(x));
+---
+
+<section class="hero">
+  <div class="contenedor">
+    <div class="libro-pila">
+      {diapositivas.map((d, i) => (
+        <article
+          class:list={['libro', 'libro-slide', i === 0 && 'activo']}
+          data-slide={i}
+          aria-hidden={i === 0 ? 'false' : 'true'}
+          inert={i !== 0}
+        >
+          <div class="libro-texto">
+            <p class="etiqueta">Saga · {d.saga}</p>
+            <h2 class="libro-titulo">{d.titulo}</h2>
+            <p class="libro-lead">{d.cuento.data.resumen}</p>
+            <div class="libro-meta">
+              {d.cuento.data.parte ? (
+                <span>Parte {String(d.cuento.data.parte).padStart(2, '0')} de 11</span>
+              ) : (
+                <span>Cuento completo</span>
+              )}
+              <span aria-hidden="true">·</span>
+              <span>{d.cuento.data.minutos} min de lectura</span>
+            </div>
+            <div class="libro-acciones">
+              <a class="enlace-flecha" href={`/${d.cuento.data.slug}/`}>
+                {d.cta}
+                <Icon nombre="flecha" tamano={16} />
+              </a>
+              <a href={`/sagas/${d.cuento.data.saga}/`} class="text-[14px] font-bold text-verde hover:underline">
+                Ver la saga
+              </a>
+            </div>
+          </div>
+          <div class="libro-portada">
+            <span class="cinta" aria-hidden="true"></span>
+            <Image
+              src={portadaDe(d.cuento.data.portada)}
+              alt={d.cuento.data.portadaAlt ?? d.cuento.data.title}
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 1000px) 560px, 92vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+              decoding="async"
+            />
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="slider" role="group" aria-label="Cuentos destacados">
+      <button type="button" data-slider="anterior" aria-label="Anterior">‹</button>
+      <span data-slider="contador">01 / 03</span>
+      <div class="puntos">
+        {diapositivas.map((_, i) => (
+          <button
+            type="button"
+            class:list={['punto', i === 0 && 'activo']}
+            data-slider="punto"
+            data-indice={i}
+            aria-label={`Ver destacado ${i + 1}`}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          ></button>
+        ))}
+      </div>
+      <span data-slider="pista">{diapositivas[0]?.pista}</span>
+      <button type="button" data-slider="siguiente" aria-label="Siguiente" class="ml-auto">›</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const slides = Array.from(document.querySelectorAll<HTMLElement>('.libro-slide'));
+  const puntos = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-slider="punto"]'));
+  const contador = document.querySelector<HTMLElement>('[data-slider="contador"]');
+  const pista = document.querySelector<HTMLElement>('[data-slider="pista"]');
+  const pistas = ['Empieza por el principio', 'Un cuento suelto', 'Otro mundo'];
+  let actual = 0;
+
+  function mostrar(indice: number) {
+    actual = (indice + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const activo = i === actual;
+      slide.classList.toggle('activo', activo);
+      slide.setAttribute('aria-hidden', activo ? 'false' : 'true');
+      if (activo) slide.removeAttribute('inert');
+      else slide.setAttribute('inert', '');
+    });
+    puntos.forEach((p, i) => {
+      p.classList.toggle('activo', i === actual);
+      p.setAttribute('aria-pressed', i === actual ? 'true' : 'false');
+    });
+    if (contador) contador.textContent = `${String(actual + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    if (pista) pista.textContent = pistas[actual] ?? '';
+  }
+
+  document.querySelector('[data-slider="anterior"]')?.addEventListener('click', () => mostrar(actual - 1));
+  document.querySelector('[data-slider="siguiente"]')?.addEventListener('click', () => mostrar(actual + 1));
+  puntos.forEach((p) => p.addEventListener('click', () => mostrar(Number(p.dataset.indice))));
+</script>

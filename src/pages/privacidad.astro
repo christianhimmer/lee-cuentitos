@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
+import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 
@@ -16,6 +17,7 @@ const actualizado = '12 de noviembre de 2026';
   descripcion="Cómo Lee Cuentitos trata tus datos, usa cookies, muestra publicidad de Google AdSense y protege la privacidad de los niños."
   imagen="/og-default.jpg"
 >
+  <TopBar slot="header" />
   <Header slot="header" />
   <Footer slot="footer" />
 

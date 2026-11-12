@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
+import TopBar from '../../components/TopBar.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import StoryCard from '../../components/StoryCard.astro';
@@ -47,21 +48,22 @@ const migas = [
     },
   }}
 >
+  <TopBar slot="header" />
   <Header slot="header" />
   <Footer slot="footer" />
 
-  <section class="border-b border-borde bg-crema-2">
+  <section class="border-b border-linea bg-papel-2">
     <div class="contenedor py-10">
       <Breadcrumbs items={migas} />
-      <div class="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-        <PersonajeAvatar personaje={personaje} clase="h-56 w-44 sm:h-64 sm:w-52" tamano={280} forma="retrato" />
+      <div class="flex flex-col items-start gap-8 sm:flex-row sm:items-center">
+        <PersonajeAvatar personaje={personaje} clase="h-56 w-44 sm:h-64 sm:w-52" tamano={260} forma="retrato" />
         <div>
-          <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">{personaje.especie} · {personaje.rol}</p>
-          <h1 class="mt-1 text-[2.5rem] sm:text-5xl">{personaje.nombre}</h1>
+          <p class="etiqueta">{personaje.etiqueta} · {personaje.especie}</p>
+          <h1 class="mt-2 text-[2.5rem] sm:text-5xl">{personaje.nombre}</h1>
           <p class="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-tinta-suave">{personaje.descripcion}</p>
           {saga && (
-            <a href={`/sagas/${saga.slug}/`} class="mt-4 inline-flex items-center gap-2 rounded-full bg-superficie px-4 py-2 text-[0.85rem] font-bold text-vino shadow-sm hover:underline">
-              <Icon nombre="saga" tamano={15} /> Saga: {saga.nombre}
+            <a href={`/sagas/${saga.slug}/`} class="enlace-flecha mt-5">
+              Saga: {saga.nombre} <Icon nombre="flecha" tamano={15} />
             </a>
           )}
         </div>
@@ -70,20 +72,23 @@ const migas = [
   </section>
 
   <div class="contenedor py-12">
-    <h2 class="text-[1.9rem]">Cuentos donde aparece {personaje.nombre}</h2>
-    <p class="mt-1 text-tinta-suave">{cuentos.length} {cuentos.length === 1 ? 'historia' : 'historias'} para leer hoy.</p>
+    <div class="seccion-cabeza">
+      <div>
+        <span class="ojal">Sus historias</span>
+        <h2 class="text-[1.8rem]">Cuentos donde aparece {personaje.nombre}</h2>
+      </div>
+    </div>
 
-    <div class="mt-6 cuadricula-cuentos">
+    <div class="cuadricula-cuentos">
       {cuentos.map((c) => <StoryCard cuento={c} compacta />)}
     </div>
 
     {companeros.length > 0 && (
-      <section class="mt-14 border-t border-borde pt-10">
-        <h2 class="text-[1.6rem]">Compañeros de aventura</h2>
-        <div class="mt-5 flex flex-wrap gap-3">
+      <section class="mt-16 border-t border-linea pt-10">
+        <h2 class="text-[1.5rem]">Compañeros de aventura</h2>
+        <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
           {companeros.map((p) => (
-            <a href={`/personajes/${p.slug}/`} class="inline-flex items-center gap-2 rounded-full border border-borde bg-superficie px-3 py-2 text-[0.9rem] font-bold text-tinta hover:border-vino/30 hover:text-vino">
-              <PersonajeAvatar personaje={p} clase="h-7 w-7 border-2" tamano={40} />
+            <a href={`/personajes/${p.slug}/`} class="text-[14px] font-bold text-morado underline decoration-linea underline-offset-4 hover:text-carmesi">
               {p.nombre}
             </a>
           ))}

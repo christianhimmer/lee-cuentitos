@@ -1,0 +1,19 @@
+---
+import { todosLosCuentos } from '../lib/cuentos';
+
+const [ultimo] = await todosLosCuentos();
+---
+
+{
+  ultimo && (
+    <div class="topbar">
+      <div class="contenedor topbar-inner">
+        <span>
+          Nuevo cuento: <strong>{ultimo.data.title}</strong>
+        </span>
+        <span class="hidden opacity-50 sm:inline">·</span>
+        <a href={`/${ultimo.data.slug}/`}>¡Ya disponible para leer en familia!</a>
+      </div>
+    </div>
+  )
+}

@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
+import TopBar from '../../components/TopBar.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import PersonajeAvatar from '../../components/PersonajeAvatar.astro';
@@ -34,13 +35,14 @@ const lista = personajes
     })),
   }}
 >
+  <TopBar slot="header" />
   <Header slot="header" />
   <Footer slot="footer" />
 
-  <div class="border-b border-borde bg-crema-2">
+  <div class="border-b border-linea bg-papel-2">
     <div class="contenedor py-12">
-      <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Habitantes del mundo</p>
-      <h1 class="mt-1 text-[2.4rem] sm:text-5xl">Personajes</h1>
+      <p class="etiqueta">Habitantes del mundo</p>
+      <h1 class="mt-2 text-[2.4rem] sm:text-5xl">Personajes</h1>
       <p class="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-tinta-suave">
         Niños, perros, búhos, gusanitos y duendes. Todos viven en el mismo mundo de cuentos y
         aparecen una y otra vez en distintas historias.
@@ -49,16 +51,16 @@ const lista = personajes
   </div>
 
   <div class="contenedor py-12">
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
       {lista.map((p) => (
-        <a href={`/personajes/${p.slug}/`} class="group relative flex gap-5 rounded-2xl border border-borde bg-superficie p-5 shadow-[var(--shadow-suave)] transition-transform hover:-translate-y-1">
-          <PersonajeAvatar personaje={p} clase="h-40 w-32" tamano={200} forma="retrato" />
+        <a href={`/personajes/${p.slug}/`} class="group grid grid-cols-[7rem_1fr] items-start gap-5 border-t border-linea pt-6">
+          <PersonajeAvatar personaje={p} clase="h-40 w-28" tamano={180} forma="retrato" />
           <div>
-            <p class="text-[0.7rem] font-extrabold uppercase tracking-wider text-ambar">{p.especie} · {p.sagaNombre}</p>
-            <h2 class="mt-0.5 font-titulo text-xl font-semibold text-tinta group-hover:text-vino">{p.nombre}</h2>
-            <p class="mt-1 line-clamp-2 text-[0.9rem] leading-relaxed text-tinta-suave">{p.descripcion}</p>
-            <p class="mt-2 inline-flex items-center gap-1 text-[0.8rem] font-bold text-teal">
-              {p.total} {p.total === 1 ? 'cuento' : 'cuentos'} <Icon nombre="flecha" tamano={13} />
+            <span class="text-[10px] font-bold uppercase tracking-[0.14em] text-naranja">{p.etiqueta}</span>
+            <h2 class="mt-1 font-titulo text-[1.4rem] font-semibold leading-tight text-morado group-hover:text-carmesi">{p.nombre}</h2>
+            <p class="mt-1 line-clamp-3 text-[14px] leading-relaxed text-tinta-suave">{p.descripcion}</p>
+            <p class="mt-2 inline-flex items-center gap-1 text-[12px] font-bold text-verde">
+              {p.total} {p.total === 1 ? 'cuento' : 'cuentos'} <Icon nombre="flecha" tamano={12} />
             </p>
           </div>
         </a>

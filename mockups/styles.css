@@ -1,0 +1,296 @@
+/* Lee Cuentitos — propuestas de diseño
+   Paleta real del Elementor kit + Bitter / Atkinson Hyperlegible */
+
+:root {
+  --paper: #faf6ef;
+  --paper-2: #f3eadf;
+  --paper-3: #fffdf8;
+  --ink: #241820;
+  --ink-soft: #5d4c56;
+  --purple: #5f0f40;
+  --carmine: #9a031e;
+  --orange: #e36414;
+  --orange-2: #fb8b24;
+  --teal: #0f4c5c;
+  --line: #ded2c6;
+  --line-soft: #ece3d8;
+  --max: 1180px;
+  --font-title: 'Bitter', Georgia, serif;
+  --font-body: 'Atkinson Hyperlegible', ui-sans-serif, system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4 { font-family: var(--font-title); font-weight: 600; color: var(--purple); margin: 0; line-height: 1.12; letter-spacing: -0.015em; }
+p { margin: 0; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+.rule { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+/* ---------- barra superior ---------- */
+.topbar { background: var(--orange); color: #fff; font-size: 14px; }
+.topbar .wrap { display: flex; justify-content: center; align-items: center; gap: 10px; height: 38px; }
+.topbar strong { font-weight: 700; }
+.topbar a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,.45); }
+.topbar a:hover { text-decoration-color: #fff; }
+.topbar .dot { opacity: .55; }
+
+/* ---------- header ---------- */
+.header { background: var(--paper); border-bottom: 1px solid var(--line-soft); }
+.header .wrap { display: flex; align-items: center; justify-content: space-between; height: 86px; gap: 24px; }
+.logo { display: block; }
+.logo svg { height: 72px; width: auto; }
+.logo .logoFull01, .logo .logoFull02, .logo .logoFull03 { fill: var(--teal); }
+.logo .logoFull04 { fill: var(--purple); }
+.nav { display: flex; align-items: center; gap: 26px; font-size: 15px; font-weight: 700; color: var(--purple); }
+.nav a { padding: 4px 0; border-bottom: 2px solid transparent; }
+.nav a:hover { border-color: var(--orange); }
+.nav a.active { border-color: var(--carmine); }
+.header-actions { display: flex; align-items: center; gap: 14px; }
+.icon-btn { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 4px; color: var(--purple); background: transparent; cursor: pointer; }
+.icon-btn:hover { border-color: var(--purple); }
+.cta { display: inline-flex; align-items: center; gap: 8px; background: var(--carmine); color: #fff; font-weight: 700; font-size: 14px; padding: 11px 18px; border-radius: 4px; }
+.cta:hover { background: #7d0218; }
+
+/* ---------- libro abierto (A) ---------- */
+.hero { padding: 56px 0 64px; }
+.book {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  background: var(--paper-3);
+  border: 1px solid var(--line);
+  box-shadow: 0 40px 70px -55px rgba(95, 15, 64, .45);
+}
+.book::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 51.5%;
+  width: 46px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(95,15,64,0) 0%, rgba(95,15,64,.07) 42%, rgba(95,15,64,.12) 50%, rgba(95,15,64,.07) 58%, rgba(95,15,64,0) 100%);
+  pointer-events: none;
+}
+.book-text { padding: 58px 56px 52px; display: flex; flex-direction: column; justify-content: center; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); margin-bottom: 18px; }
+.eyebrow.muted { color: var(--teal); }
+.book h1 { font-size: 56px; margin-bottom: 18px; }
+.book .lead { font-size: 17px; color: var(--ink-soft); max-width: 42ch; }
+.book-meta { display: flex; align-items: center; gap: 18px; margin-top: 20px; font-size: 13px; color: var(--teal); font-weight: 700; letter-spacing: .02em; }
+.book-actions { display: flex; align-items: center; gap: 22px; margin-top: 28px; }
+.link-arrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--carmine); border-bottom: 2px solid var(--carmine); padding-bottom: 3px; }
+.link-arrow:hover { color: var(--purple); border-color: var(--purple); }
+.book-cover { position: relative; overflow: hidden; border-left: 1px solid var(--line-soft); box-shadow: inset 22px 0 26px -20px rgba(95,15,64,.45); }
+.book-cover img { width: 100%; height: 100%; object-fit: cover; }
+.bookmark { position: absolute; top: 0; left: 26px; width: 20px; height: 78px; background: var(--orange); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%); box-shadow: 0 2px 4px rgba(0,0,0,.15); }
+.slider { display: flex; align-items: center; gap: 14px; margin-top: 22px; font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--ink-soft); text-transform: uppercase; }
+.slider .dots { display: flex; gap: 6px; }
+.slider .dot { width: 26px; height: 3px; background: var(--line); }
+.slider .dot.on { background: var(--orange); }
+.slider button { border: 0; background: transparent; color: var(--purple); cursor: pointer; font-size: 22px; line-height: 1; padding: 0 4px; }
+
+/* ---------- variante B ---------- */
+.variant-b .topbar { background: var(--carmine); }
+.variant-b .book-stage { display: grid; grid-template-columns: 1.02fr 1fr; align-items: center; gap: 0; padding: 26px 0 40px; }
+.variant-b .book-page {
+  position: relative;
+  background: var(--paper-3);
+  border: 1px solid var(--line);
+  padding: 60px 56px;
+  z-index: 2;
+  box-shadow: 0 30px 60px -50px rgba(95,15,64,.4);
+}
+.variant-b .book-page::before {
+  content: '';
+  position: absolute; inset: 12px;
+  border: 1px solid var(--line-soft);
+  pointer-events: none;
+}
+.variant-b .book-cover-float { position: relative; margin-left: -58px; z-index: 3; }
+.variant-b .book-cover-float img {
+  width: 100%;
+  transform: rotate(-1.6deg);
+  box-shadow: 0 40px 70px -45px rgba(36,24,32,.6);
+  border: 6px solid var(--paper-3);
+}
+.variant-b .book-cover-float figcaption { margin-top: 14px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); text-align: right; }
+.variant-b .book-page h1 { font-size: 50px; }
+
+/* ---------- secciones ---------- */
+.section { padding: 54px 0 58px; border-top: 1px solid var(--line); }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
+.section-head .num { display: block; font-size: 12px; font-weight: 700; letter-spacing: .16em; color: var(--orange); margin-bottom: 8px; }
+.section-head h2 { font-size: 34px; }
+.section-head .more { font-size: 14px; font-weight: 700; color: var(--carmine); white-space: nowrap; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.section-head .more:hover { border-color: var(--carmine); }
+
+/* sigue la aventura */
+.chapters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.chapter .cover { position: relative; overflow: hidden; border-radius: 3px; background: var(--paper-2); }
+.chapter .cover img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; transition: transform .4s ease; }
+.chapter:hover .cover img { transform: scale(1.03); }
+.chapter .part { display: block; margin-top: 14px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
+.chapter h3 { font-size: 20px; margin-top: 6px; line-height: 1.25; }
+.chapter:hover h3 { color: var(--carmine); }
+.chapter .meta { margin-top: 6px; font-size: 13px; color: var(--teal); font-weight: 700; }
+
+/* sagas asimétricas */
+.sagas { display: grid; grid-template-columns: 1.35fr 1fr; gap: 28px; }
+.saga-main { position: relative; overflow: hidden; border-radius: 3px; min-height: 380px; display: flex; flex-direction: column; justify-content: flex-end; padding: 34px; color: #fff; }
+.saga-main img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .5s ease; }
+.saga-main::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(36,12,30,.92), rgba(36,12,30,.25) 62%, rgba(36,12,30,.05)); }
+.saga-main:hover img { transform: scale(1.04); }
+.saga-main h3 { color: #fff; font-size: 40px; }
+.saga-main p { color: rgba(255,255,255,.8); margin-top: 10px; max-width: 40ch; }
+.saga-main .count { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange-2); margin-bottom: 12px; }
+.saga-stack { display: grid; gap: 28px; }
+.saga-small { display: grid; grid-template-columns: 40% 1fr; gap: 0; background: var(--paper-3); border: 1px solid var(--line); border-radius: 3px; overflow: hidden; min-height: 176px; }
+.saga-small img { width: 100%; height: 100%; object-fit: cover; }
+.saga-small .txt { padding: 20px 22px; display: flex; flex-direction: column; justify-content: center; }
+.saga-small h3 { font-size: 22px; }
+.saga-small p { font-size: 14px; color: var(--ink-soft); margin-top: 6px; }
+.saga-small .count { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+.saga-small:hover { border-color: var(--purple); }
+
+/* personajes */
+.characters {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  align-items: end;
+  padding-top: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.character { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.character img { height: 190px; width: auto; object-fit: contain; transition: transform .35s ease; }
+.character:hover img { transform: translateY(-5px); }
+.character .name { margin-top: 14px; font-family: var(--font-title); font-size: 17px; font-weight: 600; color: var(--purple); }
+.character .who { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin: 2px 0 18px; }
+
+/* últimos */
+.latest { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px 28px; }
+.latest .cover img { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; border-radius: 3px; }
+.latest h3 { font-size: 20px; margin-top: 12px; line-height: 1.25; }
+.latest .date { margin-top: 5px; font-size: 12px; letter-spacing: .06em; color: var(--ink-soft); }
+
+/* filosofía */
+.philosophy { position: relative; overflow: hidden; background: var(--purple); color: #fff; padding: 88px 0 82px; }
+.philosophy .wrap { position: relative; z-index: 2; }
+.philosophy .quote { font-family: var(--font-title); font-weight: 600; font-size: 46px; line-height: 1.18; color: #fff; max-width: 20ch; letter-spacing: -0.02em; }
+.philosophy .sub { margin-top: 24px; max-width: 56ch; color: rgba(255,255,255,.78); font-size: 17px; }
+.philosophy .sign { margin-top: 30px; display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--orange-2); font-weight: 700; }
+.philosophy .sign span { width: 42px; height: 1px; background: rgba(251,139,36,.5); }
+.watermark { position: absolute; right: -90px; bottom: -70px; width: 620px; opacity: .05; pointer-events: none; }
+.watermark .logoFull04 { display: none; }
+.watermark svg { width: 100%; height: auto; }
+.watermark .logoFull01, .watermark .logoFull02, .watermark .logoFull03, .watermark .logoFull04 { fill: #fff; }
+
+/* variante B: filosofía clara con marca de agua */
+.variant-b .philosophy { background: var(--paper-2); color: var(--ink); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.variant-b .philosophy .quote { color: var(--purple); max-width: 24ch; margin: 0 auto; text-align: center; font-size: 44px; }
+.variant-b .philosophy .sub { color: var(--ink-soft); margin: 26px auto 0; text-align: center; }
+.variant-b .philosophy .sign { justify-content: center; color: var(--carmine); }
+.variant-b .philosophy .sign span { background: rgba(154,3,30,.35); }
+.variant-b .watermark { left: 50%; right: auto; bottom: 50%; transform: translate(-50%, 50%); width: 760px; opacity: .07; }
+.variant-b .watermark .logoFull04 { display: none; }
+.variant-b .watermark .logoFull01, .variant-b .watermark .logoFull02, .variant-b .watermark .logoFull03, .variant-b .watermark .logoFull04 { fill: var(--purple); }
+
+/* footer */
+.footer { background: var(--paper); padding: 30px 0 34px; }
+.footer .top { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.footer .logo svg { height: 60px; }
+.footer .links { display: flex; gap: 22px; font-size: 14px; font-weight: 700; color: var(--purple); }
+.footer .links a:hover { color: var(--carmine); text-decoration: underline; text-underline-offset: 3px; }
+.footer .social { display: flex; gap: 8px; }
+.footer .social a { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--purple); }
+.footer .social a:hover { border-color: var(--purple); background: var(--paper-2); }
+.footer .bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 18px; font-size: 12.5px; color: var(--ink-soft); }
+.footer .bottom a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* busca */
+.search { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--paper-3); padding: 10px 14px; border-radius: 4px; max-width: 420px; }
+.search input { border: 0; background: transparent; font: inherit; font-size: 14px; outline: none; width: 100%; color: var(--ink); }
+.search input::placeholder { color: #9a8b93; }
+
+@media (max-width: 1000px) {
+  .book { grid-template-columns: 1fr; }
+  .book::after { display: none; }
+  .book-cover { border-left: 0; border-top: 1px solid var(--line-soft); min-height: 320px; }
+  .book h1 { font-size: 42px; }
+  .variant-b .book-stage { grid-template-columns: 1fr; gap: 28px; }
+  .variant-b .book-cover-float { margin-left: 0; }
+  .chapters { grid-template-columns: repeat(2, 1fr); }
+  .sagas { grid-template-columns: 1fr; }
+  .characters { grid-template-columns: repeat(3, 1fr); }
+  .characters .character img { height: 150px; }
+  .latest { grid-template-columns: repeat(2, 1fr); }
+  .nav, .search { display: none; }
+  .philosophy .quote { font-size: 34px; }
+}
+
+
+/* textura de papel muy sutil */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 700px) {
+  body { font-size: 16px; }
+  .wrap { padding: 0 20px; }
+  .topbar .wrap { height: auto; min-height: 34px; padding: 7px 20px; flex-wrap: wrap; gap: 2px 6px; font-size: 12px; text-align: center; }
+  .topbar .dot { display: none; }
+  .header .wrap { height: 66px; gap: 10px; }
+  .logo svg { height: 48px; }
+  .header-actions .cta { display: none; }
+  .icon-btn { width: 34px; height: 34px; }
+  .hero { padding: 28px 0 36px; }
+  .book-text, .variant-b .book-page { padding: 34px 24px 30px; }
+  .book h1, .variant-b .book-page h1 { font-size: 34px; }
+  .book .lead { font-size: 16px; }
+  .book-meta { flex-wrap: wrap; gap: 6px 10px; font-size: 12px; }
+  .book-meta span:nth-child(2) { display: none; }
+  .book-actions { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .book-cover { min-height: 220px; }
+  .slider { flex-wrap: wrap; gap: 8px 12px; margin-top: 16px; }
+  .slider span:last-of-type { display: none; }
+  .section { padding: 36px 0 40px; }
+  .section-head { margin-bottom: 22px; }
+  .section-head h2 { font-size: 27px; }
+  .section-head .more { font-size: 12px; }
+  .chapters { gap: 20px; }
+  .chapter h3 { font-size: 17px; }
+  .saga-main { min-height: 280px; padding: 24px; }
+  .saga-main h3 { font-size: 30px; }
+  .saga-small { grid-template-columns: 38% 1fr; min-height: 140px; }
+  .saga-small h3 { font-size: 18px; }
+  .characters { grid-template-columns: repeat(3, 1fr); padding-top: 10px; }
+  .characters .character img { height: 120px; }
+  .character .name { font-size: 15px; margin-top: 10px; }
+  .character .who { margin-bottom: 12px; }
+  .latest { gap: 26px 18px; }
+  .latest h3 { font-size: 17px; }
+  .philosophy { padding: 52px 0 48px; }
+  .philosophy .quote, .variant-b .philosophy .quote { font-size: 30px; }
+  .philosophy .sub, .variant-b .philosophy .sub { font-size: 15px; }
+  .watermark, .variant-b .watermark { width: 420px; opacity: .06; }
+  .footer .top { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .footer .links { flex-wrap: wrap; gap: 10px 16px; }
+  .footer .bottom { flex-direction: column; gap: 6px; }
+}

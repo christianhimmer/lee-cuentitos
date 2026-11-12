@@ -29,11 +29,8 @@ const miniatura = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
 {
   id && (
-    <figure class={`not-prose my-10 ${clase}`}>
-      <div
-        class="group relative overflow-hidden rounded-2xl border border-borde bg-vino-oscuro shadow-[var(--shadow-suave)]"
-        data-video-youtube={id}
-      >
+    <figure class={`my-10 ${clase}`}>
+      <div class="group relative overflow-hidden border border-linea bg-morado-fuerte" data-video-youtube={id}>
         <img
           src={miniatura}
           alt={`Miniatura del video: ${titulo}`}
@@ -45,19 +42,17 @@ const miniatura = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
         />
         <button
           type="button"
-          class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-t from-vino-oscuro/80 via-vino/20 to-transparent text-white transition-colors hover:from-vino-oscuro/90"
+          class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-t from-black/70 via-black/10 to-transparent text-white"
           aria-label={`Reproducir el video de YouTube: ${titulo}`}
         >
-          <span class="flex h-16 w-16 items-center justify-center rounded-full bg-superficie text-vino shadow-lg transition-transform group-hover:scale-110">
-            <Icon nombre="play" tamano={34} />
+          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 text-carmesi transition-transform group-hover:scale-110">
+            <Icon nombre="play" tamano={30} />
           </span>
-          <span class="rounded-full bg-black/45 px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur">
-            Ver el cuento en video
-          </span>
+          <span class="text-[11px] font-bold uppercase tracking-[0.14em]">Ver el cuento en video</span>
         </button>
       </div>
-      <figcaption class="mt-2 text-center text-[0.8rem] text-tinta-suave">
-        Video del canal de Lee Cuentitos en YouTube · al reproducirlo se conecta con YouTube
+      <figcaption class="mt-2 text-center text-[12px] text-tinta-suave">
+        Video del canal de Lee Cuentitos · al reproducirlo se conecta con YouTube
       </figcaption>
     </figure>
   )

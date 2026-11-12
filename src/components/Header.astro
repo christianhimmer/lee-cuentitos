@@ -14,89 +14,72 @@ const activo = (href: string) =>
   href === '/' ? ruta === '/' : ruta.startsWith(href.replace(/\/$/, ''));
 ---
 
-<div class="bg-vino-fuerte text-white">
-  <div class="contenedor flex items-center justify-center gap-2 py-2 text-center text-[0.8rem] font-semibold sm:text-sm">
-    <Icon nombre="chispa" tamano={15} clase="shrink-0 text-ambar" />
-    <span>Nuevo cuento: <a href="/el-misterio-del-lago-espejo-parte-11/" class="underline decoration-white/40 hover:decoration-white">El Misterio del Lago Espejo — Parte 11</a></span>
-  </div>
-</div>
-
-<header class="sticky top-0 z-50 border-b border-borde bg-crema/95 backdrop-blur supports-[backdrop-filter]:bg-crema/80">
-  <div class="contenedor flex h-[4.5rem] items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-2.5 text-vino" aria-label="Lee Cuentitos, ir al inicio">
-      <Logo clase="h-9 w-9" />
-      <span class="font-titulo text-xl font-bold leading-none tracking-tight sm:text-2xl">
-        Lee<span class="text-vino">Cuentitos</span>
-      </span>
+<header class="header sticky top-0 z-50">
+  <div class="contenedor header-inner">
+    <a href="/" aria-label="Lee Cuentitos, ir al inicio">
+      <Logo variante="header" />
     </a>
 
-    <nav class="hidden items-center gap-1 lg:flex" aria-label="Navegación principal">
+    <nav class="nav-principal" aria-label="Navegación principal">
       {enlaces.map((e) => (
-        <a
-          href={e.href}
-          class:list={[
-            'rounded-lg px-3.5 py-2 text-[0.95rem] font-bold transition-colors',
-            activo(e.href) ? 'bg-vino-claro text-vino' : 'text-tinta-suave hover:bg-crema-2 hover:text-vino',
-          ]}
-          aria-current={activo(e.href) ? 'page' : undefined}
-        >
-          {e.texto}
-        </a>
+        <a href={e.href} aria-current={activo(e.href) ? 'page' : undefined}>{e.texto}</a>
       ))}
     </nav>
 
-    <div class="flex items-center gap-1.5">
+    <div class="acciones-header">
+      <div class="busqueda-header hidden lg:block">
+        <form action="/buscar/" method="get" role="search" class="flex items-center gap-2 border-b border-linea px-1 py-1.5">
+          <Icon nombre="buscar" tamano={15} clase="text-tinta-suave" />
+          <input
+            type="search"
+            name="q"
+            placeholder="Buscar…"
+            aria-label="Buscar cuentos"
+            class="w-32 bg-transparent text-[13px] text-tinta outline-none placeholder:text-tinta-suave/70"
+          />
+        </form>
+      </div>
       <button
         type="button"
         id="boton-tema"
-        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-tinta-suave transition-colors hover:bg-crema-2 hover:text-vino"
+        class="boton-icono"
         aria-label="Cambiar entre modo día y noche"
         title="Modo día / noche"
       >
-        <span data-icono="luna"><Icon nombre="luna" tamano={19} /></span>
-        <span data-icono="sol" class="hidden"><Icon nombre="sol" tamano={19} /></span>
+        <span data-icono="luna"><Icon nombre="luna" tamano={17} /></span>
+        <span data-icono="sol" class="hidden"><Icon nombre="sol" tamano={17} /></span>
       </button>
-      <a
-        href="/buscar/"
-        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-tinta-suave transition-colors hover:bg-crema-2 hover:text-vino"
-        aria-label="Buscar cuentos"
-      >
-        <Icon nombre="buscar" tamano={19} />
+      <a href="/buscar/" class="boton-icono lg:hidden" aria-label="Buscar cuentos">
+        <Icon nombre="buscar" tamano={17} />
       </a>
-      <a href="/cuentos/" class="boton boton-primario hidden sm:inline-flex">
-        <Icon nombre="libro" tamano={17} />
-        Empezar a leer
-      </a>
+      <a href="/cuentos/" class="boton boton-primario hidden sm:inline-flex">Empezar a leer</a>
       <button
         type="button"
         id="boton-menu"
-        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-vino lg:hidden"
+        class="boton-icono lg:hidden"
         aria-label="Abrir menú"
         aria-expanded="false"
         aria-controls="menu-movil"
       >
-        <Icon nombre="menu" tamano={22} />
+        <Icon nombre="menu" tamano={19} />
       </button>
     </div>
   </div>
 
-  <div id="menu-movil" class="hidden border-t border-borde bg-crema px-5 pb-5 pt-2 lg:hidden">
+  <div id="menu-movil" class="hidden border-t border-linea bg-papel px-5 pb-5 pt-3 lg:hidden">
     <nav class="flex flex-col" aria-label="Navegación móvil">
       {enlaces.map((e) => (
         <a
           href={e.href}
           class:list={[
-            'rounded-lg px-3 py-2.5 text-base font-bold',
-            activo(e.href) ? 'bg-vino-claro text-vino' : 'text-tinta hover:bg-crema-2',
+            'border-b border-linea-suave py-3 text-[15px] font-bold',
+            activo(e.href) ? 'text-carmesi' : 'text-morado',
           ]}
         >
           {e.texto}
         </a>
       ))}
-      <a href="/cuentos/" class="boton boton-primario mt-3">
-        <Icon nombre="libro" tamano={17} />
-        Empezar a leer
-      </a>
+      <a href="/cuentos/" class="boton boton-primario mt-4">Empezar a leer</a>
     </nav>
   </div>
 </header>

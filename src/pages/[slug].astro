@@ -3,13 +3,13 @@ import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
+import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import StoryCard from '../components/StoryCard.astro';
 import AdSlot from '../components/AdSlot.astro';
 import YouTube from '../components/YouTube.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import PersonajeAvatar from '../components/PersonajeAvatar.astro';
 import {
   relacionados,
   anteriorYSiguiente,
@@ -28,15 +28,17 @@ export async function getStaticPaths() {
 const { cuento } = Astro.props;
 const { data } = cuento;
 const { Content } = await render(cuento);
-const portada = portadaDe(data.portada);
 
 const relacionadosLista = await relacionados(cuento, 3);
 const { anterior, siguiente } = await anteriorYSiguiente(cuento);
 const saga = nombreSaga(data.saga);
-
+const portada = portadaDe(data.portada);
 const personajesCuento = data.personajes.map((p) => personajesPorSlug[p]).filter(Boolean);
 
-const migas: { texto: string; href?: string }[] = [{ texto: 'Inicio', href: '/' }, { texto: 'Cuentos', href: '/cuentos/' }];
+const migas: { texto: string; href?: string }[] = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Cuentos', href: '/cuentos/' },
+];
 if (saga && data.saga) migas.push({ texto: saga, href: `/sagas/${data.saga}/` });
 migas.push({ texto: data.title });
 
@@ -53,16 +55,8 @@ const jsonLd = [
     url: `https://leecuentitos.com/${data.slug}/`,
     mainEntityOfPage: `https://leecuentitos.com/${data.slug}/`,
     image: [new URL(portada.src, Astro.site).href],
-    author: {
-      '@type': 'Person',
-      name: 'Christian Himmer',
-      url: 'https://christianhimmer.com',
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Lee Cuentitos',
-      url: 'https://leecuentitos.com/',
-    },
+    author: { '@type': 'Person', name: 'Christian Himmer', url: 'https://christianhimmer.com' },
+    publisher: { '@type': 'Organization', name: 'Lee Cuentitos', url: 'https://leecuentitos.com/' },
     isAccessibleForFree: true,
     ...(data.parte && data.arco
       ? {
@@ -74,17 +68,6 @@ const jsonLd = [
         }
       : {}),
     about: personajesCuento.map((p) => ({ '@type': 'Person', name: p.nombre })),
-    ...(data.youtube
-      ? {
-          video: {
-            '@type': 'VideoObject',
-            name: `Video: ${data.title}`,
-            embedUrl: `https://www.youtube.com/embed/${data.youtube}`,
-            thumbnailUrl: `https://i.ytimg.com/vi/${data.youtube}/hqdefault.jpg`,
-            uploadDate: data.date.toISOString(),
-          },
-        }
-      : {}),
   },
 ];
 ---
@@ -96,150 +79,142 @@ const jsonLd = [
   tipo="article"
   jsonLd={jsonLd}
 >
+  <TopBar slot="header" />
   <Header slot="header" />
   <Footer slot="footer" />
   <div id="progreso-lectura" slot="progreso"></div>
 
-  <!-- CABECERA DEL CUENTO -->
   <article class="contenedor pt-8" id="cuento" data-lectura="normal">
     <Breadcrumbs items={migas} />
 
-    <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-      <div>
-        <div class="mb-4 flex flex-wrap items-center gap-2">
-          {data.parte && <span class="etiqueta etiqueta-ambar">Parte {String(data.parte).padStart(2, '0')}</span>}
-          {saga && (
-            <a href={`/sagas/${data.saga}/`} class="etiqueta etiqueta-vino hover:underline">{saga}</a>
-          )}
-          {data.youtube && (
-            <span class="etiqueta etiqueta-teal"><Icon nombre="youtube" tamano={12} /> Con video</span>
-          )}
-        </div>
+    <div class="mx-auto max-w-[52rem]">
+      <p class="etiqueta">
+        {data.parte ? `Parte ${String(data.parte).padStart(2, '0')}` : 'Cuento'}
+        {saga ? ` · ${saga}` : ''}
+      </p>
 
-        <h1 class="text-[2.3rem] leading-[1.06] sm:text-5xl lg:text-[3.4rem]">{data.title}</h1>
+      <h1 class="mt-3 text-[2.4rem] leading-[1.05] sm:text-5xl lg:text-[3.5rem]">{data.title}</h1>
 
-        <p class="mt-4 max-w-2xl text-[1.1rem] leading-relaxed text-tinta-suave">{data.resumen}</p>
+      <p class="mt-4 max-w-2xl text-[1.1rem] leading-relaxed text-tinta-suave">{data.resumen}</p>
 
-        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.88rem] font-bold text-teal">
-          <span class="inline-flex items-center gap-1.5"><Icon nombre="reloj" tamano={15} /> {data.minutos} min de lectura</span>
-          <span class="inline-flex items-center gap-1.5"><Icon nombre="libro" tamano={15} /> Cuento ilustrado</span>
-          <time datetime={data.date.toISOString()} class="text-tinta-suave">{fechaLarga(data.date)}</time>
-        </div>
-
+      <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] font-bold text-verde">
+        <span class="inline-flex items-center gap-1.5"><Icon nombre="reloj" tamano={14} /> {data.minutos} min de lectura</span>
+        <span aria-hidden="true" class="text-linea">|</span>
+        <time datetime={data.date.toISOString()}>{fechaLarga(data.date)}</time>
         {personajesCuento.length > 0 && (
-          <div class="mt-6 flex flex-wrap items-center gap-2">
-            <span class="text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">Personajes:</span>
-            {personajesCuento.map((p) => (
-              <a href={`/personajes/${p.slug}/`} class="inline-flex items-center gap-1.5 rounded-full border border-borde bg-superficie px-2.5 py-1 text-[0.82rem] font-bold text-tinta transition-colors hover:border-vino/30 hover:text-vino">
-                <PersonajeAvatar personaje={p} clase="h-6 w-6 border-2" tamano={32} />
-                {p.nombre}
-              </a>
-            ))}
-          </div>
+          <>
+            <span aria-hidden="true" class="text-linea">|</span>
+            <span class="flex flex-wrap items-center gap-x-2 gap-y-1">
+              {personajesCuento.map((p, i) => (
+                <span class="inline-flex items-center gap-2">
+                  {i > 0 && <span aria-hidden="true" class="text-linea">·</span>}
+                  <a href={`/personajes/${p.slug}/`} class="font-bold text-verde underline decoration-linea decoration-1 underline-offset-4 hover:text-morado">
+                    {p.nombre}
+                  </a>
+                </span>
+              ))}
+            </span>
+          </>
         )}
       </div>
-
-      <figure class="relative">
-        <div class="absolute -inset-2 -z-10 rotate-1 rounded-2xl bg-ambar/15"></div>
-        <Image
-          src={portada}
-          alt={data.portadaAlt ?? data.title}
-          widths={[640, 960, 1280]}
-          format="webp"
-          sizes="(min-width: 1024px) 520px, 92vw"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          class="aspect-[16/9] w-full rounded-2xl object-cover shadow-[var(--shadow-alta)]"
-        />
-      </figure>
     </div>
 
-    <!-- BARRA DE LECTURA -->
-    <div class="sticky top-[4.5rem] z-30 mt-10 rounded-xl border border-borde bg-crema/95 px-3 py-2 backdrop-blur">
+    <figure class="mx-auto mt-8 max-w-[64rem]">
+      <Image
+        src={portada}
+        alt={data.portadaAlt ?? data.title}
+        widths={[640, 960, 1280, 1600]}
+        sizes="(min-width: 1024px) 1024px, 94vw"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="aspect-[16/9] w-full rounded-[2px] object-cover"
+      />
+    </figure>
+
+    <div class="sticky top-[4.5rem] z-30 mx-auto mt-8 max-w-[52rem] border-y border-linea bg-papel/95 py-1 backdrop-blur">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div class="flex items-center gap-1" role="group" aria-label="Tamaño de letra">
-          <span class="mr-1 hidden text-[0.75rem] font-bold uppercase tracking-wider text-tinta-suave sm:inline">Letra</span>
+          <span class="mr-1 hidden text-[10px] font-bold uppercase tracking-[0.14em] text-tinta-suave sm:inline">Letra</span>
           <button type="button" class="control-lectura" data-tamano="pequena" aria-label="Letra más pequeña">A−</button>
           <button type="button" class="control-lectura control-activo" data-tamano="normal" aria-label="Letra normal">A</button>
           <button type="button" class="control-lectura" data-tamano="grande" aria-label="Letra más grande">A+</button>
         </div>
         <div class="flex items-center gap-1">
-          <button type="button" id="boton-compartir" class="control-lectura gap-1.5 px-3">
-            <Icon nombre="compartir" tamano={16} /> <span class="hidden sm:inline">Compartir</span>
+          <button type="button" id="boton-compartir" class="control-lectura">
+            <Icon nombre="compartir" tamano={15} /> <span class="ml-1 hidden sm:inline">Compartir</span>
           </button>
-          <button type="button" id="boton-imprimir" class="control-lectura gap-1.5 px-3">
-            <Icon nombre="descargar" tamano={16} /> <span class="hidden sm:inline">Imprimir</span>
+          <button type="button" id="boton-imprimir" class="control-lectura">
+            <Icon nombre="descargar" tamano={15} /> <span class="ml-1 hidden sm:inline">Imprimir</span>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- TEXTO -->
-    <div class="mx-auto mt-10 max-w-[44rem]">
-      <div class="lectura" id="texto-cuento">
-        <Content />
-      </div>
+    <div class="lectura mx-auto mt-10 max-w-[42rem]" id="texto-cuento">
+      <Content />
+    </div>
 
+    <div class="mx-auto mt-12 max-w-[52rem]">
       {data.youtube && <YouTube video={data.youtube} titulo={data.title} />}
+      <AdSlot formato="horizontal" />
+    </div>
 
-      <div class="mt-12">
-        <AdSlot formato="horizontal" />
-      </div>
-
-      <!-- NAVEGACIÓN DEL ARCO -->
-      {(anterior || siguiente) && (
-        <nav class="mt-12 grid gap-3 border-t border-borde pt-8 sm:grid-cols-2" aria-label="Capítulos de la saga">
-          {anterior ? (
-            <a href={`/${anterior.data.slug}/`} class="group rounded-xl border border-borde bg-superficie p-4 transition-colors hover:border-vino/30">
-              <span class="text-[0.72rem] font-extrabold uppercase tracking-wider text-tinta-suave">← Parte anterior</span>
-              <p class="mt-1 font-titulo text-lg font-semibold text-vino group-hover:underline">{anterior.data.title}</p>
-            </a>
-          ) : (
-            <span></span>
-          )}
-          {siguiente && (
-            <a href={`/${siguiente.data.slug}/`} class="group rounded-xl border border-borde bg-superficie p-4 text-right transition-colors hover:border-vino/30">
-              <span class="text-[0.72rem] font-extrabold uppercase tracking-wider text-tinta-suave">Parte siguiente →</span>
-              <p class="mt-1 font-titulo text-lg font-semibold text-vino group-hover:underline">{siguiente.data.title}</p>
-            </a>
-          )}
-        </nav>
-      )}
-
-      <div class="mt-10 rounded-2xl border border-borde bg-crema-2 p-6 text-center">
-        <p class="font-titulo text-xl text-vino">¿Te gustó este cuento?</p>
-        <p class="mx-auto mt-1 max-w-lg text-[0.95rem] text-tinta-suave">
-          Compártelo con otra familia o síguenos en Instagram para enterarte de cada historia nueva.
-        </p>
-        <div class="mt-4 flex flex-wrap justify-center gap-2">
-          <a href="https://www.instagram.com/leecuentitos/" target="_blank" rel="noopener" class="boton boton-secundario">
-            <Icon nombre="instagram" tamano={17} /> Instagram
+    {(anterior || siguiente) && (
+      <nav class="mx-auto mt-14 grid max-w-[52rem] gap-4 border-t border-linea pt-8 sm:grid-cols-2" aria-label="Capítulos de la saga">
+        {anterior ? (
+          <a href={`/${anterior.data.slug}/`} class="group border border-linea p-5 transition-colors hover:border-morado">
+            <span class="text-[10px] font-bold uppercase tracking-[0.14em] text-tinta-suave">← Parte anterior</span>
+            <p class="mt-2 font-titulo text-lg font-semibold text-morado group-hover:text-carmesi">{anterior.data.title}</p>
           </a>
-          {siguiente && (
-            <a href={`/${siguiente.data.slug}/`} class="boton boton-primario">
-              Leer la siguiente parte <Icon nombre="flecha" tamano={16} />
-            </a>
-          )}
-        </div>
+        ) : (
+          <span></span>
+        )}
+        {siguiente && (
+          <a href={`/${siguiente.data.slug}/`} class="group border border-linea p-5 text-right transition-colors hover:border-morado">
+            <span class="text-[10px] font-bold uppercase tracking-[0.14em] text-tinta-suave">Parte siguiente →</span>
+            <p class="mt-2 font-titulo text-lg font-semibold text-morado group-hover:text-carmesi">{siguiente.data.title}</p>
+          </a>
+        )}
+      </nav>
+    )}
+
+    <div class="mx-auto mt-12 max-w-[52rem] border-y border-linea py-8 text-center">
+      <p class="font-titulo text-xl text-morado">¿Te gustó este cuento?</p>
+      <p class="mx-auto mt-2 max-w-lg text-[15px] text-tinta-suave">
+        Compártelo con otra familia o síguenos en Instagram para enterarte de cada historia nueva.
+      </p>
+      <div class="mt-5 flex flex-wrap justify-center gap-3">
+        <a href="https://www.instagram.com/leecuentitos/" target="_blank" rel="noopener" class="boton boton-secundario">
+          <Icon nombre="instagram" tamano={16} /> Instagram
+        </a>
+        {siguiente && (
+          <a href={`/${siguiente.data.slug}/`} class="boton boton-primario">
+            Leer la siguiente parte <Icon nombre="flecha" tamano={16} />
+          </a>
+        )}
       </div>
     </div>
   </article>
 
   {relacionadosLista.length > 0 && (
-    <section class="contenedor mt-16 border-t border-borde pt-12">
-      <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
-        <h2 class="text-[1.9rem] sm:text-4xl">También te puede gustar</h2>
-        <a href="/cuentos/" class="boton boton-fantasma font-bold">Ver todos <Icon nombre="flecha" tamano={16} /></a>
-      </div>
-      <div class="cuadricula-cuentos">
-        {relacionadosLista.map((c) => <StoryCard cuento={c} compacta />)}
+    <section class="seccion mt-16">
+      <div class="contenedor">
+        <div class="seccion-cabeza">
+          <div>
+            <span class="ojal">Del mismo mundo</span>
+            <h2>También te puede gustar</h2>
+          </div>
+          <a class="mas" href="/cuentos/">Ver todos →</a>
+        </div>
+        <div class="cuadricula-cuentos">
+          {relacionadosLista.map((c) => <StoryCard cuento={c} compacta />)}
+        </div>
       </div>
     </section>
   )}
 
   <script>
-    // Progreso de lectura
     const barra = document.getElementById('progreso-lectura');
     const articulo = document.getElementById('cuento');
     function actualizarProgreso() {
@@ -252,7 +227,6 @@ const jsonLd = [
     window.addEventListener('scroll', actualizarProgreso, { passive: true });
     actualizarProgreso();
 
-    // Tamaño de letra
     const controles = document.querySelectorAll<HTMLElement>('[data-tamano]');
     const guardado = localStorage.getItem('lc-letra');
     if (guardado) articulo?.setAttribute('data-lectura', guardado);
@@ -269,7 +243,6 @@ const jsonLd = [
       });
     });
 
-    // Compartir
     document.getElementById('boton-compartir')?.addEventListener('click', async (e) => {
       const boton = e.currentTarget as HTMLElement;
       const datos = {
@@ -278,9 +251,8 @@ const jsonLd = [
         url: location.href,
       };
       try {
-        if (navigator.share) {
-          await navigator.share(datos);
-        } else {
+        if (navigator.share) await navigator.share(datos);
+        else {
           await navigator.clipboard.writeText(location.href);
           const original = boton.innerHTML;
           boton.innerHTML = '¡Enlace copiado!';
@@ -291,41 +263,4 @@ const jsonLd = [
 
     document.getElementById('boton-imprimir')?.addEventListener('click', () => window.print());
   </script>
-
-  <style>
-    .control-lectura {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.5rem;
-      padding: 0.4rem 0.6rem;
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--color-tinta-suave);
-      transition: all 0.15s ease;
-    }
-    .control-lectura:hover {
-      background: var(--color-crema-3);
-      color: var(--color-vino);
-    }
-    .control-activo {
-      background: var(--color-vino);
-      color: #fff;
-    }
-    .control-activo:hover {
-      background: var(--color-vino-oscuro);
-      color: #fff;
-    }
-    @media print {
-      header,
-      footer,
-      #progreso-lectura,
-      .sticky {
-        display: none !important;
-      }
-      .lectura p {
-        font-size: 12pt;
-      }
-    }
-  </style>
 </Base>

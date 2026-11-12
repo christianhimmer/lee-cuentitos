@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
+import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import { todosLosCuentos, sagas } from '../lib/cuentos';
@@ -16,35 +17,35 @@ const personajesPopulares = personajes.slice(0, 8);
   titulo="Buscar cuentos, sagas y personajes"
   descripcion="Busca en Lee Cuentitos por título, personaje o saga. Encuentra cuentos de Tom, Lucas y Max, Damián, Guijarro y muchas aventuras más."
   imagen={portadaDe(populares[0].data.portada).src}
-  sinIndexar={false}
 >
+  <TopBar slot="header" />
   <Header slot="header" />
   <Footer slot="footer" />
 
-  <section class="border-b border-borde bg-crema-2">
+  <section class="border-b border-linea bg-papel-2">
     <div class="contenedor py-10 sm:py-14">
-      <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Encuentra tu próxima historia</p>
-      <h1 class="mt-1 text-[2.2rem] sm:text-5xl">Buscar cuentos</h1>
+      <p class="etiqueta">Encuentra tu próxima historia</p>
+      <h1 class="mt-2 text-[2.2rem] sm:text-5xl">Buscar cuentos</h1>
 
       <div class="mt-6 max-w-2xl">
         <label for="buscador" class="solo-lectura">Buscar cuentos, personajes o sagas</label>
-        <div class="flex items-center gap-2 rounded-2xl border border-borde bg-superficie p-2 shadow-[var(--shadow-suave)] focus-within:border-vino/40">
-          <span class="pl-2 text-tinta-suave"><Icon nombre="buscar" tamano={21} /></span>
+        <div class="flex items-center gap-3 border-b-2 border-morado/60 pb-2 focus-within:border-carmesi">
+          <Icon nombre="buscar" tamano={20} clase="text-tinta-suave" />
           <input
             id="buscador"
             type="search"
             placeholder="Ej: Tom, Lago Espejo, Damián, magia…"
             autocomplete="off"
-            class="min-w-0 flex-1 bg-transparent px-1 py-2.5 text-[1.05rem] outline-none placeholder:text-tinta-suave/60"
+            class="min-w-0 flex-1 bg-transparent py-1 text-[1.15rem] outline-none placeholder:text-tinta-suave/60"
           />
-          <button type="button" id="limpiar-busqueda" class="hidden rounded-lg px-3 py-2 text-sm font-bold text-tinta-suave hover:bg-crema-2" aria-label="Limpiar búsqueda">
+          <button type="button" id="limpiar-busqueda" class="hidden text-[12px] font-bold text-carmesi hover:underline" aria-label="Limpiar búsqueda">
             Limpiar
           </button>
         </div>
       </div>
 
       <div class="mt-5 flex flex-wrap items-center gap-2">
-        <span class="text-[0.8rem] font-bold text-tinta-suave">Prueba con:</span>
+        <span class="text-[12px] font-bold text-tinta-suave">Prueba con:</span>
         {['Tom', 'Max', 'Lago Espejo', 'Damián', 'Guijarro', 'magia'].map((t) => (
           <button type="button" class="chip-sugerencia" data-sugerencia={t}>{t}</button>
         ))}
@@ -53,40 +54,40 @@ const personajesPopulares = personajes.slice(0, 8);
   </section>
 
   <div class="contenedor py-10">
-    <div id="filtros-busqueda" class="mb-8 hidden flex-wrap items-center gap-2">
-      <span class="text-[0.78rem] font-extrabold uppercase tracking-wider text-tinta-suave">Saga:</span>
-      <div class="flex flex-wrap gap-2" data-grupo-busca="saga">
+    <div id="filtros-busqueda" class="mb-8 hidden flex-wrap items-center gap-2 border-b border-linea pb-4">
+      <span class="text-[10px] font-bold uppercase tracking-[0.16em] text-tinta-suave">Saga:</span>
+      <div class="flex flex-wrap gap-1.5" data-grupo-busca="saga">
         <button type="button" class="chip-sugerencia chip-activo" data-valor="">Todas</button>
         {sagasConCuentos.map((s) => <button type="button" class="chip-sugerencia" data-valor={s.slug}>{s.nombre}</button>)}
       </div>
-      <span class="ml-4 text-[0.78rem] font-extrabold uppercase tracking-wider text-tinta-suave">Personaje:</span>
-      <div class="flex flex-wrap gap-2" data-grupo-busca="personaje">
+      <span class="ml-4 text-[10px] font-bold uppercase tracking-[0.16em] text-tinta-suave">Personaje:</span>
+      <div class="flex flex-wrap gap-1.5" data-grupo-busca="personaje">
         <button type="button" class="chip-sugerencia chip-activo" data-valor="">Todos</button>
         {personajesPopulares.map((p) => <button type="button" class="chip-sugerencia" data-valor={p.nombre}>{p.nombre}</button>)}
       </div>
     </div>
 
-    <p id="resumen-busqueda" class="mb-6 text-[0.95rem] font-bold text-tinta-suave" aria-live="polite">
+    <p id="resumen-busqueda" class="mb-6 text-[13px] font-bold text-tinta-suave" aria-live="polite">
       Escribe algo o elige una sugerencia para empezar.
     </p>
 
-    <div id="resultados" class="grid gap-4"></div>
+    <div id="resultados" class="grid gap-0"></div>
 
-    <div id="sin-resultados-busqueda" class="hidden rounded-2xl border border-dashed border-borde bg-crema-2 p-10 text-center">
-      <p class="font-titulo text-2xl text-vino">No encontramos nada con esa palabra</p>
+    <div id="sin-resultados-busqueda" class="hidden border border-dashed border-linea p-10 text-center">
+      <p class="font-titulo text-2xl text-morado">No encontramos nada con esa palabra</p>
       <p class="mt-2 text-tinta-suave">Revisa cómo se escribe o prueba con el nombre de un personaje, como <strong>Tom</strong> o <strong>Max</strong>.</p>
       <a href="/cuentos/" class="boton boton-primario mt-5">Ver todos los cuentos</a>
     </div>
 
     <div id="sugerencias-iniciales" class="mt-4">
       <h2 class="mb-5 text-[1.7rem]">Cuentos populares</h2>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {populares.map((c) => (
-          <a href={`/${c.data.slug}/`} class="group flex gap-4 rounded-xl border border-borde bg-superficie p-3 hover:border-vino/30">
-            <img src={portadaDe(c.data.portada).src} alt="" width="160" height="90" loading="lazy" class="h-[70px] w-[124px] shrink-0 rounded-lg object-cover" />
+          <a href={`/${c.data.slug}/`} class="group grid grid-cols-[7rem_1fr] items-center gap-4 border-t border-linea pt-4">
+            <img src={portadaDe(c.data.portada).src} alt="" width="160" height="90" loading="lazy" class="aspect-[16/9] w-full object-cover" />
             <div class="min-w-0">
-              <p class="line-clamp-2 font-titulo text-[1.05rem] font-semibold leading-snug text-tinta group-hover:text-vino">{c.data.title}</p>
-              <p class="mt-1 text-[0.8rem] font-bold text-teal">{c.data.minutos} min de lectura</p>
+              <p class="line-clamp-2 font-titulo text-[1.02rem] font-semibold leading-snug text-morado group-hover:text-carmesi">{c.data.title}</p>
+              <p class="mt-1 text-[12px] font-bold text-verde">{c.data.minutos} min de lectura</p>
             </div>
           </a>
         ))}
@@ -96,16 +97,7 @@ const personajesPopulares = personajes.slice(0, 8);
 
   <script>
     interface CuentoIndice {
-      t: string;
-      s: string;
-      r: string;
-      g: string;
-      a: string;
-      p: string[];
-      k: string[];
-      d: string;
-      m: number;
-      i: string;
+      t: string; s: string; r: string; g: string; a: string; p: string[]; k: string[]; d: string; m: number; i: string;
     }
 
     const caja = document.getElementById('buscador') as HTMLInputElement;
@@ -120,19 +112,15 @@ const personajesPopulares = personajes.slice(0, 8);
     let filtroSaga = '';
     let filtroPersonaje = '';
 
-    const normalizar = (t: string) =>
-      t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
-
-    function escapar(t: string) {
-      return t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-    }
+    const normalizar = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const escapar = (t: string) => t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
     function resaltar(texto: string, terminos: string[]) {
       let html = escapar(texto);
       for (const t of terminos) {
         if (t.length < 2) continue;
         const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-        html = html.replace(re, '<mark class="rounded bg-ambar/35 px-0.5 text-tinta">$1</mark>');
+        html = html.replace(re, '<mark class="bg-naranja-2/40 px-0.5 text-tinta">$1</mark>');
       }
       return html;
     }
@@ -141,12 +129,12 @@ const personajesPopulares = personajes.slice(0, 8);
       resultados.innerHTML = lista
         .map(
           (c) => `
-          <a href="/${c.s}/" class="group flex gap-4 rounded-xl border border-borde bg-superficie p-3 transition-transform hover:-translate-y-0.5 hover:border-vino/30">
-            <img src="${c.i}" alt="" width="160" height="90" loading="lazy" class="h-[74px] w-[132px] shrink-0 rounded-lg object-cover" />
-            <div class="min-w-0 py-0.5">
-              <p class="line-clamp-2 font-titulo text-[1.1rem] font-semibold leading-snug text-tinta group-hover:text-vino">${resaltar(c.t, terminos)}</p>
-              <p class="mt-1 line-clamp-1 text-[0.85rem] text-tinta-suave">${resaltar(c.r, terminos)}</p>
-              <p class="mt-1.5 flex flex-wrap items-center gap-x-2 text-[0.75rem] font-bold text-teal">
+          <a href="/${c.s}/" class="group grid grid-cols-[7.5rem_1fr] items-center gap-5 border-b border-linea py-4">
+            <img src="${c.i}" alt="" width="160" height="90" loading="lazy" class="aspect-[16/9] w-full object-cover" />
+            <div class="min-w-0">
+              <p class="line-clamp-2 font-titulo text-[1.15rem] font-semibold leading-snug text-morado group-hover:text-carmesi">${resaltar(c.t, terminos)}</p>
+              <p class="mt-1 line-clamp-1 text-[14px] text-tinta-suave">${resaltar(c.r, terminos)}</p>
+              <p class="mt-1.5 flex flex-wrap items-center gap-x-2 text-[12px] font-bold text-verde">
                 ${c.g ? `<span>${escapar(c.g)}</span>` : ''}
                 ${c.p.length ? `<span>· ${escapar(c.p.join(', '))}</span>` : ''}
                 <span>· ${c.m} min</span>
@@ -185,9 +173,7 @@ const personajesPopulares = personajes.slice(0, 8);
           const saga = normalizar(c.g);
           const resumenTexto = normalizar(c.r);
           const tags = normalizar(c.k.join(' '));
-
           if (!consulta) return { c, puntos: 1 };
-
           for (const t of terminos) {
             if (titulo.includes(t)) puntos += titulo.startsWith(t) ? 12 : 9;
             if (personajes.includes(t)) puntos += 7;
@@ -277,22 +263,22 @@ const personajesPopulares = personajes.slice(0, 8);
 
   <style>
     .chip-sugerencia {
-      border-radius: 999px;
-      border: 1px solid var(--color-borde);
-      background: #fff;
-      padding: 0.35rem 0.75rem;
-      font-size: 0.82rem;
+      border: 1px solid var(--color-linea);
+      border-radius: 2px;
+      background: transparent;
+      padding: 4px 9px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--color-tinta-suave);
       transition: all 0.15s ease;
     }
     .chip-sugerencia:hover {
-      border-color: color-mix(in srgb, var(--color-vino) 35%, var(--color-borde));
-      color: var(--color-vino);
+      border-color: var(--color-morado);
+      color: var(--color-morado);
     }
     .chip-activo {
-      background: var(--color-vino-fuerte);
-      border-color: var(--color-vino-fuerte);
+      background: var(--color-morado);
+      border-color: var(--color-morado);
       color: #fff;
     }
   </style>

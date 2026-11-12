@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Header from '../../components/Header.astro';
+import TopBar from '../../components/TopBar.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import StoryCard from '../../components/StoryCard.astro';
@@ -36,13 +37,14 @@ const personajesConCuentos = personajes
     })),
   }}
 >
+  <TopBar slot="header" />
   <Header slot="header" />
   <Footer slot="footer" />
 
-  <div class="border-b border-borde bg-crema-2">
+  <div class="border-b border-linea bg-papel-2">
     <div class="contenedor py-12">
-      <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Biblioteca</p>
-      <h1 class="mt-1 text-[2.4rem] sm:text-5xl">Todos los cuentos</h1>
+      <p class="etiqueta">Biblioteca</p>
+      <h1 class="mt-2 text-[2.4rem] sm:text-5xl">Todos los cuentos</h1>
       <p class="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-tinta-suave">
         {cuentos.length} historias ilustradas para leer en voz alta, practicar la lectura o disfrutar antes de dormir.
         Filtra por saga, personaje o tema.
@@ -51,44 +53,43 @@ const personajesConCuentos = personajes
   </div>
 
   <div class="contenedor py-10">
-    <div class="grid gap-8 lg:grid-cols-[17rem_1fr]">
-      <!-- FILTROS -->
+    <div class="grid gap-10 lg:grid-cols-[16rem_1fr]">
       <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="Filtros">
-        <div class="rounded-2xl border border-borde bg-superficie p-5">
-          <label for="filtro-texto" class="mb-2 block text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">
+        <div class="border-t border-linea pt-5">
+          <label for="filtro-texto" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-tinta-suave">
             Buscar
           </label>
-          <div class="mb-6 flex items-center gap-2 rounded-xl border border-borde bg-crema px-3 focus-within:border-vino/40">
-            <Icon nombre="buscar" tamano={17} clase="text-tinta-suave" />
+          <div class="mb-6 flex items-center gap-2 border-b border-linea pb-1">
+            <Icon nombre="buscar" tamano={15} clase="text-tinta-suave" />
             <input
               id="filtro-texto"
               type="search"
               placeholder="Título o personaje…"
-              class="w-full bg-transparent py-2.5 text-[0.95rem] outline-none placeholder:text-tinta-suave/60"
+              class="w-full bg-transparent py-1.5 text-[14px] outline-none placeholder:text-tinta-suave/60"
             />
           </div>
 
-          <p class="mb-2 text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">Saga</p>
-          <div class="mb-6 flex flex-wrap gap-2" data-grupo="saga">
+          <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-tinta-suave">Saga</p>
+          <div class="mb-6 flex flex-wrap gap-1.5" data-grupo="saga">
             <button type="button" class="chip-filtro chip-activo" data-valor="">Todas</button>
             {conteoSagas.map((s) => (
-              <button type="button" class="chip-filtro" data-valor={s.slug}>{s.nombre} <span class="opacity-60">({s.total})</span></button>
+              <button type="button" class="chip-filtro" data-valor={s.slug}>{s.nombre} <span class="opacity-60">{s.total}</span></button>
             ))}
           </div>
 
-          <p class="mb-2 text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">Personaje</p>
-          <div class="flex flex-wrap gap-2" data-grupo="personaje">
+          <p class="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-tinta-suave">Personaje</p>
+          <div class="flex flex-wrap gap-1.5" data-grupo="personaje">
             <button type="button" class="chip-filtro chip-activo" data-valor="">Todos</button>
             {personajesConCuentos.map((p) => (
               <button type="button" class="chip-filtro" data-valor={p.slug}>{p.nombre}</button>
             ))}
           </div>
 
-          <div class="mt-6 border-t border-borde pt-4">
-            <label for="filtro-orden" class="mb-2 block text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">
+          <div class="mt-7 border-t border-linea pt-4">
+            <label for="filtro-orden" class="mb-2 block text-[10px] font-bold uppercase tracking-[0.16em] text-tinta-suave">
               Ordenar
             </label>
-            <select id="filtro-orden" class="w-full rounded-lg border border-borde bg-crema px-3 py-2 text-[0.9rem] font-semibold text-tinta outline-none">
+            <select id="filtro-orden" class="w-full border border-linea bg-transparent px-2 py-2 text-[13px] font-semibold text-tinta outline-none">
               <option value="lectura" selected>Orden de lectura</option>
               <option value="recientes">Más recientes</option>
               <option value="antiguos">Más antiguos</option>
@@ -96,19 +97,18 @@ const personajesConCuentos = personajes
             </select>
           </div>
 
-          <button type="button" id="limpiar-filtros" class="mt-4 w-full rounded-lg px-3 py-2 text-[0.85rem] font-bold text-vino hover:bg-vino-claro">
+          <button type="button" id="limpiar-filtros" class="mt-4 text-[12px] font-bold text-carmesi hover:underline">
             Limpiar filtros
           </button>
         </div>
       </aside>
 
-      <!-- RESULTADOS -->
       <div>
-        <div class="mb-5 flex flex-wrap items-center justify-between gap-2">
-          <p id="contador" class="text-[0.9rem] font-bold text-tinta-suave" aria-live="polite">
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-2 border-b border-linea pb-3">
+          <p id="contador" class="text-[13px] font-bold text-tinta-suave" aria-live="polite">
             Mostrando {cuentos.length} cuentos
           </p>
-          <a href="/sagas/" class="text-[0.9rem] font-bold text-vino hover:underline">Ver por saga →</a>
+          <a href="/sagas/" class="text-[13px] font-bold text-carmesi hover:underline">Ver por saga →</a>
         </div>
 
         <div id="lista-cuentos" class="cuadricula-cuentos">
@@ -121,7 +121,6 @@ const personajesConCuentos = personajes
               data-resumen={c.data.resumen}
               data-busca={`${c.data.title} ${c.data.resumen} ${c.data.saga ?? ''} ${c.data.personajes.join(' ')} ${c.data.tags.join(' ')}`.toLowerCase()}
               data-fecha={c.data.date.getTime()}
-              data-orden={c.data.parte ?? 99}
               data-lectura={indice}
             >
               <StoryCard cuento={c} compacta />
@@ -129,13 +128,13 @@ const personajesConCuentos = personajes
           ))}
         </div>
 
-        <div id="sin-resultados" class="hidden rounded-2xl border border-dashed border-borde bg-crema-2 p-10 text-center">
-          <p class="font-titulo text-2xl text-vino">No encontramos cuentos con esos filtros</p>
+        <div id="sin-resultados" class="mt-6 hidden border border-dashed border-linea p-10 text-center">
+          <p class="font-titulo text-2xl text-morado">No encontramos cuentos con esos filtros</p>
           <p class="mt-2 text-tinta-suave">Prueba con otro personaje, saga o palabra.</p>
           <button type="button" id="reiniciar-vacio" class="boton boton-primario mt-5">Ver todos los cuentos</button>
         </div>
 
-        <div class="mt-12">
+        <div class="mt-14">
           <AdSlot formato="horizontal" />
         </div>
       </div>
@@ -216,7 +215,6 @@ const personajesConCuentos = personajes
     document.getElementById('limpiar-filtros')?.addEventListener('click', limpiar);
     document.getElementById('reiniciar-vacio')?.addEventListener('click', limpiar);
 
-    // Filtros desde la URL: /cuentos/?saga=...&personaje=...
     const params = new URLSearchParams(location.search);
     const sagaUrl = params.get('saga');
     const personajeUrl = params.get('personaje');
@@ -232,22 +230,22 @@ const personajesConCuentos = personajes
 
   <style>
     .chip-filtro {
-      border-radius: 999px;
-      border: 1px solid var(--color-borde);
-      background: var(--color-crema);
-      padding: 0.35rem 0.7rem;
-      font-size: 0.78rem;
+      border: 1px solid var(--color-linea);
+      border-radius: 2px;
+      background: transparent;
+      padding: 4px 8px;
+      font-size: 11.5px;
       font-weight: 700;
       color: var(--color-tinta-suave);
       transition: all 0.15s ease;
     }
     .chip-filtro:hover {
-      border-color: color-mix(in srgb, var(--color-vino) 35%, var(--color-borde));
-      color: var(--color-vino);
+      border-color: var(--color-morado);
+      color: var(--color-morado);
     }
     .chip-activo {
-      background: var(--color-vino-fuerte);
-      border-color: var(--color-vino-fuerte);
+      background: var(--color-morado);
+      border-color: var(--color-morado);
       color: #fff;
     }
   </style>

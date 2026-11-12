@@ -19,7 +19,7 @@ const medidas = {
 {
   cliente && slot ? (
     <aside class={`mx-auto w-full ${medidas.clase} ${clase}`} aria-label="Publicidad">
-      <p class="mb-1 text-center text-[0.65rem] font-bold uppercase tracking-[0.12em] text-tinta-suave/60">Publicidad</p>
+      <p class="mb-1 text-center text-[10px] font-bold uppercase tracking-[0.16em] text-tinta-suave/60">Publicidad</p>
       <ins
         class="adsbygoogle block"
         style="display:block"
@@ -35,9 +35,9 @@ const medidas = {
   ) : (
     esDev && (
       <aside class={`mx-auto w-full ${medidas.clase} ${clase}`} aria-label="Espacio publicitario">
-        <div class="flex h-full flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-borde bg-crema-2/60 px-4 text-center text-tinta-suave">
-          <span class="text-[0.65rem] font-bold uppercase tracking-[0.12em]">Publicidad</span>
-          <span class="text-xs">{medidas.etiqueta} · solo se muestra cuando AdSense esté activo</span>
+        <div class="flex h-full flex-col items-center justify-center gap-1 border border-dashed border-linea px-4 py-8 text-center text-tinta-suave">
+          <span class="text-[10px] font-bold uppercase tracking-[0.16em]">Publicidad</span>
+          <span class="text-xs">{medidas.etiqueta}</span>
         </div>
       </aside>
     )

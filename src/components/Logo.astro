@@ -1,31 +1,19 @@
 ---
-type Props = { clase?: string };
-const { clase = 'h-10 w-10' } = Astro.props;
+import completo from '../assets/logo-completo.svg?raw';
+import libro from '../assets/logo-libro.svg?raw';
+
+export interface Props {
+  variante?: 'header' | 'footer' | 'agua';
+  clase?: string;
+}
+
+const { variante = 'header', clase = '' } = Astro.props;
+const svg = variante === 'agua' ? libro : completo;
+const clases = {
+  header: 'logoHeader',
+  footer: 'logoFooter',
+  agua: 'marca-agua',
+}[variante];
 ---
 
-<span class={`inline-flex items-center gap-2.5 no-underline ${clase}`} aria-hidden="true">
-  <svg viewBox="0 0 48 48" class="h-full w-auto" fill="none" aria-hidden="true">
-    <path
-      d="M24 14.5c-4.3-3.2-9.6-4.4-16-4v26c6.4-.4 11.7.8 16 4 4.3-3.2 9.6-4.4 16-4v-26c-6.4-.4-11.7.8-16 4Z"
-      stroke="currentColor"
-      stroke-width="2.4"
-      stroke-linejoin="round"></path>
-    <path d="M24 14.5v26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
-    <path
-      d="M13 18c2.6.1 4.9.7 7 1.8M13 24c2.6.1 4.9.7 7 1.8M13 30c2.6.1 4.9.7 7 1.8"
-      stroke="currentColor"
-      stroke-width="1.8"
-      stroke-linecap="round"
-      opacity=".55"></path>
-    <path
-      d="M35 18c-2.6.1-4.9.7-7 1.8M35 24c-2.6.1-4.9.7-7 1.8M35 30c-2.6.1-4.9.7-7 1.8"
-      stroke="currentColor"
-      stroke-width="1.8"
-      stroke-linecap="round"
-      opacity=".55"></path>
-    <path
-      d="M24 7.2l.9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3Z"
-      fill="currentColor"
-      stroke="none"></path>
-  </svg>
-</span>
+<span class:list={['logo', clases, clase]} set:html={svg} />
