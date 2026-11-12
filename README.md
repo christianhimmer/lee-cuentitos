@@ -6,6 +6,12 @@ Sitio estático de cuentos infantiles. Astro + Tailwind, desplegado en Cloudflar
 - **Panel para escribir:** https://app.pagescms.org (conectado a este repositorio)
 - **Repositorio:** GitHub `christianhimmer/lee-cuentitos`
 
+## Estado
+
+- Producción: https://leecuentitos.com (Cloudflare Pages, certificado activo)
+- Preview: https://leecuentitos.pages.dev
+- Repositorio: https://github.com/christianhimmer/lee-cuentitos
+
 ## Stack
 
 | Pieza | Qué hace |
