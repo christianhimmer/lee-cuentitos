@@ -12,6 +12,8 @@ Sitio estático de cuentos infantiles. Astro + Tailwind, desplegado en Cloudflar
 |---|---|
 | [Astro 5](https://astro.build) | Genera HTML estático, cero JS innecesario |
 | Tailwind CSS 4 | Estilos |
+| Bitter + Atkinson Hyperlegible | Tipografía editorial / lectura infantil |
+| Paleta del kit Elementor | Tyrian purple, carmín, naranjas y verde azulado |
 | `astro:assets` + Sharp | Optimiza portadas a AVIF/WebP en varios tamaños |
 | Búsqueda propia | Índice JSON + filtros por saga y personaje |
 | Cloudflare Pages | Hosting, CDN, HTTPS y deploy automático |
@@ -39,6 +41,16 @@ src/
 ├── components/            ← Header, Footer, tarjetas, anuncios, YouTube…
 └── styles/global.css      ← colores, tipografía y componentes
 ```
+
+## Diseño
+
+- Home con **banner de libro abierto** y 3 destacados manuales (sin autoplay).
+- Barra superior automática con el último cuento publicado.
+- Secciones: Sigue la aventura · Explora por saga · Conoce a los personajes ·
+  Últimos cuentos · Nuestra filosofía.
+- Filosofía en morado profundo con el logo del libro como marca de agua.
+- Sin píldoras, sin sombras suaves y sin tarjetas redondeadas: filetes y papel.
+- Las propuestas visuales están en `mockups/` (A y B); se implementó la A.
 
 ## Cómo publicar un cuento
 

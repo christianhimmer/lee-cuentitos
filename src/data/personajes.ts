@@ -17,7 +17,7 @@ export const personajes: Personaje[] = [
     nombre: 'Tom',
     rol: 'El mentor del grupo',
     descripcion:
-      'Un hombre de unos 50 años, de mirada sabia y abrigo rojo gastado. Alguna vez fue un zombie y Lucas y Max le devolvieron su humanidad. Hoy camina con una brújula de latón, un diario de cuero y la prudencia de quien ya vio demasiado.',
+      'Dicen que Tom fue un zombie antes de ser el hombre que es hoy. Lucas y Max le devolvieron la humanidad, y desde entonces carga su mochila de latón y su bastón como quien carga una promesa: no dejar a nadie atrás. Camina despacio, pero nunca llega tarde.',
     saga: 'tom-lucas-y-max',
     color: '#7A1236',
     iniciales: 'T',
@@ -30,7 +30,7 @@ export const personajes: Personaje[] = [
     nombre: 'Lucas',
     rol: 'El cerebro del equipo',
     descripcion:
-      'Tiene 9 años, lentes grandes y un cuaderno lleno de ideas. Resuelve acertijos de formas que nadie más imagina y nunca se separa de su mochila.',
+      'Lucas piensa con las manos: dibuja mapas en el aire, anota ideas en un cuaderno que ya no cierra y encuentra la salida donde los demás solo ven un callejón. Sus lentes agrandan los ojos, pero también la curiosidad.',
     saga: 'tom-lucas-y-max',
     color: '#1F7A6F',
     iniciales: 'L',
@@ -43,7 +43,7 @@ export const personajes: Personaje[] = [
     nombre: 'Max',
     rol: 'El perro guardián',
     descripcion:
-      'El perro leal de Tom y Lucas: pelaje marrón oscuro, collar dorado con un colgante de lobo y un brillo que aparece cuando la magia está cerca. Duerme con un ojo abierto.',
+      'Max no ladra a los fantasmas: los mira fijo hasta que se van. Su collar de lobo brilla cuando la magia anda cerca, y si alguna vez lo ves correr con el pelo erizado, corre tú también.',
     saga: 'tom-lucas-y-max',
     color: '#B26A00',
     iniciales: 'M',
@@ -56,7 +56,7 @@ export const personajes: Personaje[] = [
     nombre: 'Lía',
     rol: 'La que ve los detalles',
     descripcion:
-      'Ocho años, cabello largo y oscuro, diadema morada y una linterna siempre en el bolsillo. Encuentra las pistas que los demás pasan por alto y no le teme a la oscuridad.',
+      'Lía aparece cuando el camino se pone oscuro, con su linterna y esa diadema morada que no se quita ni para dormir. Ve lo que otros no ven: una huella, una sombra que no encaja, una puerta donde antes había pared.',
     saga: 'tom-lucas-y-max',
     color: '#6A4C93',
     iniciales: 'Lí',
@@ -69,7 +69,7 @@ export const personajes: Personaje[] = [
     nombre: 'Finn',
     rol: 'El explorador',
     descripcion:
-      'Nueve años, gorra verde de la suerte, brújula y mapa. Quiere ver qué hay más allá de la próxima curva, aunque eso lo meta en problemas de vez en cuando.',
+      'Finn tiene una gorra verde que le da suerte y un mapa que siempre está un poco arrugado. Quiere saber qué hay después de la próxima curva, aunque la próxima curva tenga espinas. Vuelve con rasguños y con historias.',
     saga: 'tom-lucas-y-max',
     color: '#2A6F97',
     iniciales: 'F',
@@ -82,7 +82,7 @@ export const personajes: Personaje[] = [
     nombre: 'El Guardián',
     rol: 'El protector del Lago Espejo',
     descripcion:
-      'Una figura alta, con túnica azul bordada de constelaciones y un bastón coronado por un cristal que cambia de color según el peligro. Habla en enigmas y abre portales entre mundos, pero no puede luchar contra la oscuridad: solo guiar.',
+      'El Guardián no lucha: guía. Vive entre la niebla del lago, con una túnica bordada de constelaciones y un bastón cuyo cristal cambia de color cuando algo se acerca. Habla en enigmas porque las respuestas fáciles nunca fueron suyas.',
     saga: 'tom-lucas-y-max',
     color: '#1D3557',
     iniciales: 'G',
@@ -95,7 +95,7 @@ export const personajes: Personaje[] = [
     nombre: 'Damián',
     rol: 'El aventurero de los videojuegos',
     descripcion:
-      'Explora minas de Minecraft, resuelve misiones en naves espaciales y conversa con un búho sabio. El nombre de este personaje nace de un lector muy especial.',
+      'Damián tiene dos mundos: uno con espada de diamante y otro con nave espacial. En ambos se mete donde no debe, pregunta lo que nadie pregunta y vuelve con un amigo nuevo. Su lobo Sader siempre va un paso adelante.',
     saga: 'aventuras-de-damian',
     color: '#C1440E',
     iniciales: 'D',
@@ -107,7 +107,7 @@ export const personajes: Personaje[] = [
     nombre: 'Sader',
     rol: 'El lobo fiel',
     descripcion:
-      'El compañero inseparable de Damián. Siempre camina un paso adelante, olfateando el peligro antes de que llegue.',
+      'Sader es el lobo de Damián y su sombra cuando hay peligro. No necesita órdenes: huele el miedo, marca el camino y espera. Si se detiene y mira hacia atrás, es porque algo viene.',
     saga: 'aventuras-de-damian',
     color: '#5C5470',
     iniciales: 'S',
@@ -119,7 +119,7 @@ export const personajes: Personaje[] = [
     nombre: 'Ollie',
     rol: 'El búho sabio',
     descripcion:
-      'Vive en el Bosque Mágico y siempre tiene una historia o un consejo. Sus alas conocen todos los caminos.',
+      'Ollie vive en la rama más alta del Bosque Mágico y colecciona historias como otros coleccionan piedras. Cuando baja a hablar, conviene escuchar: casi siempre trae una advertencia envuelta en un cuento.',
     saga: 'aventuras-de-damian',
     color: '#8A5A00',
     iniciales: 'O',
@@ -131,7 +131,7 @@ export const personajes: Personaje[] = [
     nombre: 'Joaquín',
     rol: 'El niño del guijarro',
     descripcion:
-      'Encontró en el jardín de su abuela una piedra azul que concede deseos… si se dice la palabra correcta.',
+      'Joaquín encontró el guijarro azul en el jardín de su abuela, entre las malas hierbas y las hormigas. Desde entonces aprendió que los deseos se piden con cuidado, y que las palabras correctas a veces pesan más que una piedra.',
     saga: 'mundo-de-guijarro',
     color: '#2A6F97',
     iniciales: 'J',
@@ -143,7 +143,7 @@ export const personajes: Personaje[] = [
     nombre: 'Guillermo',
     rol: 'El gusanito guerrero',
     descripcion:
-      'Vive bajo una hoja de roble y sueña con ser un gran guerrero. Su valentía es mucho más grande que su tamaño.',
+      'Guillermo es un gusanito verde con casco de bellota y sueños del tamaño de un reino. Entrena con palitos, saluda a las hormigas y se prepara para el Gran Juego como si fuera la batalla final. Nadie se ríe de él dos veces.',
     saga: 'mundo-de-guijarro',
     color: '#4F772D',
     iniciales: 'G',
@@ -155,7 +155,7 @@ export const personajes: Personaje[] = [
     nombre: 'Juana',
     rol: 'La tortuga sabia',
     descripcion:
-      'La voz de la experiencia en el reino de Guijarro. Piensa despacio y acierta casi siempre.',
+      'Juana piensa despacio porque piensa de verdad. Mientras los demás corren, ella mira, escucha y al final dice la frase justa. En el reino de Guijarro, cuando Juana habla, se hace silencio.',
     saga: 'mundo-de-guijarro',
     color: '#588157',
     iniciales: 'Ju',
@@ -167,7 +167,7 @@ export const personajes: Personaje[] = [
     nombre: 'Jasper',
     rol: 'El duende travieso',
     descripcion:
-      'Nunca se queda quieto y siempre tiene un plan. A veces mete al grupo en problemas y a veces los saca.',
+      'Jasper es un duende con las manos rápidas y los bolsillos llenos de cosas que no son suyas. La mitad de los problemas del reino los causó él; la otra mitad los resolvió con una sonrisa torcida.',
     saga: 'mundo-de-guijarro',
     color: '#B5651D',
     iniciales: 'Ja',
