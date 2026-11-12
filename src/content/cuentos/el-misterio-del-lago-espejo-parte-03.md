@@ -5,7 +5,7 @@ date: 2025-01-06
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 3
-personajes: [tom, lucas, max]
+personajes: [tom, lucas, max, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Después de regresar del Mundo Espejo, Tom, Lucas y Max no podían dejar de pensar en la increíble aventura que habían vivido."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-03.webp"

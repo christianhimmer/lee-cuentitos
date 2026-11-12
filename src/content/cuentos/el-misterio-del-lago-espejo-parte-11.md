@@ -5,7 +5,7 @@ date: 2025-05-08
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 11
-personajes: [tom, lucas, max, lia, finn]
+personajes: [tom, lucas, max, lia, finn, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Tom, Lucas, Max, Lía y Finn avanzaron con cautela hacia la montaña oscura que la brújula mágica les indicaba."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-11.webp"

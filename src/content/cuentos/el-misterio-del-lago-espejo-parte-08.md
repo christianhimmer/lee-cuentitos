@@ -5,7 +5,7 @@ date: 2025-04-24
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 8
-personajes: [tom, lucas, max]
+personajes: [tom, lucas, max, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "De vuelta en el claro del bosque, Tom, Lucas y Max sintieron una calma extraña."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-08.webp"

@@ -5,7 +5,7 @@ date: 2025-01-14
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 5
-personajes: [tom, lucas, max]
+personajes: [tom, lucas, max, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Con la primera gema azul unida al collar de Max, Tom, Lucas y su fiel compañero sabían que el tiempo corría."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-05.webp"

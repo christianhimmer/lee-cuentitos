@@ -5,7 +5,7 @@ date: 2025-05-07
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 10
-personajes: [tom, lucas, max, lia, finn]
+personajes: [tom, lucas, max, lia, finn, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Después de derrotar la oscuridad en el corazón del Reino de los Guardianes, Tom, Lucas, Max, Lía y Finn fueron celebrados como héroes."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-10.webp"

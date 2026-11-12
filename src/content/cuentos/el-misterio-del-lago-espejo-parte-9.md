@@ -5,7 +5,7 @@ date: 2025-04-25
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 9
-personajes: [tom, lucas, max, finn]
+personajes: [tom, lucas, max, finn, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "En el Reino de los Guardianes, Tom, Lucas y Max empezaron su entrenamiento para convertirse en protectores de los mundos."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-9.webp"

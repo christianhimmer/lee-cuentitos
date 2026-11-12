@@ -5,7 +5,7 @@ date: 2024-12-31
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 1
-personajes: [tom, lucas, max]
+personajes: [tom, lucas, max, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Era un día soleado cuando Tom, Lucas y su perro Max decidieron explorar un lago escondido en el bosque, conocido como el Lago Espejo."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-01.webp"

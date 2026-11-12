@@ -5,7 +5,7 @@ date: 2025-01-10
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 4
-personajes: [tom, lucas, max]
+personajes: [tom, lucas, max, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Después de que Tom, Lucas y Max regresaron a casa con el nuevo poder del collar del Guardián, sus vidas volvieron a la normalidad, pero con una sensación…"
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-04.webp"

@@ -5,7 +5,7 @@ date: 2025-04-24
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 6
-personajes: [tom, lucas, max]
+personajes: [tom, lucas, max, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Tom, Lucas y Max atravesaron el portal y se encontraron en un bosque denso y oscuro."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-06.webp"

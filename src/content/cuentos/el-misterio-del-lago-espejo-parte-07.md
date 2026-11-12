@@ -5,7 +5,7 @@ date: 2025-04-24
 saga: tom-lucas-y-max
 arco: el-misterio-del-lago-espejo
 parte: 7
-personajes: [tom, lucas, max]
+personajes: [tom, lucas, max, guardian]
 tags: [misterio, magia, aventura, amistad]
 resumen: "Con la misión en el Mundo Espejo completada, Tom, Lucas y Max regresaron a su vida diaria. Sin embargo, algo en ellos había cambiado."
 portada: "../../assets/cuentos/el-misterio-del-lago-espejo-parte-07.webp"
