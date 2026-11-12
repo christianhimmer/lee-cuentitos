@@ -149,6 +149,14 @@
     padding-right: max(5%, calc((100% - 1240px) / 2));
   }
 
+  .contenedor-texto {
+    width: 100%;
+    max-width: 48rem;
+    margin-inline: auto;
+    padding-left: clamp(20px, 5vw, 32px);
+    padding-right: clamp(20px, 5vw, 32px);
+  }
+
   .contenedor-lectura {
     width: 100%;
     max-width: 44rem;
@@ -946,8 +954,14 @@
 
   /* ---------- footer ---------- */
   .footer {
-    background: var(--color-papel);
+    border-top: 3px solid var(--color-naranja);
+    background: #2a0d1c;
+    color: #f4ece6;
     padding: 34px 0 38px;
+  }
+
+  [data-tema='noche'] .footer {
+    background: #0f0a0d;
   }
 
   .footer-top {
@@ -956,7 +970,17 @@
     justify-content: space-between;
     gap: 30px;
     padding-bottom: 24px;
-    border-bottom: 1px solid var(--color-linea);
+    border-bottom: 1px solid rgb(255 255 255 / 0.14);
+  }
+
+  .footer .logoFooter .logoFull01,
+  .footer .logoFooter .logoFull02,
+  .footer .logoFooter .logoFull03 {
+    fill: var(--color-naranja-2);
+  }
+
+  .footer .logoFooter .logoFull04 {
+    fill: #f4ece6;
   }
 
   .footer .logo svg {
@@ -968,11 +992,11 @@
     gap: 22px;
     font-size: 14px;
     font-weight: 700;
-    color: var(--color-morado);
+    color: #f4ece6;
   }
 
   .footer-links a:hover {
-    color: var(--color-carmesi);
+    color: var(--color-naranja-2);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -987,14 +1011,14 @@
     height: 34px;
     display: grid;
     place-items: center;
-    border: 1px solid var(--color-linea);
+    border: 1px solid rgb(255 255 255 / 0.25);
     border-radius: 50%;
-    color: var(--color-morado);
+    color: #f4ece6;
   }
 
   .footer-social a:hover {
-    border-color: var(--color-morado);
-    background: var(--color-papel-2);
+    border-color: var(--color-naranja-2);
+    color: var(--color-naranja-2);
   }
 
   .footer-bottom {
@@ -1003,7 +1027,7 @@
     gap: 20px;
     padding-top: 18px;
     font-size: 12.5px;
-    color: var(--color-tinta-suave);
+    color: rgb(244 236 230 / 0.62);
   }
 
   .footer-bottom a {
@@ -1226,4 +1250,130 @@
 
 [data-tema='noche'] .logoHeader .logoFull04 {
   fill: #f4ece6;
+}
+
+/* ---------- aviso de cookies ---------- */
+.cookies {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  width: min(960px, calc(100% - 32px));
+  background: var(--color-superficie);
+  border: 1px solid var(--color-linea);
+  box-shadow: 0 24px 60px -30px rgb(36 24 32 / 0.45);
+  z-index: 90;
+  padding: 18px 22px;
+}
+
+.cookies[hidden] {
+  display: none;
+}
+
+.cookies-caja {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.cookies-titulo {
+  font-family: var(--font-titulo);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-morado);
+}
+
+.cookies-desc {
+  margin-top: 4px;
+  max-width: 62ch;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--color-tinta-suave);
+}
+
+.cookies-desc a {
+  color: var(--color-verde);
+  text-decoration: underline;
+}
+
+.cookies-acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cookies-config {
+  border: 0;
+  background: transparent;
+  padding: 6px 2px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-tinta-suave);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cookies-config:hover {
+  color: var(--color-morado);
+}
+
+.cookies-prefs {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-linea);
+  display: grid;
+  gap: 12px;
+}
+
+.cookies-prefs[hidden] {
+  display: none;
+}
+
+.cookies-opcion {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--color-tinta);
+  cursor: pointer;
+}
+
+.cookies-opcion input {
+  margin-top: 3px;
+  accent-color: var(--color-morado);
+}
+
+.cookies-opcion small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-tinta-suave);
+}
+
+.cookies-guardar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 760px) {
+  .cookies {
+    bottom: 10px;
+    width: calc(100% - 20px);
+    padding: 16px;
+  }
+  .cookies-caja {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .cookies-acciones {
+    flex-wrap: wrap;
+  }
+  .cookies-acciones .boton {
+    flex: 1;
+  }
 }

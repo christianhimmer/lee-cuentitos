@@ -6,7 +6,9 @@ export interface Props {
 }
 
 const { slot = '', formato = 'horizontal', clase = '' } = Astro.props;
-const cliente = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+import { ANALYTICS } from '../data/analytics';
+
+const cliente = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? ANALYTICS.adsense;
 const esDev = import.meta.env.DEV;
 
 const medidas = {
@@ -28,9 +30,6 @@ const medidas = {
         data-ad-format={formato === 'horizontal' ? 'auto' : undefined}
         data-full-width-responsive="true"
       />
-      <script is:inline>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
     </aside>
   ) : (
     esDev && (

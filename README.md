@@ -70,6 +70,24 @@ Si el campo está vacío, la sección de video no aparece.
 | `PUBLIC_ADSENSE_CLIENT` | `ca-pub-XXXXXXXX` — activa los anuncios. Sin ella, no se carga AdSense. |
 | `PUBLIC_FORMSPREE_ID` | ID del formulario de contacto. Sin ella, el formulario abre el correo. |
 
+## Analítica, publicidad y consentimiento
+
+Los IDs viven en `src/data/analytics.ts` (son públicos, viajan en el HTML):
+
+| Herramienta | ID |
+|---|---|
+| Google Analytics 4 | `G-8ZTRVFLMVC` |
+| Microsoft Clarity | `o9g9w35fyl` |
+| Ahrefs | `hDh20kUP3Dhr/QW2bFTX2g` |
+| Meta Pixel | `1262915438225933` |
+| Google AdSense | `ca-pub-1433734828248955` |
+
+Ninguno se carga antes del consentimiento. El aviso de cookies
+(`src/components/Consent.astro`) guarda la decisión en `localStorage` con dos
+categorías: **analítica** (GA4, Clarity, Ahrefs) y **publicidad** (AdSense, Meta).
+El enlace **Cookies** del pie reabre las preferencias. `public/ads.txt` declara el
+publisher de AdSense.
+
 ## Publicidad
 
 Los espacios publicitarios están maquetados y solo se renderizan si existe
