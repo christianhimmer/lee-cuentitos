@@ -6,11 +6,11 @@ import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import PersonajeAvatar from '../../components/PersonajeAvatar.astro';
 import { todosLosCuentos, sagas } from '../../lib/cuentos';
-import { personajes } from '../../data/personajes';
+import { personajesVisibles } from '../../data/personajes';
 import { portadaDe } from '../../lib/imagenes';
 
 const cuentos = await todosLosCuentos();
-const lista = personajes
+const lista = personajesVisibles
   .map((p) => ({
     ...p,
     total: cuentos.filter((c) => c.data.personajes.includes(p.slug)).length,

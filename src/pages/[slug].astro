@@ -33,7 +33,7 @@ const relacionadosLista = await relacionados(cuento, 3);
 const { anterior, siguiente } = await anteriorYSiguiente(cuento);
 const saga = nombreSaga(data.saga);
 const portada = portadaDe(data.portada);
-const personajesCuento = data.personajes.map((p) => personajesPorSlug[p]).filter(Boolean);
+const personajesCuento = data.personajes.map((p) => personajesPorSlug[p]).filter((p) => p && !p.oculto);
 
 const migas: { texto: string; href?: string }[] = [
   { texto: 'Inicio', href: '/' },

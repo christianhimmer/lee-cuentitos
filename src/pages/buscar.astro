@@ -5,12 +5,12 @@ import TopBar from '../components/TopBar.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import { todosLosCuentos, sagas } from '../lib/cuentos';
-import { personajes } from '../data/personajes';
+import { personajesVisibles } from '../data/personajes';
 import { portadaDe } from '../lib/imagenes';
 
 const populares = (await todosLosCuentos()).slice(0, 6);
 const sagasConCuentos = sagas.filter((s) => populares.some((p) => p.data.saga === s.slug));
-const personajesPopulares = personajes.slice(0, 8);
+const personajesPopulares = personajesVisibles.slice(0, 8);
 ---
 
 <Base

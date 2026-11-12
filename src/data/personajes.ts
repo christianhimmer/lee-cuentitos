@@ -8,6 +8,7 @@ export type Personaje = {
   iniciales: string;
   especie: string;
   etiqueta: string;
+  oculto?: boolean;
   foto?: string;
 };
 
@@ -101,6 +102,7 @@ export const personajes: Personaje[] = [
     iniciales: 'D',
     especie: 'Niño',
     etiqueta: 'Aventurero',
+    oculto: true,
   },
   {
     slug: 'sader',
@@ -113,6 +115,7 @@ export const personajes: Personaje[] = [
     iniciales: 'S',
     especie: 'Lobo',
     etiqueta: 'Lobo fiel',
+    oculto: true,
   },
   {
     slug: 'ollie',
@@ -125,6 +128,7 @@ export const personajes: Personaje[] = [
     iniciales: 'O',
     especie: 'Búho',
     etiqueta: 'Búho sabio',
+    oculto: true,
   },
   {
     slug: 'joaquin',
@@ -137,6 +141,7 @@ export const personajes: Personaje[] = [
     iniciales: 'J',
     especie: 'Niño',
     etiqueta: 'El del guijarro',
+    oculto: true,
   },
   {
     slug: 'guillermo',
@@ -149,6 +154,7 @@ export const personajes: Personaje[] = [
     iniciales: 'G',
     especie: 'Gusano',
     etiqueta: 'Guerrero',
+    oculto: true,
   },
   {
     slug: 'juana',
@@ -161,6 +167,7 @@ export const personajes: Personaje[] = [
     iniciales: 'Ju',
     especie: 'Tortuga',
     etiqueta: 'Sabia',
+    oculto: true,
   },
   {
     slug: 'jasper',
@@ -173,7 +180,9 @@ export const personajes: Personaje[] = [
     iniciales: 'Ja',
     especie: 'Duende',
     etiqueta: 'Travieso',
+    oculto: true,
   },
 ];
 
 export const personajesPorSlug = Object.fromEntries(personajes.map((p) => [p.slug, p]));
+export const personajesVisibles = personajes.filter((p) => !p.oculto);

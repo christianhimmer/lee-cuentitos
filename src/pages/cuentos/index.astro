@@ -7,7 +7,7 @@ import Icon from '../../components/Icon.astro';
 import StoryCard from '../../components/StoryCard.astro';
 import AdSlot from '../../components/AdSlot.astro';
 import { cuentosOrdenados, sagas } from '../../lib/cuentos';
-import { personajes } from '../../data/personajes';
+import { personajesVisibles } from '../../data/personajes';
 import { portadaDe } from '../../lib/imagenes';
 
 const cuentos = await cuentosOrdenados();
@@ -15,7 +15,7 @@ const conteoSagas = sagas
   .map((s) => ({ ...s, total: cuentos.filter((c) => c.data.saga === s.slug).length }))
   .filter((s) => s.total > 0);
 
-const personajesConCuentos = personajes
+const personajesConCuentos = personajesVisibles
   .map((p) => ({ ...p, total: cuentos.filter((c) => c.data.personajes.includes(p.slug)).length }))
   .filter((p) => p.total > 0);
 ---

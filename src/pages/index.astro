@@ -8,7 +8,8 @@ import Logo from '../components/Logo.astro';
 import StoryCard from '../components/StoryCard.astro';
 import BookHero from '../components/BookHero.astro';
 import AdSlot from '../components/AdSlot.astro';
-import { todosLosCuentos, sagas, personajes } from '../lib/cuentos';
+import { todosLosCuentos, sagas } from '../lib/cuentos';
+import { personajesVisibles } from '../data/personajes';
 import { imagen, portadaDe, retrato } from '../lib/imagenes';
 
 const cuentos = await todosLosCuentos();
@@ -23,7 +24,7 @@ const conteoSagas = sagas.map((s) => ({
 }));
 
 const [sagaPrincipal, ...sagasSecundarias] = conteoSagas;
-const personajesDestacados = personajes.slice(0, 6);
+const personajesDestacados = personajesVisibles.slice(0, 6);
 
 const jsonLd = [
   {

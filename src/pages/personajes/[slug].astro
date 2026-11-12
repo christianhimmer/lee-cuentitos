@@ -7,11 +7,12 @@ import Icon from '../../components/Icon.astro';
 import StoryCard from '../../components/StoryCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import PersonajeAvatar from '../../components/PersonajeAvatar.astro';
-import { cuentosDePersonaje, sagas, personajes, personajesPorSlug, todosLosCuentos } from '../../lib/cuentos';
+import { cuentosDePersonaje, sagas, personajesPorSlug, todosLosCuentos } from '../../lib/cuentos';
+import { personajesVisibles } from '../../data/personajes';
 import { portadaDe } from '../../lib/imagenes';
 
 export async function getStaticPaths() {
-  return personajes.map((p) => ({ params: { slug: p.slug }, props: { personaje: p } }));
+  return personajesVisibles.map((p) => ({ params: { slug: p.slug }, props: { personaje: p } }));
 }
 
 const { personaje } = Astro.props;
@@ -19,7 +20,7 @@ const cuentos = await cuentosDePersonaje(personaje.slug);
 const saga = sagas.find((s) => s.slug === personaje.saga);
 const companeros = (saga?.personajes ?? [])
   .map((s) => personajesPorSlug[s])
-  .filter((p) => p && p.slug !== personaje.slug);
+  .filter((p) => p && !p.oculto && p.slug !== personaje.slug);
 
 const todos = await todosLosCuentos();
 const imagenSocial = portadaDe(cuentos[0]?.data.portada ?? todos[0].data.portada).src;

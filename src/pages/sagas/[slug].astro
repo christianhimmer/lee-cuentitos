@@ -45,7 +45,7 @@ const migas = [
 
 const personajesDeLaSaga = (esSaga ? entidad.personajes : sagaPadre?.personajes ?? [])
   .map((p: string) => personajesPorSlug[p])
-  .filter(Boolean);
+  .filter((p: any) => p && !p.oculto);
 
 // Agrupación: arcos primero, luego sueltos
 const porArco = new Map<string, typeof cuentos>();
