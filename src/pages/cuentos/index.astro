@@ -54,7 +54,7 @@ const personajesConCuentos = personajes
     <div class="grid gap-8 lg:grid-cols-[17rem_1fr]">
       <!-- FILTROS -->
       <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="Filtros">
-        <div class="rounded-2xl border border-borde bg-white p-5">
+        <div class="rounded-2xl border border-borde bg-superficie p-5">
           <label for="filtro-texto" class="mb-2 block text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">
             Buscar
           </label>
@@ -89,6 +89,7 @@ const personajesConCuentos = personajes
               Ordenar
             </label>
             <select id="filtro-orden" class="w-full rounded-lg border border-borde bg-crema px-3 py-2 text-[0.9rem] font-semibold text-tinta outline-none">
+              <option value="lectura" selected>Orden de lectura</option>
               <option value="recientes">Más recientes</option>
               <option value="antiguos">Más antiguos</option>
               <option value="titulo">Título (A–Z)</option>
@@ -111,7 +112,7 @@ const personajesConCuentos = personajes
         </div>
 
         <div id="lista-cuentos" class="cuadricula-cuentos">
-          {cuentos.map((c) => (
+          {cuentos.map((c, indice) => (
             <div
               class="contenedor-cuento"
               data-saga={c.data.saga ?? ''}
@@ -121,6 +122,7 @@ const personajesConCuentos = personajes
               data-busca={`${c.data.title} ${c.data.resumen} ${c.data.saga ?? ''} ${c.data.personajes.join(' ')} ${c.data.tags.join(' ')}`.toLowerCase()}
               data-fecha={c.data.date.getTime()}
               data-orden={c.data.parte ?? 99}
+              data-lectura={indice}
             >
               <StoryCard cuento={c} compacta />
             </div>
@@ -141,7 +143,7 @@ const personajesConCuentos = personajes
   </div>
 
   <script>
-    const estado = { saga: '', personaje: '', texto: '', orden: 'recientes' };
+    const estado = { saga: '', personaje: '', texto: '', orden: 'lectura' };
     const lista = document.getElementById('lista-cuentos');
     const tarjetas = Array.from(lista?.querySelectorAll<HTMLElement>('.contenedor-cuento') ?? []);
     const contador = document.getElementById('contador');
@@ -166,6 +168,7 @@ const personajesConCuentos = personajes
       }
 
       const ordenadas = [...tarjetas].sort((a, b) => {
+        if (estado.orden === 'lectura') return Number(a.dataset.lectura) - Number(b.dataset.lectura);
         if (estado.orden === 'antiguos') return Number(a.dataset.fecha) - Number(b.dataset.fecha);
         if (estado.orden === 'titulo') return (a.dataset.titulo ?? '').localeCompare(b.dataset.titulo ?? '', 'es');
         return Number(b.dataset.fecha) - Number(a.dataset.fecha);
@@ -201,9 +204,9 @@ const personajesConCuentos = personajes
       estado.saga = '';
       estado.personaje = '';
       estado.texto = '';
-      estado.orden = 'recientes';
+      estado.orden = 'lectura';
       if (campoTexto) campoTexto.value = '';
-      if (selectOrden) selectOrden.value = 'recientes';
+      if (selectOrden) selectOrden.value = 'lectura';
       document.querySelectorAll('[data-grupo]').forEach((grupo) => {
         grupo.querySelectorAll('button').forEach((b, i) => b.classList.toggle('chip-activo', i === 0));
       });
@@ -243,8 +246,8 @@ const personajesConCuentos = personajes
       color: var(--color-vino);
     }
     .chip-activo {
-      background: var(--color-vino);
-      border-color: var(--color-vino);
+      background: var(--color-vino-fuerte);
+      border-color: var(--color-vino-fuerte);
       color: #fff;
     }
   </style>

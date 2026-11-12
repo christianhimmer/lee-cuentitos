@@ -33,7 +33,7 @@ const correo = 'hola@leecuentitos.com';
 
     <div class="mt-10 grid gap-8 md:grid-cols-[1.2fr_0.8fr]">
       <form
-        class="rounded-2xl border border-borde bg-white p-6 shadow-[var(--shadow-suave)]"
+        class="rounded-2xl border border-borde bg-superficie p-6 shadow-[var(--shadow-suave)]"
         action={formId ? `https://formspree.io/f/${formId}` : `mailto:${correo}`}
         method={formId ? 'POST' : 'GET'}
         enctype="text/plain"

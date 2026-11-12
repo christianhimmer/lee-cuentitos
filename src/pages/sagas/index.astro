@@ -55,7 +55,7 @@ const sueltos = cuentos.filter((c) => !c.data.saga);
   <div class="contenedor py-12">
     <div class="grid gap-8">
       {lista.map((s) => (
-        <section class="overflow-hidden rounded-2xl border border-borde bg-white shadow-[var(--shadow-suave)] md:grid md:grid-cols-[0.9fr_1.1fr]">
+        <section class="overflow-hidden rounded-2xl border border-borde bg-superficie shadow-[var(--shadow-suave)] md:grid md:grid-cols-[0.9fr_1.1fr]">
           <a href={`/sagas/${s.slug}/`} class="relative block min-h-[15rem] overflow-hidden">
             <Image
               src={imagen(s.portada)}
@@ -117,7 +117,7 @@ const sueltos = cuentos.filter((c) => !c.data.saga);
         <p class="mt-1 text-tinta-suave">Historias que aún no pertenecen a una saga.</p>
         <div class="mt-5 flex flex-wrap gap-2">
           {sueltos.map((c) => (
-            <a href={`/${c.data.slug}/`} class="rounded-full border border-borde bg-white px-4 py-2 text-[0.9rem] font-bold text-tinta hover:border-vino/30 hover:text-vino">
+            <a href={`/${c.data.slug}/`} class="rounded-full border border-borde bg-superficie px-4 py-2 text-[0.9rem] font-bold text-tinta hover:border-vino/30 hover:text-vino">
               {c.data.title}
             </a>
           ))}

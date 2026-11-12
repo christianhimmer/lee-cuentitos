@@ -98,7 +98,7 @@ const jsonLd = [
 
         <form action="/buscar/" method="get" role="search" class="mt-7 max-w-xl">
           <label for="busqueda-hero" class="solo-lectura">Buscar un cuento, personaje o saga</label>
-          <div class="flex items-center gap-2 rounded-2xl border border-borde bg-white p-2 shadow-[var(--shadow-suave)] focus-within:border-vino/40">
+          <div class="flex items-center gap-2 rounded-2xl border border-borde bg-superficie p-2 shadow-[var(--shadow-suave)] focus-within:border-vino/40">
             <span class="pl-2 text-tinta-suave"><Icon nombre="buscar" tamano={20} /></span>
             <input
               id="busqueda-hero"
@@ -117,7 +117,7 @@ const jsonLd = [
           {['Tom y Lucas', 'Lago Espejo', 'Damián', 'Guijarro'].map((t) => (
             <a
               href={`/buscar/?q=${encodeURIComponent(t)}`}
-              class="rounded-full border border-borde bg-white/70 px-3 py-1 text-[0.82rem] font-bold text-tinta-suave transition-colors hover:border-vino/30 hover:text-vino"
+              class="rounded-full border border-borde bg-superficie/80 px-3 py-1 text-[0.82rem] font-bold text-tinta-suave transition-colors hover:border-vino/30 hover:text-vino"
             >
               {t}
             </a>
@@ -147,7 +147,7 @@ const jsonLd = [
           </a>
           <div class="absolute left-4 top-4 flex gap-2">
             <span class="etiqueta bg-ambar text-[#3a2a08] shadow-sm">Saga · {nombreSaga(destacado.data.saga)}</span>
-            <span class="etiqueta bg-white/95 text-vino shadow-sm">Nuevo</span>
+            <span class="etiqueta bg-superficie text-vino shadow-sm">Nuevo</span>
           </div>
           <div class="p-6">
             <h2 class="font-titulo text-[1.75rem] leading-tight">
@@ -236,7 +236,7 @@ const jsonLd = [
 
       <div class="grid grid-cols-3 gap-4 sm:grid-cols-4 lg:grid-cols-6">
         {personajesDestacados.map((p) => (
-          <a href={`/personajes/${p.slug}/`} class="group flex flex-col items-center gap-3 rounded-2xl p-3 text-center transition-colors hover:bg-white">
+          <a href={`/personajes/${p.slug}/`} class="group flex flex-col items-center gap-3 rounded-2xl p-3 text-center transition-colors hover:bg-superficie">
             <PersonajeAvatar personaje={p} clase="h-24 w-24 sm:h-28 sm:w-28 transition-transform group-hover:scale-105" tamano={140} />
             <span class="font-titulo text-[1.05rem] font-semibold leading-tight text-tinta group-hover:text-vino">{p.nombre}</span>
             <span class="-mt-2 text-[0.75rem] font-semibold text-tinta-suave">{p.especie}</span>

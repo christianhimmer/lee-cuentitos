@@ -130,7 +130,7 @@ const jsonLd = [
           <div class="mt-6 flex flex-wrap items-center gap-2">
             <span class="text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">Personajes:</span>
             {personajesCuento.map((p) => (
-              <a href={`/personajes/${p.slug}/`} class="inline-flex items-center gap-1.5 rounded-full border border-borde bg-white px-2.5 py-1 text-[0.82rem] font-bold text-tinta transition-colors hover:border-vino/30 hover:text-vino">
+              <a href={`/personajes/${p.slug}/`} class="inline-flex items-center gap-1.5 rounded-full border border-borde bg-superficie px-2.5 py-1 text-[0.82rem] font-bold text-tinta transition-colors hover:border-vino/30 hover:text-vino">
                 <PersonajeAvatar personaje={p} clase="h-6 w-6 border-2" tamano={32} />
                 {p.nombre}
               </a>
@@ -191,7 +191,7 @@ const jsonLd = [
       {(anterior || siguiente) && (
         <nav class="mt-12 grid gap-3 border-t border-borde pt-8 sm:grid-cols-2" aria-label="Capítulos de la saga">
           {anterior ? (
-            <a href={`/${anterior.data.slug}/`} class="group rounded-xl border border-borde bg-white p-4 transition-colors hover:border-vino/30">
+            <a href={`/${anterior.data.slug}/`} class="group rounded-xl border border-borde bg-superficie p-4 transition-colors hover:border-vino/30">
               <span class="text-[0.72rem] font-extrabold uppercase tracking-wider text-tinta-suave">← Parte anterior</span>
               <p class="mt-1 font-titulo text-lg font-semibold text-vino group-hover:underline">{anterior.data.title}</p>
             </a>
@@ -199,7 +199,7 @@ const jsonLd = [
             <span></span>
           )}
           {siguiente && (
-            <a href={`/${siguiente.data.slug}/`} class="group rounded-xl border border-borde bg-white p-4 text-right transition-colors hover:border-vino/30">
+            <a href={`/${siguiente.data.slug}/`} class="group rounded-xl border border-borde bg-superficie p-4 text-right transition-colors hover:border-vino/30">
               <span class="text-[0.72rem] font-extrabold uppercase tracking-wider text-tinta-suave">Parte siguiente →</span>
               <p class="mt-1 font-titulo text-lg font-semibold text-vino group-hover:underline">{siguiente.data.title}</p>
             </a>

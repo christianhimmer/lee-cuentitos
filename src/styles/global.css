@@ -5,7 +5,9 @@
   --color-crema-2: #fdf1e4;
   --color-crema-3: #f7e8d8;
   --color-vino: #7a1236;
+  --color-vino-fuerte: #7a1236;
   --color-vino-oscuro: #560b26;
+  --color-superficie: #ffffff;
   --color-vino-claro: #f5e3e9;
   --color-ambar: #e9a23b;
   --color-ambar-claro: #fdf0d8;
@@ -34,7 +36,9 @@
     --color-crema-2: #211915;
     --color-crema-3: #2c2219;
     --color-vino: #f0a8bf;
-    --color-vino-oscuro: #f7c6d6;
+    --color-vino-fuerte: #7a1236;
+    --color-vino-oscuro: #4a0a20;
+    --color-superficie: #211915;
     --color-vino-claro: #3a1f2a;
     --color-ambar: #f2b95e;
     --color-ambar-claro: #3a2b14;
@@ -140,7 +144,7 @@
   }
 
   .boton-primario {
-    background: var(--color-vino);
+    background: var(--color-vino-fuerte);
     color: #fff;
     box-shadow: 0 6px 16px -8px rgb(122 18 54 / 0.6);
   }
