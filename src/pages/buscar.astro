@@ -82,7 +82,7 @@ const personajesPopulares = personajes.slice(0, 8);
       <h2 class="mb-5 text-[1.7rem]">Cuentos populares</h2>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {populares.map((c) => (
-          <a href={`/cuentos/${c.data.slug}/`} class="group flex gap-4 rounded-xl border border-borde bg-white p-3 hover:border-vino/30">
+          <a href={`/${c.data.slug}/`} class="group flex gap-4 rounded-xl border border-borde bg-white p-3 hover:border-vino/30">
             <img src={portadaDe(c.data.portada).src} alt="" width="160" height="90" loading="lazy" class="h-[70px] w-[124px] shrink-0 rounded-lg object-cover" />
             <div class="min-w-0">
               <p class="line-clamp-2 font-titulo text-[1.05rem] font-semibold leading-snug text-tinta group-hover:text-vino">{c.data.title}</p>
@@ -141,7 +141,7 @@ const personajesPopulares = personajes.slice(0, 8);
       resultados.innerHTML = lista
         .map(
           (c) => `
-          <a href="/cuentos/${c.s}/" class="group flex gap-4 rounded-xl border border-borde bg-white p-3 transition-transform hover:-translate-y-0.5 hover:border-vino/30">
+          <a href="/${c.s}/" class="group flex gap-4 rounded-xl border border-borde bg-white p-3 transition-transform hover:-translate-y-0.5 hover:border-vino/30">
             <img src="${c.i}" alt="" width="160" height="90" loading="lazy" class="h-[74px] w-[132px] shrink-0 rounded-lg object-cover" />
             <div class="min-w-0 py-0.5">
               <p class="line-clamp-2 font-titulo text-[1.1rem] font-semibold leading-snug text-tinta group-hover:text-vino">${resaltar(c.t, terminos)}</p>

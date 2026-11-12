@@ -37,7 +37,7 @@ export const GET: APIRoute = async () => {
     const saga = sagas.find((s) => s.slug === c.data.saga)?.nombre;
     const personas = c.data.personajes.map((p) => personajesPorSlug[p]?.nombre).filter(Boolean).join(', ');
     lineas.push(
-      `- [${c.data.title}](https://leecuentitos.com/cuentos/${c.data.slug}/): ${c.data.resumen}${saga ? ` Saga: ${saga}.` : ''}${personas ? ` Personajes: ${personas}.` : ''}`,
+      `- [${c.data.title}](https://leecuentitos.com/${c.data.slug}/): ${c.data.resumen}${saga ? ` Saga: ${saga}.` : ''}${personas ? ` Personajes: ${personas}.` : ''}`,
     );
   }
   lineas.push('');

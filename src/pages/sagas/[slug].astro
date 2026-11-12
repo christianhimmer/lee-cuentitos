@@ -71,7 +71,7 @@ const jsonLd = {
   hasPart: cuentos.map((c, i) => ({
     '@type': 'CreativeWork',
     name: c.data.title,
-    url: `https://leecuentitos.com/cuentos/${c.data.slug}/`,
+    url: `https://leecuentitos.com/${c.data.slug}/`,
     position: i + 1,
   })),
 };

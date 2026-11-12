@@ -14,7 +14,7 @@ export async function GET(context: APIContext) {
       title: c.data.title,
       pubDate: c.data.date,
       description: c.data.resumen,
-      link: `/cuentos/${c.data.slug}/`,
+      link: `/${c.data.slug}/`,
       categories: [...c.data.tags, ...(c.data.saga ? [c.data.saga] : [])],
       enclosure: { url: portadaDe(c.data.portada).src, length: 0, type: 'image/webp' },
     })),

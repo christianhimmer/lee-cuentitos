@@ -1,9 +1,21 @@
 # Redirecciones desde el WordPress anterior
-/saga/:slug/  /sagas/:slug/  301
-/saga/:slug   /sagas/:slug/  301
-/feed/        /rss.xml       301
-/feed         /rss.xml       301
-/sitemap_index.xml  /sitemap-index.xml  301
-/wp-sitemap.xml     /sitemap-index.xml  301
-/home/        /              301
-/home         /              301
+
+# Los cuentos conservan su URL original (raíz). Si alguien entra por /cuentos/<slug>,
+# lo llevamos a la URL canónica.
+/cuentos/:slug/  /:slug/  301
+/cuentos/:slug   /:slug/  301
+
+# Taxonomías y páginas del WordPress
+/saga/:slug/       /sagas/:slug/  301
+/saga/:slug        /sagas/:slug/  301
+/tag/tom-lucas-y-max/  /sagas/tom-lucas-y-max/  301
+/tag/lia-y-finn/       /sagas/tom-lucas-y-max/  301
+/tag/minecraft/        /buscar/?q=minecraft     301
+/tag/among-us/         /buscar/?q=among-us      301
+/category/cuentitos/   /cuentos/                301
+/feed/                 /rss.xml                 301
+/feed                  /rss.xml                 301
+/sitemap_index.xml     /sitemap-index.xml       301
+/wp-sitemap.xml        /sitemap-index.xml       301
+/home/                 /                        301
+/home                  /                        301

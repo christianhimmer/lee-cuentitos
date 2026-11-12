@@ -65,7 +65,7 @@ const jsonLd = [
     hasPart: cuentos.slice(0, 12).map((c) => ({
       '@type': 'CreativeWork',
       name: c.data.title,
-      url: `https://leecuentitos.com/cuentos/${c.data.slug}/`,
+      url: `https://leecuentitos.com/${c.data.slug}/`,
     })),
   },
 ];
@@ -132,7 +132,7 @@ const jsonLd = [
       <div class="relative min-w-0">
         <div class="absolute -inset-3 -z-10 rotate-2 rounded-[1.6rem] bg-ambar/15"></div>
         <article class="tarjeta relative overflow-hidden">
-          <a href={`/cuentos/${destacado.data.slug}/`} class="block overflow-hidden" tabindex="-1" aria-hidden="true">
+          <a href={`/${destacado.data.slug}/`} class="block overflow-hidden" tabindex="-1" aria-hidden="true">
             <Image
               src={portadaDe(destacado.data.portada)}
               alt={destacado.data.portadaAlt ?? destacado.data.title}
@@ -151,7 +151,7 @@ const jsonLd = [
           </div>
           <div class="p-6">
             <h2 class="font-titulo text-[1.75rem] leading-tight">
-              <a href={`/cuentos/${destacado.data.slug}/`} class="enlace-titulo hover:underline hover:decoration-vino/30">
+              <a href={`/${destacado.data.slug}/`} class="enlace-titulo hover:underline hover:decoration-vino/30">
                 {destacado.data.title.replace(/\s*\(Parte \d+\)$/, '')}
               </a>
             </h2>
@@ -159,7 +159,7 @@ const jsonLd = [
               Parte {String(destacado.data.parte ?? '').padStart(2, '0')} de 11 · {destacado.data.minutos} min de lectura
             </p>
             <p class="mt-3 line-clamp-2 text-[0.98rem] leading-relaxed text-tinta-suave">{destacado.data.resumen}</p>
-            <a href={`/cuentos/${destacado.data.slug}/`} class="boton boton-primario mt-5 w-full sm:w-auto">
+            <a href={`/${destacado.data.slug}/`} class="boton boton-primario mt-5 w-full sm:w-auto">
               Seguir leyendo <Icon nombre="flecha" tamano={17} />
             </a>
           </div>

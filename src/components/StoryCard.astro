@@ -14,7 +14,7 @@ const { cuento, prioridad = false, compacta = false } = Astro.props;
 const { data } = cuento;
 const saga = nombreSaga(data.saga);
 const portada = portadaDe(data.portada);
-const url = `/cuentos/${data.slug}/`;
+const url = `/${data.slug}/`;
 const insignia = data.parte ? `Parte ${String(data.parte).padStart(2, '0')}` : saga || 'Cuento';
 ---
 
