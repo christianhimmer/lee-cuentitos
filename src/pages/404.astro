@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+
+const sugerencias = [
+  { href: '/cuentos/', texto: 'Todos los cuentos' },
+  { href: '/sagas/tom-lucas-y-max/', texto: 'Saga Tom, Lucas y Max' },
+  { href: '/sagas/el-misterio-del-lago-espejo/', texto: 'El Misterio del Lago Espejo' },
+  { href: '/personajes/', texto: 'Personajes' },
+];
+---
+
+<Base
+  titulo="Página no encontrada"
+  descripcion="La página que buscas no existe o cambió de lugar. Vuelve al inicio o busca un cuento."
+  sinIndexar={true}
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <div class="contenedor flex min-h-[55vh] flex-col items-center justify-center py-16 text-center">
+    <span class="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-vino-claro text-vino">
+      <Icon nombre="libro" tamano={38} />
+    </span>
+    <p class="text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Error 404</p>
+    <h1 class="mt-2 text-[2.4rem] sm:text-5xl">Esta página se perdió en el bosque</h1>
+    <p class="mt-3 max-w-xl text-[1.05rem] leading-relaxed text-tinta-suave">
+      Puede que el cuento haya cambiado de nombre o que el enlace esté mal escrito.
+      No te preocupes: la aventura continúa por aquí.
+    </p>
+
+    <form action="/buscar/" method="get" role="search" class="mt-7 w-full max-w-lg">
+      <label for="q404" class="solo-lectura">Buscar un cuento</label>
+      <div class="flex items-center gap-2 rounded-2xl border border-borde bg-white p-2 shadow-[var(--shadow-suave)]">
+        <span class="pl-2 text-tinta-suave"><Icon nombre="buscar" tamano={19} /></span>
+        <input id="q404" name="q" type="search" placeholder="Busca un cuento o personaje…" class="min-w-0 flex-1 bg-transparent px-1 py-2.5 outline-none" />
+        <button class="boton boton-primario">Buscar</button>
+      </div>
+    </form>
+
+    <div class="mt-6 flex flex-wrap justify-center gap-2">
+      {sugerencias.map((s) => (
+        <a href={s.href} class="rounded-full border border-borde bg-white px-4 py-2 text-[0.88rem] font-bold text-tinta hover:border-vino/30 hover:text-vino">{s.texto}</a>
+      ))}
+    </div>
+  </div>
+</Base>

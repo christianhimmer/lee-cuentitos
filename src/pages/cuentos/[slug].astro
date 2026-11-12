@@ -1,0 +1,329 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import StoryCard from '../../components/StoryCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import YouTube from '../../components/YouTube.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PersonajeAvatar from '../../components/PersonajeAvatar.astro';
+import {
+  relacionados,
+  anteriorYSiguiente,
+  nombreSaga,
+  nombreArco,
+  personajesPorSlug,
+  fechaLarga,
+} from '../../lib/cuentos';
+import { portadaDe } from '../../lib/imagenes';
+
+export async function getStaticPaths() {
+  const cuentos = await getCollection('cuentos', ({ data }) => !data.borrador);
+  return cuentos.map((cuento) => ({ params: { slug: cuento.data.slug }, props: { cuento } }));
+}
+
+const { cuento } = Astro.props;
+const { data } = cuento;
+const { Content } = await render(cuento);
+const portada = portadaDe(data.portada);
+
+const relacionadosLista = await relacionados(cuento, 3);
+const { anterior, siguiente } = await anteriorYSiguiente(cuento);
+const saga = nombreSaga(data.saga);
+
+const personajesCuento = data.personajes.map((p) => personajesPorSlug[p]).filter(Boolean);
+
+const migas: { texto: string; href?: string }[] = [{ texto: 'Inicio', href: '/' }, { texto: 'Cuentos', href: '/cuentos/' }];
+if (saga && data.saga) migas.push({ texto: saga, href: `/sagas/${data.saga}/` });
+migas.push({ texto: data.title });
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ShortStory',
+    headline: data.title,
+    name: data.title,
+    description: data.resumen,
+    datePublished: data.date.toISOString(),
+    dateModified: data.date.toISOString(),
+    inLanguage: 'es',
+    url: `https://leecuentitos.com/cuentos/${data.slug}/`,
+    mainEntityOfPage: `https://leecuentitos.com/cuentos/${data.slug}/`,
+    image: [new URL(portada.src, Astro.site).href],
+    author: {
+      '@type': 'Person',
+      name: 'Christian Himmer',
+      url: 'https://christianhimmer.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Lee Cuentitos',
+      url: 'https://leecuentitos.com/',
+    },
+    isAccessibleForFree: true,
+    ...(data.parte && data.arco
+      ? {
+          isPartOf: {
+            '@type': 'Book',
+            name: nombreArco(data.arco),
+            url: `https://leecuentitos.com/sagas/${data.saga}/`,
+          },
+        }
+      : {}),
+    about: personajesCuento.map((p) => ({ '@type': 'Person', name: p.nombre })),
+    ...(data.youtube
+      ? {
+          video: {
+            '@type': 'VideoObject',
+            name: `Video: ${data.title}`,
+            embedUrl: `https://www.youtube.com/embed/${data.youtube}`,
+            thumbnailUrl: `https://i.ytimg.com/vi/${data.youtube}/hqdefault.jpg`,
+            uploadDate: data.date.toISOString(),
+          },
+        }
+      : {}),
+  },
+];
+---
+
+<Base
+  titulo={data.title}
+  descripcion={data.resumen}
+  imagen={portada.src}
+  tipo="article"
+  jsonLd={jsonLd}
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+  <div id="progreso-lectura" slot="progreso"></div>
+
+  <!-- CABECERA DEL CUENTO -->
+  <article class="contenedor pt-8" id="cuento" data-lectura="normal">
+    <Breadcrumbs items={migas} />
+
+    <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <div>
+        <div class="mb-4 flex flex-wrap items-center gap-2">
+          {data.parte && <span class="etiqueta etiqueta-ambar">Parte {String(data.parte).padStart(2, '0')}</span>}
+          {saga && (
+            <a href={`/sagas/${data.saga}/`} class="etiqueta etiqueta-vino hover:underline">{saga}</a>
+          )}
+          {data.youtube && (
+            <span class="etiqueta etiqueta-teal"><Icon nombre="youtube" tamano={12} /> Con video</span>
+          )}
+        </div>
+
+        <h1 class="text-[2.3rem] leading-[1.06] sm:text-5xl lg:text-[3.4rem]">{data.title}</h1>
+
+        <p class="mt-4 max-w-2xl text-[1.1rem] leading-relaxed text-tinta-suave">{data.resumen}</p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.88rem] font-bold text-teal">
+          <span class="inline-flex items-center gap-1.5"><Icon nombre="reloj" tamano={15} /> {data.minutos} min de lectura</span>
+          <span class="inline-flex items-center gap-1.5"><Icon nombre="libro" tamano={15} /> Cuento ilustrado</span>
+          <time datetime={data.date.toISOString()} class="text-tinta-suave">{fechaLarga(data.date)}</time>
+        </div>
+
+        {personajesCuento.length > 0 && (
+          <div class="mt-6 flex flex-wrap items-center gap-2">
+            <span class="text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">Personajes:</span>
+            {personajesCuento.map((p) => (
+              <a href={`/personajes/${p.slug}/`} class="inline-flex items-center gap-1.5 rounded-full border border-borde bg-white px-2.5 py-1 text-[0.82rem] font-bold text-tinta transition-colors hover:border-vino/30 hover:text-vino">
+                <PersonajeAvatar personaje={p} clase="h-6 w-6 border-2" tamano={32} />
+                {p.nombre}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <figure class="relative">
+        <div class="absolute -inset-2 -z-10 rotate-1 rounded-2xl bg-ambar/15"></div>
+        <Image
+          src={portada}
+          alt={data.portadaAlt ?? data.title}
+          widths={[640, 960, 1280]}
+          format="webp"
+          sizes="(min-width: 1024px) 520px, 92vw"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="aspect-[16/9] w-full rounded-2xl object-cover shadow-[var(--shadow-alta)]"
+        />
+      </figure>
+    </div>
+
+    <!-- BARRA DE LECTURA -->
+    <div class="sticky top-[4.5rem] z-30 mt-10 rounded-xl border border-borde bg-crema/95 px-3 py-2 backdrop-blur">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-1" role="group" aria-label="Tamaño de letra">
+          <span class="mr-1 hidden text-[0.75rem] font-bold uppercase tracking-wider text-tinta-suave sm:inline">Letra</span>
+          <button type="button" class="control-lectura" data-tamano="pequena" aria-label="Letra más pequeña">A−</button>
+          <button type="button" class="control-lectura control-activo" data-tamano="normal" aria-label="Letra normal">A</button>
+          <button type="button" class="control-lectura" data-tamano="grande" aria-label="Letra más grande">A+</button>
+        </div>
+        <div class="flex items-center gap-1">
+          <button type="button" id="boton-compartir" class="control-lectura gap-1.5 px-3">
+            <Icon nombre="compartir" tamano={16} /> <span class="hidden sm:inline">Compartir</span>
+          </button>
+          <button type="button" id="boton-imprimir" class="control-lectura gap-1.5 px-3">
+            <Icon nombre="descargar" tamano={16} /> <span class="hidden sm:inline">Imprimir</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEXTO -->
+    <div class="mx-auto mt-10 max-w-[44rem]">
+      <div class="lectura" id="texto-cuento">
+        <Content />
+      </div>
+
+      {data.youtube && <YouTube video={data.youtube} titulo={data.title} />}
+
+      <div class="mt-12">
+        <AdSlot formato="horizontal" />
+      </div>
+
+      <!-- NAVEGACIÓN DEL ARCO -->
+      {(anterior || siguiente) && (
+        <nav class="mt-12 grid gap-3 border-t border-borde pt-8 sm:grid-cols-2" aria-label="Capítulos de la saga">
+          {anterior ? (
+            <a href={`/cuentos/${anterior.data.slug}/`} class="group rounded-xl border border-borde bg-white p-4 transition-colors hover:border-vino/30">
+              <span class="text-[0.72rem] font-extrabold uppercase tracking-wider text-tinta-suave">← Parte anterior</span>
+              <p class="mt-1 font-titulo text-lg font-semibold text-vino group-hover:underline">{anterior.data.title}</p>
+            </a>
+          ) : (
+            <span></span>
+          )}
+          {siguiente && (
+            <a href={`/cuentos/${siguiente.data.slug}/`} class="group rounded-xl border border-borde bg-white p-4 text-right transition-colors hover:border-vino/30">
+              <span class="text-[0.72rem] font-extrabold uppercase tracking-wider text-tinta-suave">Parte siguiente →</span>
+              <p class="mt-1 font-titulo text-lg font-semibold text-vino group-hover:underline">{siguiente.data.title}</p>
+            </a>
+          )}
+        </nav>
+      )}
+
+      <div class="mt-10 rounded-2xl border border-borde bg-crema-2 p-6 text-center">
+        <p class="font-titulo text-xl text-vino">¿Te gustó este cuento?</p>
+        <p class="mx-auto mt-1 max-w-lg text-[0.95rem] text-tinta-suave">
+          Compártelo con otra familia o síguenos en Instagram para enterarte de cada historia nueva.
+        </p>
+        <div class="mt-4 flex flex-wrap justify-center gap-2">
+          <a href="https://www.instagram.com/leecuentitos/" target="_blank" rel="noopener" class="boton boton-secundario">
+            <Icon nombre="instagram" tamano={17} /> Instagram
+          </a>
+          <a href={`/cuentos/${siguiente ? siguiente.data.slug : ''}`} class="boton boton-primario" hidden={!siguiente}>
+            Leer la siguiente parte <Icon nombre="flecha" tamano={16} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  {relacionadosLista.length > 0 && (
+    <section class="contenedor mt-16 border-t border-borde pt-12">
+      <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <h2 class="text-[1.9rem] sm:text-4xl">También te puede gustar</h2>
+        <a href="/cuentos/" class="boton boton-fantasma font-bold">Ver todos <Icon nombre="flecha" tamano={16} /></a>
+      </div>
+      <div class="cuadricula-cuentos">
+        {relacionadosLista.map((c) => <StoryCard cuento={c} compacta />)}
+      </div>
+    </section>
+  )}
+
+  <script>
+    // Progreso de lectura
+    const barra = document.getElementById('progreso-lectura');
+    const articulo = document.getElementById('cuento');
+    function actualizarProgreso() {
+      if (!barra || !articulo) return;
+      const inicio = articulo.offsetTop;
+      const alto = articulo.offsetHeight - window.innerHeight * 0.6;
+      const avance = Math.min(1, Math.max(0, (window.scrollY - inicio) / Math.max(1, alto)));
+      barra.style.width = `${avance * 100}%`;
+    }
+    window.addEventListener('scroll', actualizarProgreso, { passive: true });
+    actualizarProgreso();
+
+    // Tamaño de letra
+    const controles = document.querySelectorAll<HTMLElement>('[data-tamano]');
+    const guardado = localStorage.getItem('lc-letra');
+    if (guardado) articulo?.setAttribute('data-lectura', guardado);
+    function marcarActivo(tamano: string) {
+      controles.forEach((b) => b.classList.toggle('control-activo', b.dataset.tamano === tamano));
+    }
+    if (guardado) marcarActivo(guardado);
+    controles.forEach((boton) => {
+      boton.addEventListener('click', () => {
+        const tamano = boton.dataset.tamano ?? 'normal';
+        articulo?.setAttribute('data-lectura', tamano);
+        localStorage.setItem('lc-letra', tamano);
+        marcarActivo(tamano);
+      });
+    });
+
+    // Compartir
+    document.getElementById('boton-compartir')?.addEventListener('click', async (e) => {
+      const boton = e.currentTarget as HTMLElement;
+      const datos = {
+        title: document.title,
+        text: document.querySelector('meta[name="description"]')?.getAttribute('content') ?? '',
+        url: location.href,
+      };
+      try {
+        if (navigator.share) {
+          await navigator.share(datos);
+        } else {
+          await navigator.clipboard.writeText(location.href);
+          const original = boton.innerHTML;
+          boton.innerHTML = '¡Enlace copiado!';
+          setTimeout(() => (boton.innerHTML = original), 1800);
+        }
+      } catch (err) {}
+    });
+
+    document.getElementById('boton-imprimir')?.addEventListener('click', () => window.print());
+  </script>
+
+  <style>
+    .control-lectura {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--color-tinta-suave);
+      transition: all 0.15s ease;
+    }
+    .control-lectura:hover {
+      background: var(--color-crema-3);
+      color: var(--color-vino);
+    }
+    .control-activo {
+      background: var(--color-vino);
+      color: #fff;
+    }
+    .control-activo:hover {
+      background: var(--color-vino-oscuro);
+      color: #fff;
+    }
+    @media print {
+      header,
+      footer,
+      #progreso-lectura,
+      .sticky {
+        display: none !important;
+      }
+      .lectura p {
+        font-size: 12pt;
+      }
+    }
+  </style>
+</Base>

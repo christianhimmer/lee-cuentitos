@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Privacidad y cookies' },
+];
+const actualizado = '12 de noviembre de 2026';
+---
+
+<Base
+  titulo="Política de privacidad y cookies"
+  descripcion="Cómo Lee Cuentitos trata tus datos, usa cookies, muestra publicidad de Google AdSense y protege la privacidad de los niños."
+  imagen="/og-default.jpg"
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <article class="contenedor max-w-3xl py-12">
+    <Breadcrumbs items={migas} />
+    <h1 class="text-[2.4rem] sm:text-5xl">Privacidad y cookies</h1>
+    <p class="mt-2 text-sm font-bold text-tinta-suave">Última actualización: {actualizado}</p>
+
+    <div class="prosa-enlace mt-8 space-y-6 text-[1.02rem] leading-relaxed text-tinta">
+      <p>
+        En Lee Cuentitos la privacidad importa, sobre todo porque muchos lectores son niños y niñas.
+        Esta página explica, sin letra pequeña, qué información se recoge y para qué.
+      </p>
+
+      <section>
+        <h2 class="text-2xl">Quién es el responsable</h2>
+        <p class="mt-2">
+          Lee Cuentitos es un proyecto personal de Christian Himmer. Para cualquier consulta sobre
+          datos personales puedes escribir a <a href="mailto:hola@leecuentitos.com" class="font-bold text-teal underline">hola@leecuentitos.com</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Qué datos recogemos</h2>
+        <ul class="mt-3 list-disc space-y-1.5 pl-5">
+          <li><strong>Formulario de contacto:</strong> nombre, correo y mensaje, solo si decides escribírnoslo.</li>
+          <li><strong>Datos técnicos:</strong> el proveedor de hosting y seguridad (Cloudflare) puede registrar IP, tipo de navegador y páginas visitadas para prevención de abuso y estadísticas agregadas.</li>
+          <li><strong>Comentarios:</strong> no hay sistema de comentarios ni registro de usuarios.</li>
+          <li><strong>Newsletter:</strong> actualmente no enviamos boletines ni almacenamos listas de correo.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Para qué usamos los datos</h2>
+        <p class="mt-2">
+          Usamos el correo del formulario únicamente para responderte. Los datos técnicos se usan para
+          mantener el sitio seguro, rápido y disponible. No vendemos ni cedemos datos personales a terceros.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Cookies</h2>
+        <p class="mt-2">
+          Lee Cuentitos usa cookies y almacenamiento local estrictamente necesarios para recordar tus
+          preferencias de lectura (tamaño de letra y modo día/noche). Estas preferencias se guardan en
+          tu navegador y no se envían a nuestros servidores.
+        </p>
+        <p class="mt-2">
+          Si en el futuro se activa publicidad de Google AdSense, Google y sus socios podrán utilizar
+          cookies para mostrar anuncios basados en visitas anteriores a este u otros sitios.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Publicidad de Google AdSense</h2>
+        <p class="mt-2">
+          Este sitio puede mostrar anuncios servidos por Google. El uso de cookies de publicidad permite
+          a Google y a sus socios mostrarte anuncios según tu visita a este sitio y a otros sitios de Internet.
+        </p>
+        <ul class="mt-3 list-disc space-y-1.5 pl-5">
+          <li>Puedes inhabilitar la publicidad personalizada en la <a href="https://adssettings.google.com" target="_blank" rel="noopener nofollow" class="font-bold text-teal underline">Configuración de anuncios de Google</a>.</li>
+          <li>También puedes inhabilitar cookies de terceros en <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener nofollow" class="font-bold text-teal underline">aboutads.info</a>.</li>
+          <li>Más información en la <a href="https://policies.google.com/technologies/ads?hl=es" target="_blank" rel="noopener nofollow" class="font-bold text-teal underline">política de publicidad de Google</a>.</li>
+        </ul>
+        <p class="mt-2">
+          Los anuncios que aparecen en los cuentos se colocan fuera del texto para no interrumpir la
+          lectura y no se dirigen a niños con publicidad personalizada.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Privacidad de los niños</h2>
+        <p class="mt-2">
+          Lee Cuentitos está pensado para leer en familia. No solicitamos ni recogemos conscientemente
+          datos personales de menores de 13 años. Si un niño nos escribe, pedimos que lo haga junto a un
+          adulto. Si crees que hemos recibido datos de un menor sin consentimiento, escríbenos y los
+          eliminaremos.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Tus derechos</h2>
+        <p class="mt-2">
+          Puedes solicitar acceso, corrección o eliminación de los datos que nos hayas enviado. Basta
+          con escribir a <a href="mailto:hola@leecuentitos.com" class="font-bold text-teal underline">hola@leecuentitos.com</a>
+          indicando el correo con el que nos contactaste.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Cambios en esta política</h2>
+        <p class="mt-2">
+          Si cambiamos la forma en que tratamos los datos (por ejemplo, al activar publicidad o
+          analítica), actualizaremos esta página y la fecha del encabezado.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl">Contacto</h2>
+        <p class="mt-2">
+          Dudas, sugerencias o solicitudes: <a href="/contacto/" class="font-bold text-teal underline">página de contacto</a>
+          o <a href="mailto:hola@leecuentitos.com" class="font-bold text-teal underline">hola@leecuentitos.com</a>.
+        </p>
+      </section>
+    </div>
+  </article>
+</Base>

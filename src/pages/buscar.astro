@@ -1,0 +1,299 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import { todosLosCuentos, sagas } from '../lib/cuentos';
+import { personajes } from '../data/personajes';
+import { portadaDe } from '../lib/imagenes';
+
+const populares = (await todosLosCuentos()).slice(0, 6);
+const sagasConCuentos = sagas.filter((s) => populares.some((p) => p.data.saga === s.slug));
+const personajesPopulares = personajes.slice(0, 8);
+---
+
+<Base
+  titulo="Buscar cuentos, sagas y personajes"
+  descripcion="Busca en Lee Cuentitos por título, personaje o saga. Encuentra cuentos de Tom, Lucas y Max, Damián, Guijarro y muchas aventuras más."
+  imagen={portadaDe(populares[0].data.portada).src}
+  sinIndexar={false}
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <section class="border-b border-borde bg-crema-2">
+    <div class="contenedor py-10 sm:py-14">
+      <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Encuentra tu próxima historia</p>
+      <h1 class="mt-1 text-[2.2rem] sm:text-5xl">Buscar cuentos</h1>
+
+      <div class="mt-6 max-w-2xl">
+        <label for="buscador" class="solo-lectura">Buscar cuentos, personajes o sagas</label>
+        <div class="flex items-center gap-2 rounded-2xl border border-borde bg-white p-2 shadow-[var(--shadow-suave)] focus-within:border-vino/40">
+          <span class="pl-2 text-tinta-suave"><Icon nombre="buscar" tamano={21} /></span>
+          <input
+            id="buscador"
+            type="search"
+            placeholder="Ej: Tom, Lago Espejo, Damián, magia…"
+            autocomplete="off"
+            class="min-w-0 flex-1 bg-transparent px-1 py-2.5 text-[1.05rem] outline-none placeholder:text-tinta-suave/60"
+          />
+          <button type="button" id="limpiar-busqueda" class="hidden rounded-lg px-3 py-2 text-sm font-bold text-tinta-suave hover:bg-crema-2" aria-label="Limpiar búsqueda">
+            Limpiar
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-5 flex flex-wrap items-center gap-2">
+        <span class="text-[0.8rem] font-bold text-tinta-suave">Prueba con:</span>
+        {['Tom', 'Max', 'Lago Espejo', 'Damián', 'Guijarro', 'magia'].map((t) => (
+          <button type="button" class="chip-sugerencia" data-sugerencia={t}>{t}</button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="contenedor py-10">
+    <div id="filtros-busqueda" class="mb-8 hidden flex-wrap items-center gap-2">
+      <span class="text-[0.78rem] font-extrabold uppercase tracking-wider text-tinta-suave">Saga:</span>
+      <div class="flex flex-wrap gap-2" data-grupo-busca="saga">
+        <button type="button" class="chip-sugerencia chip-activo" data-valor="">Todas</button>
+        {sagasConCuentos.map((s) => <button type="button" class="chip-sugerencia" data-valor={s.slug}>{s.nombre}</button>)}
+      </div>
+      <span class="ml-4 text-[0.78rem] font-extrabold uppercase tracking-wider text-tinta-suave">Personaje:</span>
+      <div class="flex flex-wrap gap-2" data-grupo-busca="personaje">
+        <button type="button" class="chip-sugerencia chip-activo" data-valor="">Todos</button>
+        {personajesPopulares.map((p) => <button type="button" class="chip-sugerencia" data-valor={p.nombre}>{p.nombre}</button>)}
+      </div>
+    </div>
+
+    <p id="resumen-busqueda" class="mb-6 text-[0.95rem] font-bold text-tinta-suave" aria-live="polite">
+      Escribe algo o elige una sugerencia para empezar.
+    </p>
+
+    <div id="resultados" class="grid gap-4"></div>
+
+    <div id="sin-resultados-busqueda" class="hidden rounded-2xl border border-dashed border-borde bg-crema-2 p-10 text-center">
+      <p class="font-titulo text-2xl text-vino">No encontramos nada con esa palabra</p>
+      <p class="mt-2 text-tinta-suave">Revisa cómo se escribe o prueba con el nombre de un personaje, como <strong>Tom</strong> o <strong>Max</strong>.</p>
+      <a href="/cuentos/" class="boton boton-primario mt-5">Ver todos los cuentos</a>
+    </div>
+
+    <div id="sugerencias-iniciales" class="mt-4">
+      <h2 class="mb-5 text-[1.7rem]">Cuentos populares</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {populares.map((c) => (
+          <a href={`/cuentos/${c.data.slug}/`} class="group flex gap-4 rounded-xl border border-borde bg-white p-3 hover:border-vino/30">
+            <img src={portadaDe(c.data.portada).src} alt="" width="160" height="90" loading="lazy" class="h-[70px] w-[124px] shrink-0 rounded-lg object-cover" />
+            <div class="min-w-0">
+              <p class="line-clamp-2 font-titulo text-[1.05rem] font-semibold leading-snug text-tinta group-hover:text-vino">{c.data.title}</p>
+              <p class="mt-1 text-[0.8rem] font-bold text-teal">{c.data.minutos} min de lectura</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    interface CuentoIndice {
+      t: string;
+      s: string;
+      r: string;
+      g: string;
+      a: string;
+      p: string[];
+      k: string[];
+      d: string;
+      m: number;
+      i: string;
+    }
+
+    const caja = document.getElementById('buscador') as HTMLInputElement;
+    const resultados = document.getElementById('resultados')!;
+    const resumen = document.getElementById('resumen-busqueda')!;
+    const sinResultados = document.getElementById('sin-resultados-busqueda')!;
+    const sugerenciasIniciales = document.getElementById('sugerencias-iniciales')!;
+    const filtros = document.getElementById('filtros-busqueda')!;
+    const limpiar = document.getElementById('limpiar-busqueda')!;
+
+    let indice: CuentoIndice[] = [];
+    let filtroSaga = '';
+    let filtroPersonaje = '';
+
+    const normalizar = (t: string) =>
+      t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+    function escapar(t: string) {
+      return t.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+    }
+
+    function resaltar(texto: string, terminos: string[]) {
+      let html = escapar(texto);
+      for (const t of terminos) {
+        if (t.length < 2) continue;
+        const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        html = html.replace(re, '<mark class="rounded bg-ambar/35 px-0.5 text-tinta">$1</mark>');
+      }
+      return html;
+    }
+
+    function pintar(lista: CuentoIndice[], terminos: string[]) {
+      resultados.innerHTML = lista
+        .map(
+          (c) => `
+          <a href="/cuentos/${c.s}/" class="group flex gap-4 rounded-xl border border-borde bg-white p-3 transition-transform hover:-translate-y-0.5 hover:border-vino/30">
+            <img src="${c.i}" alt="" width="160" height="90" loading="lazy" class="h-[74px] w-[132px] shrink-0 rounded-lg object-cover" />
+            <div class="min-w-0 py-0.5">
+              <p class="line-clamp-2 font-titulo text-[1.1rem] font-semibold leading-snug text-tinta group-hover:text-vino">${resaltar(c.t, terminos)}</p>
+              <p class="mt-1 line-clamp-1 text-[0.85rem] text-tinta-suave">${resaltar(c.r, terminos)}</p>
+              <p class="mt-1.5 flex flex-wrap items-center gap-x-2 text-[0.75rem] font-bold text-teal">
+                ${c.g ? `<span>${escapar(c.g)}</span>` : ''}
+                ${c.p.length ? `<span>· ${escapar(c.p.join(', '))}</span>` : ''}
+                <span>· ${c.m} min</span>
+              </p>
+            </div>
+          </a>`,
+        )
+        .join('');
+    }
+
+    function buscar() {
+      const consulta = normalizar(caja.value);
+      const terminos = consulta.split(/\s+/).filter((t) => t.length > 0 && t.length < 30);
+
+      if (!consulta && !filtroSaga && !filtroPersonaje) {
+        resultados.innerHTML = '';
+        sinResultados.classList.add('hidden');
+        sugerenciasIniciales.classList.remove('hidden');
+        filtros.classList.add('hidden');
+        resumen.textContent = 'Escribe algo o elige una sugerencia para empezar.';
+        limpiar.classList.add('hidden');
+        return;
+      }
+
+      limpiar.classList.remove('hidden');
+      sugerenciasIniciales.classList.add('hidden');
+      filtros.classList.remove('hidden');
+
+      const puntuados = indice
+        .filter((c) => !filtroSaga || c.g === (sagasPorSlug[filtroSaga] ?? ''))
+        .filter((c) => !filtroPersonaje || c.p.includes(filtroPersonaje))
+        .map((c) => {
+          let puntos = 0;
+          const titulo = normalizar(c.t);
+          const personajes = normalizar(c.p.join(' '));
+          const saga = normalizar(c.g);
+          const resumenTexto = normalizar(c.r);
+          const tags = normalizar(c.k.join(' '));
+
+          if (!consulta) return { c, puntos: 1 };
+
+          for (const t of terminos) {
+            if (titulo.includes(t)) puntos += titulo.startsWith(t) ? 12 : 9;
+            if (personajes.includes(t)) puntos += 7;
+            if (saga.includes(t)) puntos += 6;
+            if (tags.includes(t)) puntos += 4;
+            if (resumenTexto.includes(t)) puntos += 2;
+          }
+          return { c, puntos };
+        })
+        .filter((x) => x.puntos > 0)
+        .sort((a, b) => b.puntos - a.puntos || Number(b.c.d) - Number(a.c.d))
+        .slice(0, 30)
+        .map((x) => x.c);
+
+      pintar(puntuados, terminos);
+      sinResultados.classList.toggle('hidden', puntuados.length > 0);
+      resumen.textContent = puntuados.length
+        ? `${puntuados.length} ${puntuados.length === 1 ? 'cuento encontrado' : 'cuentos encontrados'}${consulta ? ` para “${caja.value.trim()}”` : ''}`
+        : 'Sin resultados';
+
+      const params = new URLSearchParams();
+      if (caja.value.trim()) params.set('q', caja.value.trim());
+      if (filtroSaga) params.set('saga', filtroSaga);
+      if (filtroPersonaje) params.set('personaje', filtroPersonaje);
+      const nueva = `${location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+      history.replaceState(null, '', nueva);
+    }
+
+    const sagasPorSlug: Record<string, string> = {
+      'tom-lucas-y-max': 'Tom, Lucas y Max',
+      'aventuras-de-damian': 'Las aventuras de Damián',
+      'mundo-de-guijarro': 'El mundo de Guijarro',
+    };
+
+    document.querySelectorAll<HTMLElement>('[data-sugerencia]').forEach((b) => {
+      b.addEventListener('click', () => {
+        caja.value = b.dataset.sugerencia ?? '';
+        buscar();
+        caja.focus();
+      });
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-grupo-busca]').forEach((grupo) => {
+      grupo.addEventListener('click', (e) => {
+        const boton = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-valor]');
+        if (!boton) return;
+        const valor = boton.dataset.valor ?? '';
+        if (grupo.dataset.grupoBusca === 'saga') filtroSaga = valor;
+        else filtroPersonaje = valor;
+        grupo.querySelectorAll('button').forEach((b) => b.classList.toggle('chip-activo', b === boton));
+        buscar();
+      });
+    });
+
+    caja.addEventListener('input', buscar);
+    limpiar.addEventListener('click', () => {
+      caja.value = '';
+      filtroSaga = '';
+      filtroPersonaje = '';
+      document.querySelectorAll('[data-grupo-busca] button').forEach((b, i) => b.classList.toggle('chip-activo', i === 0));
+      buscar();
+      caja.focus();
+    });
+
+    try {
+      const respuesta = await fetch('/buscar-index.json');
+      indice = await respuesta.json();
+    } catch (e) {
+      console.error('No se pudo cargar el índice de búsqueda', e);
+    }
+
+    const params = new URLSearchParams(location.search);
+    const q = params.get('q');
+    const saga = params.get('saga');
+    const personaje = params.get('personaje');
+    if (q) caja.value = q;
+    if (saga) {
+      filtroSaga = saga;
+      document.querySelectorAll('[data-grupo-busca="saga"] button').forEach((b) => b.classList.toggle('chip-activo', (b as HTMLElement).dataset.valor === saga));
+    }
+    if (personaje) {
+      filtroPersonaje = personaje;
+      document.querySelectorAll('[data-grupo-busca="personaje"] button').forEach((b) => b.classList.toggle('chip-activo', (b as HTMLElement).dataset.valor === personaje));
+    }
+    if (q || saga || personaje) buscar();
+  </script>
+
+  <style>
+    .chip-sugerencia {
+      border-radius: 999px;
+      border: 1px solid var(--color-borde);
+      background: #fff;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--color-tinta-suave);
+      transition: all 0.15s ease;
+    }
+    .chip-sugerencia:hover {
+      border-color: color-mix(in srgb, var(--color-vino) 35%, var(--color-borde));
+      color: var(--color-vino);
+    }
+    .chip-activo {
+      background: var(--color-vino);
+      border-color: var(--color-vino);
+      color: #fff;
+    }
+  </style>
+</Base>

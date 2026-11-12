@@ -1,0 +1,45 @@
+---
+export interface Props {
+  slot?: string;
+  formato?: 'horizontal' | 'rectangulo' | 'vertical';
+  clase?: string;
+}
+
+const { slot = '', formato = 'horizontal', clase = '' } = Astro.props;
+const cliente = import.meta.env.PUBLIC_ADSENSE_CLIENT;
+const esDev = import.meta.env.DEV;
+
+const medidas = {
+  horizontal: { clase: 'min-h-[90px] max-w-[728px]', etiqueta: '728 × 90' },
+  rectangulo: { clase: 'min-h-[250px] max-w-[336px]', etiqueta: '336 × 250' },
+  vertical: { clase: 'min-h-[600px] max-w-[300px]', etiqueta: '300 × 600' },
+}[formato];
+---
+
+{
+  cliente && slot ? (
+    <aside class={`mx-auto w-full ${medidas.clase} ${clase}`} aria-label="Publicidad">
+      <p class="mb-1 text-center text-[0.65rem] font-bold uppercase tracking-[0.12em] text-tinta-suave/60">Publicidad</p>
+      <ins
+        class="adsbygoogle block"
+        style="display:block"
+        data-ad-client={cliente}
+        data-ad-slot={slot}
+        data-ad-format={formato === 'horizontal' ? 'auto' : undefined}
+        data-full-width-responsive="true"
+      />
+      <script is:inline>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </aside>
+  ) : (
+    esDev && (
+      <aside class={`mx-auto w-full ${medidas.clase} ${clase}`} aria-label="Espacio publicitario">
+        <div class="flex h-full flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-borde bg-crema-2/60 px-4 text-center text-tinta-suave">
+          <span class="text-[0.65rem] font-bold uppercase tracking-[0.12em]">Publicidad</span>
+          <span class="text-xs">{medidas.etiqueta} · solo se muestra cuando AdSense esté activo</span>
+        </div>
+      </aside>
+    )
+  )
+}

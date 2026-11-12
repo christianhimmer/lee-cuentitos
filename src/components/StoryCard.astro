@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { nombreSaga, type Cuento } from '../lib/cuentos';
+import { portadaDe } from '../lib/imagenes';
+
+export interface Props {
+  cuento: Cuento;
+  prioridad?: boolean;
+  compacta?: boolean;
+}
+
+const { cuento, prioridad = false, compacta = false } = Astro.props;
+const { data } = cuento;
+const saga = nombreSaga(data.saga);
+const portada = portadaDe(data.portada);
+const url = `/cuentos/${data.slug}/`;
+const insignia = data.parte ? `Parte ${String(data.parte).padStart(2, '0')}` : saga || 'Cuento';
+---
+
+<article class="tarjeta group relative flex h-full flex-col">
+  <a href={url} class="block overflow-hidden bg-crema-3" aria-hidden="true" tabindex="-1">
+    <Image
+      src={portada}
+      alt={data.portadaAlt ?? data.title}
+      widths={[400, 640, 900]}
+      format="webp"
+      sizes={compacta ? '(min-width: 640px) 320px, 90vw' : '(min-width: 1024px) 360px, (min-width: 640px) 45vw, 90vw'}
+      loading={prioridad ? 'eager' : 'lazy'}
+      fetchpriority={prioridad ? 'high' : 'auto'}
+      decoding="async"
+      class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+    />
+  </a>
+
+  <div class={`flex flex-1 flex-col gap-2 ${compacta ? 'p-4' : 'p-5'}`}>
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="etiqueta etiqueta-ambar">{insignia}</span>
+      {data.youtube && (
+        <span class="etiqueta etiqueta-vino">
+          <Icon nombre="youtube" tamano={12} /> Video
+        </span>
+      )}
+    </div>
+
+    <h3 class={`font-titulo font-semibold leading-snug text-tinta ${compacta ? 'text-lg' : 'text-[1.35rem]'}`}>
+      <a href={url} class="enlace-titulo decoration-vino/30 hover:text-vino hover:underline">{data.title}</a>
+    </h3>
+
+    {!compacta && <p class="line-clamp-2 text-[0.95rem] leading-relaxed text-tinta-suave">{data.resumen}</p>}
+
+    <div class="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-1 text-[0.82rem] font-semibold text-teal">
+      {saga && <span>{saga}</span>}
+      <span class="inline-flex items-center gap-1">
+        <Icon nombre="reloj" tamano={13} /> {data.minutos} min
+      </span>
+    </div>
+  </div>
+</article>

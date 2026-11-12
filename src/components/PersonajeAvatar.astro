@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import type { Personaje } from '../data/personajes';
+import { retrato } from '../lib/imagenes';
+
+export interface Props {
+  personaje: Personaje;
+  clase?: string;
+  tamano?: number;
+  forma?: 'circulo' | 'retrato';
+}
+
+const { personaje, clase = 'h-20 w-20', tamano = 96, forma = 'circulo' } = Astro.props;
+const foto = personaje.foto ? retrato(personaje.foto) : undefined;
+const borde = forma === 'circulo' ? 'rounded-full' : 'rounded-2xl';
+---
+
+<span
+  class={`relative inline-flex shrink-0 items-center justify-center overflow-hidden ${borde} border-4 border-white shadow-[var(--shadow-suave)] ${clase}`}
+  style={`background: linear-gradient(150deg, color-mix(in srgb, ${personaje.color} 14%, #fff), color-mix(in srgb, ${personaje.color} 30%, #fff))`}
+  aria-hidden="true"
+>
+  {foto ? (
+    <Image
+      src={foto}
+      alt=""
+      width={tamano}
+      height={tamano}
+      widths={[96, 180, 280, 380]}
+      sizes={`${tamano}px`}
+      format="webp"
+      class={`h-full w-full object-contain ${forma === 'circulo' ? 'scale-110' : 'scale-105'} p-0.5`}
+    />
+  ) : (
+    <span class="font-titulo text-xl font-bold" style={`color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.3)`}>
+      {personaje.iniciales}
+    </span>
+  )}
+</span>

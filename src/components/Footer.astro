@@ -1,0 +1,70 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { sagas } from '../data/sagas';
+---
+
+<footer class="mt-20 bg-vino text-white">
+  <div class="contenedor grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <div class="max-w-sm">
+      <a href="/" class="mb-4 flex items-center gap-3 text-white" aria-label="Lee Cuentitos, ir al inicio">
+        <Logo clase="h-10 w-10" />
+        <span class="font-titulo text-2xl font-bold">LeeCuentitos</span>
+      </a>
+      <p class="text-[0.95rem] leading-relaxed text-white/75">
+        Cuentos infantiles ilustrados para leer en familia, practicar la lectura y soñar despiertos.
+        Gratis, sin registro y sin publicidad intrusiva.
+      </p>
+      <div class="mt-5 flex items-center gap-2">
+        <a href="https://www.instagram.com/leecuentitos/" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20" aria-label="Instagram de Lee Cuentitos" rel="me noopener" target="_blank">
+          <Icon nombre="instagram" tamano={19} />
+        </a>
+        <a href="https://www.youtube.com/@leecuentitos" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20" aria-label="Canal de YouTube de Lee Cuentitos" rel="me noopener" target="_blank">
+          <Icon nombre="youtube" tamano={19} />
+        </a>
+        <a href="https://www.facebook.com/leecuentitos" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20" aria-label="Facebook de Lee Cuentitos" rel="me noopener" target="_blank">
+          <Icon nombre="facebook" tamano={19} />
+        </a>
+      </div>
+    </div>
+
+    <nav aria-label="Cuentos">
+      <h2 class="mb-4 font-titulo text-lg font-semibold text-white">Cuentos</h2>
+      <ul class="space-y-2.5 text-[0.95rem] text-white/75">
+        <li><a href="/cuentos/" class="hover:text-white hover:underline">Todos los cuentos</a></li>
+        <li><a href="/cuentos/#ultimos" class="hover:text-white hover:underline">Últimos publicados</a></li>
+        <li><a href="/buscar/" class="hover:text-white hover:underline">Buscar un cuento</a></li>
+        <li><a href="/rss.xml" class="hover:text-white hover:underline">RSS</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Sagas">
+      <h2 class="mb-4 font-titulo text-lg font-semibold text-white">Sagas</h2>
+      <ul class="space-y-2.5 text-[0.95rem] text-white/75">
+        {sagas.map((s) => (
+          <li><a href={`/sagas/${s.slug}/`} class="hover:text-white hover:underline">{s.nombre}</a></li>
+        ))}
+        <li><a href="/sagas/" class="hover:text-white hover:underline">Ver todas</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-label="Información">
+      <h2 class="mb-4 font-titulo text-lg font-semibold text-white">Lee Cuentitos</h2>
+      <ul class="space-y-2.5 text-[0.95rem] text-white/75">
+        <li><a href="/nosotros/" class="hover:text-white hover:underline">Nosotros</a></li>
+        <li><a href="/personajes/" class="hover:text-white hover:underline">Personajes</a></li>
+        <li><a href="/contacto/" class="hover:text-white hover:underline">Contacto</a></li>
+        <li><a href="/privacidad/" class="hover:text-white hover:underline">Privacidad y cookies</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="border-t border-white/15">
+    <div class="contenedor flex flex-col items-center justify-between gap-2 py-5 text-center text-[0.82rem] text-white/60 sm:flex-row sm:text-left">
+      <p>© {new Date().getFullYear()} Lee Cuentitos. Cuentos originales, escritos con cariño.</p>
+      <p>
+        Hecho a mano por <a href="https://christianhimmer.com" class="underline decoration-white/30 hover:text-white" rel="author noopener" target="_blank">Christian Himmer</a>
+      </p>
+    </div>
+  </div>
+</footer>

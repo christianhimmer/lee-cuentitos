@@ -1,0 +1,251 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import StoryCard from '../../components/StoryCard.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { cuentosOrdenados, sagas } from '../../lib/cuentos';
+import { personajes } from '../../data/personajes';
+import { portadaDe } from '../../lib/imagenes';
+
+const cuentos = await cuentosOrdenados();
+const conteoSagas = sagas
+  .map((s) => ({ ...s, total: cuentos.filter((c) => c.data.saga === s.slug).length }))
+  .filter((s) => s.total > 0);
+
+const personajesConCuentos = personajes
+  .map((p) => ({ ...p, total: cuentos.filter((c) => c.data.personajes.includes(p.slug)).length }))
+  .filter((p) => p.total > 0);
+---
+
+<Base
+  titulo="Todos los cuentos infantiles"
+  descripcion={`Biblioteca completa de Lee Cuentitos: ${cuentos.length} cuentos infantiles ilustrados en español. Filtra por saga, personaje o tema y empieza a leer gratis.`}
+  imagen={portadaDe(cuentos[0].data.portada).src}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Todos los cuentos',
+    description: 'Biblioteca de cuentos infantiles de Lee Cuentitos',
+    numberOfItems: cuentos.length,
+    hasPart: cuentos.map((c) => ({
+      '@type': 'CreativeWork',
+      name: c.data.title,
+      url: `https://leecuentitos.com/cuentos/${c.data.slug}/`,
+    })),
+  }}
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <div class="border-b border-borde bg-crema-2">
+    <div class="contenedor py-12">
+      <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Biblioteca</p>
+      <h1 class="mt-1 text-[2.4rem] sm:text-5xl">Todos los cuentos</h1>
+      <p class="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-tinta-suave">
+        {cuentos.length} historias ilustradas para leer en voz alta, practicar la lectura o disfrutar antes de dormir.
+        Filtra por saga, personaje o tema.
+      </p>
+    </div>
+  </div>
+
+  <div class="contenedor py-10">
+    <div class="grid gap-8 lg:grid-cols-[17rem_1fr]">
+      <!-- FILTROS -->
+      <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="Filtros">
+        <div class="rounded-2xl border border-borde bg-white p-5">
+          <label for="filtro-texto" class="mb-2 block text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">
+            Buscar
+          </label>
+          <div class="mb-6 flex items-center gap-2 rounded-xl border border-borde bg-crema px-3 focus-within:border-vino/40">
+            <Icon nombre="buscar" tamano={17} clase="text-tinta-suave" />
+            <input
+              id="filtro-texto"
+              type="search"
+              placeholder="Título o personaje…"
+              class="w-full bg-transparent py-2.5 text-[0.95rem] outline-none placeholder:text-tinta-suave/60"
+            />
+          </div>
+
+          <p class="mb-2 text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">Saga</p>
+          <div class="mb-6 flex flex-wrap gap-2" data-grupo="saga">
+            <button type="button" class="chip-filtro chip-activo" data-valor="">Todas</button>
+            {conteoSagas.map((s) => (
+              <button type="button" class="chip-filtro" data-valor={s.slug}>{s.nombre} <span class="opacity-60">({s.total})</span></button>
+            ))}
+          </div>
+
+          <p class="mb-2 text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">Personaje</p>
+          <div class="flex flex-wrap gap-2" data-grupo="personaje">
+            <button type="button" class="chip-filtro chip-activo" data-valor="">Todos</button>
+            {personajesConCuentos.map((p) => (
+              <button type="button" class="chip-filtro" data-valor={p.slug}>{p.nombre}</button>
+            ))}
+          </div>
+
+          <div class="mt-6 border-t border-borde pt-4">
+            <label for="filtro-orden" class="mb-2 block text-[0.8rem] font-extrabold uppercase tracking-wider text-tinta-suave">
+              Ordenar
+            </label>
+            <select id="filtro-orden" class="w-full rounded-lg border border-borde bg-crema px-3 py-2 text-[0.9rem] font-semibold text-tinta outline-none">
+              <option value="recientes">Más recientes</option>
+              <option value="antiguos">Más antiguos</option>
+              <option value="titulo">Título (A–Z)</option>
+            </select>
+          </div>
+
+          <button type="button" id="limpiar-filtros" class="mt-4 w-full rounded-lg px-3 py-2 text-[0.85rem] font-bold text-vino hover:bg-vino-claro">
+            Limpiar filtros
+          </button>
+        </div>
+      </aside>
+
+      <!-- RESULTADOS -->
+      <div>
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-2">
+          <p id="contador" class="text-[0.9rem] font-bold text-tinta-suave" aria-live="polite">
+            Mostrando {cuentos.length} cuentos
+          </p>
+          <a href="/sagas/" class="text-[0.9rem] font-bold text-vino hover:underline">Ver por saga →</a>
+        </div>
+
+        <div id="lista-cuentos" class="cuadricula-cuentos">
+          {cuentos.map((c) => (
+            <div
+              class="contenedor-cuento"
+              data-saga={c.data.saga ?? ''}
+              data-personajes={c.data.personajes.join(' ')}
+              data-titulo={c.data.title}
+              data-resumen={c.data.resumen}
+              data-busca={`${c.data.title} ${c.data.resumen} ${c.data.saga ?? ''} ${c.data.personajes.join(' ')} ${c.data.tags.join(' ')}`.toLowerCase()}
+              data-fecha={c.data.date.getTime()}
+              data-orden={c.data.parte ?? 99}
+            >
+              <StoryCard cuento={c} compacta />
+            </div>
+          ))}
+        </div>
+
+        <div id="sin-resultados" class="hidden rounded-2xl border border-dashed border-borde bg-crema-2 p-10 text-center">
+          <p class="font-titulo text-2xl text-vino">No encontramos cuentos con esos filtros</p>
+          <p class="mt-2 text-tinta-suave">Prueba con otro personaje, saga o palabra.</p>
+          <button type="button" id="reiniciar-vacio" class="boton boton-primario mt-5">Ver todos los cuentos</button>
+        </div>
+
+        <div class="mt-12">
+          <AdSlot formato="horizontal" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const estado = { saga: '', personaje: '', texto: '', orden: 'recientes' };
+    const lista = document.getElementById('lista-cuentos');
+    const tarjetas = Array.from(lista?.querySelectorAll<HTMLElement>('.contenedor-cuento') ?? []);
+    const contador = document.getElementById('contador');
+    const vacio = document.getElementById('sin-resultados');
+    const campoTexto = document.getElementById('filtro-texto') as HTMLInputElement | null;
+    const selectOrden = document.getElementById('filtro-orden') as HTMLSelectElement | null;
+
+    function normalizar(t: string) {
+      return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
+    function aplicar() {
+      let visibles = 0;
+      const texto = normalizar(estado.texto.trim());
+      for (const tarjeta of tarjetas) {
+        const okSaga = !estado.saga || tarjeta.dataset.saga === estado.saga;
+        const okPersonaje = !estado.personaje || (tarjeta.dataset.personajes ?? '').split(' ').includes(estado.personaje);
+        const okTexto = !texto || normalizar(tarjeta.dataset.busca ?? '').includes(texto);
+        const visible = okSaga && okPersonaje && okTexto;
+        tarjeta.classList.toggle('hidden', !visible);
+        if (visible) visibles++;
+      }
+
+      const ordenadas = [...tarjetas].sort((a, b) => {
+        if (estado.orden === 'antiguos') return Number(a.dataset.fecha) - Number(b.dataset.fecha);
+        if (estado.orden === 'titulo') return (a.dataset.titulo ?? '').localeCompare(b.dataset.titulo ?? '', 'es');
+        return Number(b.dataset.fecha) - Number(a.dataset.fecha);
+      });
+      ordenadas.forEach((t) => lista?.appendChild(t));
+
+      if (contador) contador.textContent = `Mostrando ${visibles} de ${tarjetas.length} cuentos`;
+      vacio?.classList.toggle('hidden', visibles !== 0);
+    }
+
+    document.querySelectorAll<HTMLElement>('[data-grupo]').forEach((grupo) => {
+      const clave = grupo.dataset.grupo as 'saga' | 'personaje';
+      grupo.addEventListener('click', (e) => {
+        const boton = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-valor]');
+        if (!boton) return;
+        estado[clave] = boton.dataset.valor ?? '';
+        grupo.querySelectorAll('button').forEach((b) => b.classList.toggle('chip-activo', b === boton));
+        aplicar();
+      });
+    });
+
+    campoTexto?.addEventListener('input', () => {
+      estado.texto = campoTexto.value;
+      aplicar();
+    });
+
+    selectOrden?.addEventListener('change', () => {
+      estado.orden = selectOrden.value;
+      aplicar();
+    });
+
+    function limpiar() {
+      estado.saga = '';
+      estado.personaje = '';
+      estado.texto = '';
+      estado.orden = 'recientes';
+      if (campoTexto) campoTexto.value = '';
+      if (selectOrden) selectOrden.value = 'recientes';
+      document.querySelectorAll('[data-grupo]').forEach((grupo) => {
+        grupo.querySelectorAll('button').forEach((b, i) => b.classList.toggle('chip-activo', i === 0));
+      });
+      aplicar();
+    }
+
+    document.getElementById('limpiar-filtros')?.addEventListener('click', limpiar);
+    document.getElementById('reiniciar-vacio')?.addEventListener('click', limpiar);
+
+    // Filtros desde la URL: /cuentos/?saga=...&personaje=...
+    const params = new URLSearchParams(location.search);
+    const sagaUrl = params.get('saga');
+    const personajeUrl = params.get('personaje');
+    if (sagaUrl) {
+      const b = document.querySelector<HTMLButtonElement>(`[data-grupo="saga"] button[data-valor="${CSS.escape(sagaUrl)}"]`);
+      if (b) b.click();
+    }
+    if (personajeUrl) {
+      const b = document.querySelector<HTMLButtonElement>(`[data-grupo="personaje"] button[data-valor="${CSS.escape(personajeUrl)}"]`);
+      if (b) b.click();
+    }
+  </script>
+
+  <style>
+    .chip-filtro {
+      border-radius: 999px;
+      border: 1px solid var(--color-borde);
+      background: var(--color-crema);
+      padding: 0.35rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--color-tinta-suave);
+      transition: all 0.15s ease;
+    }
+    .chip-filtro:hover {
+      border-color: color-mix(in srgb, var(--color-vino) 35%, var(--color-borde));
+      color: var(--color-vino);
+    }
+    .chip-activo {
+      background: var(--color-vino);
+      border-color: var(--color-vino);
+      color: #fff;
+    }
+  </style>
+</Base>

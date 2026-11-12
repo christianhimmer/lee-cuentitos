@@ -1,0 +1,125 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+
+const ruta = Astro.url.pathname;
+const enlaces = [
+  { href: '/', texto: 'Inicio' },
+  { href: '/cuentos/', texto: 'Cuentos' },
+  { href: '/sagas/', texto: 'Sagas' },
+  { href: '/personajes/', texto: 'Personajes' },
+  { href: '/nosotros/', texto: 'Nosotros' },
+];
+const activo = (href: string) =>
+  href === '/' ? ruta === '/' : ruta.startsWith(href.replace(/\/$/, ''));
+---
+
+<div class="bg-vino text-white">
+  <div class="contenedor flex items-center justify-center gap-2 py-2 text-center text-[0.8rem] font-semibold sm:text-sm">
+    <Icon nombre="chispa" tamano={15} clase="shrink-0 text-ambar" />
+    <span>Nuevo cuento: <a href="/cuentos/el-misterio-del-lago-espejo-parte-11/" class="underline decoration-white/40 hover:decoration-white">El Misterio del Lago Espejo — Parte 11</a></span>
+  </div>
+</div>
+
+<header class="sticky top-0 z-50 border-b border-borde bg-crema/95 backdrop-blur supports-[backdrop-filter]:bg-crema/80">
+  <div class="contenedor flex h-[4.5rem] items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2.5 text-vino" aria-label="Lee Cuentitos, ir al inicio">
+      <Logo clase="h-9 w-9" />
+      <span class="font-titulo text-xl font-bold leading-none tracking-tight sm:text-2xl">
+        Lee<span class="text-vino">Cuentitos</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Navegación principal">
+      {enlaces.map((e) => (
+        <a
+          href={e.href}
+          class:list={[
+            'rounded-lg px-3.5 py-2 text-[0.95rem] font-bold transition-colors',
+            activo(e.href) ? 'bg-vino-claro text-vino' : 'text-tinta-suave hover:bg-crema-2 hover:text-vino',
+          ]}
+          aria-current={activo(e.href) ? 'page' : undefined}
+        >
+          {e.texto}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-1.5">
+      <button
+        type="button"
+        id="boton-tema"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-tinta-suave transition-colors hover:bg-crema-2 hover:text-vino"
+        aria-label="Cambiar entre modo día y noche"
+        title="Modo día / noche"
+      >
+        <span data-icono="luna"><Icon nombre="luna" tamano={19} /></span>
+        <span data-icono="sol" class="hidden"><Icon nombre="sol" tamano={19} /></span>
+      </button>
+      <a
+        href="/buscar/"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-tinta-suave transition-colors hover:bg-crema-2 hover:text-vino"
+        aria-label="Buscar cuentos"
+      >
+        <Icon nombre="buscar" tamano={19} />
+      </a>
+      <a href="/cuentos/" class="boton boton-primario hidden sm:inline-flex">
+        <Icon nombre="libro" tamano={17} />
+        Empezar a leer
+      </a>
+      <button
+        type="button"
+        id="boton-menu"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-vino lg:hidden"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+      >
+        <Icon nombre="menu" tamano={22} />
+      </button>
+    </div>
+  </div>
+
+  <div id="menu-movil" class="hidden border-t border-borde bg-crema px-5 pb-5 pt-2 lg:hidden">
+    <nav class="flex flex-col" aria-label="Navegación móvil">
+      {enlaces.map((e) => (
+        <a
+          href={e.href}
+          class:list={[
+            'rounded-lg px-3 py-2.5 text-base font-bold',
+            activo(e.href) ? 'bg-vino-claro text-vino' : 'text-tinta hover:bg-crema-2',
+          ]}
+        >
+          {e.texto}
+        </a>
+      ))}
+      <a href="/cuentos/" class="boton boton-primario mt-3">
+        <Icon nombre="libro" tamano={17} />
+        Empezar a leer
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const botonTema = document.getElementById('boton-tema');
+  botonTema?.addEventListener('click', () => {
+    const raiz = document.documentElement;
+    const esNoche = raiz.dataset.tema === 'noche';
+    if (esNoche) {
+      delete raiz.dataset.tema;
+      localStorage.setItem('lc-tema', 'dia');
+    } else {
+      raiz.dataset.tema = 'noche';
+      localStorage.setItem('lc-tema', 'noche');
+    }
+  });
+
+  const botonMenu = document.getElementById('boton-menu');
+  const menu = document.getElementById('menu-movil');
+  botonMenu?.addEventListener('click', () => {
+    const abierto = menu?.classList.toggle('hidden') === false;
+    botonMenu.setAttribute('aria-expanded', String(abierto));
+    botonMenu.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+  });
+</script>

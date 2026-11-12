@@ -1,0 +1,9 @@
+# Redirecciones desde el WordPress anterior
+/saga/:slug/  /sagas/:slug/  301
+/saga/:slug   /sagas/:slug/  301
+/feed/        /rss.xml       301
+/feed         /rss.xml       301
+/sitemap_index.xml  /sitemap-index.xml  301
+/wp-sitemap.xml     /sitemap-index.xml  301
+/home/        /              301
+/home         /              301

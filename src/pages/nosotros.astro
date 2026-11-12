@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Nosotros' },
+];
+---
+
+<Base
+  titulo="Nosotros — la historia de Lee Cuentitos"
+  descripcion="Lee Cuentitos nació para que un papá y su hijo tuvieran cuentos nuevos cada noche. Conoce el proyecto, cómo se escriben las historias y por qué son gratis."
+  imagen="/og-default.jpg"
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <article class="contenedor max-w-3xl py-12">
+    <Breadcrumbs items={migas} />
+    <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">La historia detrás</p>
+    <h1 class="mt-2 text-[2.5rem] sm:text-5xl">Un papá, un hijo y muchos cuentos</h1>
+
+    <div class="prosa-enlace mt-8 space-y-5 text-[1.08rem] leading-relaxed text-tinta">
+      <p>
+        Lee Cuentitos empezó como una tarea sencilla: mi hijo Damián necesitaba practicar la lectura.
+        Cada noche buscábamos un cuento nuevo, pero los libros de casa se terminaban y las historias
+        se repetían. Así que empezamos a inventarlas juntos.
+      </p>
+      <p>
+        Lo que comenzó como un ejercicio se convirtió en un mundo. Tom, Lucas y Max aparecieron una
+        tarde en un bosque encantado y ya no se fueron. Después llegaron Damián, Sader, el búho Ollie,
+        Guillermo y el reino de Guijarro. Cada cuento pasó por el filtro más exigente que existe:
+        la aprobación de un niño que quería seguir leyendo.
+      </p>
+      <p>
+        Hoy Lee Cuentitos es una biblioteca abierta. No hay registro, no hay muros de pago y no hay
+        letra pequeña. La idea es simple: que cualquier familia pueda encontrar una historia nueva
+        para leer en voz alta, practicar lectura o acompañar el sueño.
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-3">
+      <div class="rounded-2xl border border-borde bg-white p-5">
+        <span class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-vino-claro text-vino"><Icon nombre="libro" tamano={22} /></span>
+        <h2 class="font-titulo text-lg">Cuentos originales</h2>
+        <p class="mt-1 text-[0.92rem] text-tinta-suave">Cada historia se escribe desde cero, pensando en lectores de 6 a 10 años.</p>
+      </div>
+      <div class="rounded-2xl border border-borde bg-white p-5">
+        <span class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-vino-claro text-vino"><Icon nombre="corazon" tamano={22} /></span>
+        <h2 class="font-titulo text-lg">Aprobación infantil</h2>
+        <p class="mt-1 text-[0.92rem] text-tinta-suave">Si un cuento no engancha a Damián, no se publica. Así de simple.</p>
+      </div>
+      <div class="rounded-2xl border border-borde bg-white p-5">
+        <span class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-vino-claro text-vino"><Icon nombre="chispa" tamano={22} /></span>
+        <h2 class="font-titulo text-lg">Gratis para siempre</h2>
+        <p class="mt-1 text-[0.92rem] text-tinta-suave">Sin registro y sin anuncios que interrumpan la lectura.</p>
+      </div>
+    </div>
+
+    <div class="mt-10 rounded-2xl border border-borde bg-crema-2 p-6">
+      <h2 class="font-titulo text-2xl">¿Quién lo hace?</h2>
+      <p class="mt-2 text-[1rem] leading-relaxed text-tinta-suave">
+        Christian Himmer, papá de Damián y diseñador web. Escribe, ilustra con ayuda de inteligencia
+        artificial y mantiene el sitio. Puedes escribirle desde la
+        <a href="/contacto/" class="font-bold text-teal underline">página de contacto</a>.
+      </p>
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/cuentos/" class="boton boton-primario">Explorar los cuentos <Icon nombre="flecha" tamano={16} /></a>
+      <a href="/contacto/" class="boton boton-secundario">Escribir un mensaje</a>
+    </div>
+  </article>
+</Base>

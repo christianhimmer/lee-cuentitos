@@ -1,0 +1,34 @@
+---
+export interface Props {
+  items: { texto: string; href?: string }[];
+}
+
+const { items } = Astro.props;
+const sitio = Astro.site ?? new URL('https://leecuentitos.com');
+---
+
+<nav aria-label="Migaja de pan" class="mb-6">
+  <ol class="flex flex-wrap items-center gap-1.5 text-[0.85rem] font-semibold text-tinta-suave">
+    {items.map((item, i) => (
+      <li class="flex items-center gap-1.5">
+        {i > 0 && <span aria-hidden="true" class="text-borde">/</span>}
+        {item.href ? (
+          <a href={item.href} class="hover:text-vino hover:underline">{item.texto}</a>
+        ) : (
+          <span aria-current="page" class="text-tinta">{item.texto}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: item.texto,
+    ...(item.href ? { item: new URL(item.href, sitio).href } : {}),
+  })),
+})} />

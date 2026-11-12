@@ -1,0 +1,107 @@
+media:
+  input: src/assets/cuentos
+  output: ../../assets/cuentos
+  extensions: [webp, jpg, jpeg, png, avif]
+  rename: safe
+
+content:
+  - name: cuentos
+    label: Cuentos
+    type: collection
+    path: src/content/cuentos
+    format: frontmatter
+    filename: '{fields.slug}.md'
+    view:
+      fields: [title, date, saga, parte, borrador]
+      sort: [date, desc]
+      primary: title
+    fields:
+      - name: title
+        label: Título
+        type: string
+        required: true
+      - name: slug
+        label: URL (slug)
+        type: string
+        required: true
+        description: 'Solo minúsculas, números y guiones. Ejemplo: el-misterio-del-lago-espejo-parte-12'
+      - name: date
+        label: Fecha de publicación
+        type: date
+        required: true
+        options:
+          time: false
+      - name: resumen
+        label: Resumen
+        type: text
+        required: true
+        description: 'Una o dos frases. Aparece en las tarjetas, en Google y al compartir.'
+      - name: portada
+        label: Imagen de portada (16:9)
+        type: image
+        required: true
+        options:
+          extensions: [webp, jpg, jpeg, png]
+      - name: portadaAlt
+        label: Texto alternativo de la portada
+        type: string
+        description: 'Describe la imagen para personas ciegas y para Google.'
+      - name: saga
+        label: Saga
+        type: select
+        options:
+          values:
+            - { label: 'Tom, Lucas y Max', value: tom-lucas-y-max }
+            - { label: 'Las aventuras de Damián', value: aventuras-de-damian }
+            - { label: 'El mundo de Guijarro', value: mundo-de-guijarro }
+      - name: arco
+        label: Arco / serie dentro de la saga
+        type: select
+        options:
+          values:
+            - { label: 'Ninguno', value: '' }
+            - { label: 'El Misterio del Lago Espejo', value: el-misterio-del-lago-espejo }
+      - name: parte
+        label: Número de parte
+        type: number
+        description: 'Solo si el cuento es parte de una serie. Ejemplo: 12'
+      - name: personajes
+        label: Personajes
+        type: select
+        options:
+          multiple: true
+          values:
+            - { label: Tom, value: tom }
+            - { label: Lucas, value: lucas }
+            - { label: Max, value: max }
+            - { label: 'Lía', value: lia }
+            - { label: Finn, value: finn }
+            - { label: 'El Guardián', value: guardian }
+            - { label: 'Damián', value: damian }
+            - { label: Sader, value: sader }
+            - { label: Ollie, value: ollie }
+            - { label: 'Joaquín', value: joaquin }
+            - { label: Guillermo, value: guillermo }
+            - { label: Juana, value: juana }
+            - { label: Jasper, value: jasper }
+      - name: tags
+        label: Etiquetas
+        type: string
+        list: true
+        description: 'Temas del cuento: aventura, magia, amistad, misterio, animales…'
+      - name: minutos
+        label: Minutos de lectura
+        type: number
+        default: 5
+      - name: youtube
+        label: ID del video de YouTube
+        type: string
+        description: 'Opcional. Ejemplo: dQw4w9WgXcQ. Si está vacío, no se muestra la sección de video.'
+      - name: destacado
+        label: Destacar en la portada
+        type: boolean
+        default: false
+      - name: borrador
+        label: Borrador (no publicar)
+        type: boolean
+        default: false

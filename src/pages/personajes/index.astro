@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import PersonajeAvatar from '../../components/PersonajeAvatar.astro';
+import { todosLosCuentos, sagas } from '../../lib/cuentos';
+import { personajes } from '../../data/personajes';
+import { portadaDe } from '../../lib/imagenes';
+
+const cuentos = await todosLosCuentos();
+const lista = personajes
+  .map((p) => ({
+    ...p,
+    total: cuentos.filter((c) => c.data.personajes.includes(p.slug)).length,
+    sagaNombre: sagas.find((s) => s.slug === p.saga)?.nombre ?? '',
+  }))
+  .filter((p) => p.total > 0);
+---
+
+<Base
+  titulo="Personajes de los cuentos"
+  descripcion="Conoce a Tom, Lucas, Max, Damián, Guillermo y todos los personajes de Lee Cuentitos. Descubre en qué cuentos aparece cada uno."
+  imagen={portadaDe(cuentos[0].data.portada).src}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Personajes de Lee Cuentitos',
+    hasPart: lista.map((p) => ({
+      '@type': 'Person',
+      name: p.nombre,
+      description: p.descripcion,
+      url: `https://leecuentitos.com/personajes/${p.slug}/`,
+    })),
+  }}
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <div class="border-b border-borde bg-crema-2">
+    <div class="contenedor py-12">
+      <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">Habitantes del mundo</p>
+      <h1 class="mt-1 text-[2.4rem] sm:text-5xl">Personajes</h1>
+      <p class="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-tinta-suave">
+        Niños, perros, búhos, gusanitos y duendes. Todos viven en el mismo mundo de cuentos y
+        aparecen una y otra vez en distintas historias.
+      </p>
+    </div>
+  </div>
+
+  <div class="contenedor py-12">
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {lista.map((p) => (
+        <a href={`/personajes/${p.slug}/`} class="group relative flex gap-5 rounded-2xl border border-borde bg-white p-5 shadow-[var(--shadow-suave)] transition-transform hover:-translate-y-1">
+          <PersonajeAvatar personaje={p} clase="h-40 w-32" tamano={200} forma="retrato" />
+          <div>
+            <p class="text-[0.7rem] font-extrabold uppercase tracking-wider text-ambar">{p.especie} · {p.sagaNombre}</p>
+            <h2 class="mt-0.5 font-titulo text-xl font-semibold text-tinta group-hover:text-vino">{p.nombre}</h2>
+            <p class="mt-1 line-clamp-2 text-[0.9rem] leading-relaxed text-tinta-suave">{p.descripcion}</p>
+            <p class="mt-2 inline-flex items-center gap-1 text-[0.8rem] font-bold text-teal">
+              {p.total} {p.total === 1 ? 'cuento' : 'cuentos'} <Icon nombre="flecha" tamano={13} />
+            </p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

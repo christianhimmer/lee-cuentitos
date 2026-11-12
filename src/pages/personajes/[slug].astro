@@ -1,0 +1,94 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import StoryCard from '../../components/StoryCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import PersonajeAvatar from '../../components/PersonajeAvatar.astro';
+import { cuentosDePersonaje, sagas, personajes, personajesPorSlug, todosLosCuentos } from '../../lib/cuentos';
+import { portadaDe } from '../../lib/imagenes';
+
+export async function getStaticPaths() {
+  return personajes.map((p) => ({ params: { slug: p.slug }, props: { personaje: p } }));
+}
+
+const { personaje } = Astro.props;
+const cuentos = await cuentosDePersonaje(personaje.slug);
+const saga = sagas.find((s) => s.slug === personaje.saga);
+const companeros = (saga?.personajes ?? [])
+  .map((s) => personajesPorSlug[s])
+  .filter((p) => p && p.slug !== personaje.slug);
+
+const todos = await todosLosCuentos();
+const imagenSocial = portadaDe(cuentos[0]?.data.portada ?? todos[0].data.portada).src;
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Personajes', href: '/personajes/' },
+  { texto: personaje.nombre },
+];
+---
+
+<Base
+  titulo={`${personaje.nombre} — personaje de los cuentos`}
+  descripcion={`${personaje.descripcion} Aparece en ${cuentos.length} cuentos de Lee Cuentitos.`}
+  imagen={imagenSocial}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: personaje.nombre,
+    description: personaje.descripcion,
+    url: `https://leecuentitos.com/personajes/${personaje.slug}/`,
+    memberOf: {
+      '@type': 'CreativeWorkSeries',
+      name: saga?.nombre ?? 'Lee Cuentitos',
+      url: `https://leecuentitos.com/sagas/${saga?.slug ?? ''}/`,
+    },
+  }}
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <section class="border-b border-borde bg-crema-2">
+    <div class="contenedor py-10">
+      <Breadcrumbs items={migas} />
+      <div class="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
+        <PersonajeAvatar personaje={personaje} clase="h-56 w-44 sm:h-64 sm:w-52" tamano={280} forma="retrato" />
+        <div>
+          <p class="text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-ambar">{personaje.especie} · {personaje.rol}</p>
+          <h1 class="mt-1 text-[2.5rem] sm:text-5xl">{personaje.nombre}</h1>
+          <p class="mt-3 max-w-2xl text-[1.05rem] leading-relaxed text-tinta-suave">{personaje.descripcion}</p>
+          {saga && (
+            <a href={`/sagas/${saga.slug}/`} class="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[0.85rem] font-bold text-vino shadow-sm hover:underline">
+              <Icon nombre="saga" tamano={15} /> Saga: {saga.nombre}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contenedor py-12">
+    <h2 class="text-[1.9rem]">Cuentos donde aparece {personaje.nombre}</h2>
+    <p class="mt-1 text-tinta-suave">{cuentos.length} {cuentos.length === 1 ? 'historia' : 'historias'} para leer hoy.</p>
+
+    <div class="mt-6 cuadricula-cuentos">
+      {cuentos.map((c) => <StoryCard cuento={c} compacta />)}
+    </div>
+
+    {companeros.length > 0 && (
+      <section class="mt-14 border-t border-borde pt-10">
+        <h2 class="text-[1.6rem]">Compañeros de aventura</h2>
+        <div class="mt-5 flex flex-wrap gap-3">
+          {companeros.map((p) => (
+            <a href={`/personajes/${p.slug}/`} class="inline-flex items-center gap-2 rounded-full border border-borde bg-white px-3 py-2 text-[0.9rem] font-bold text-tinta hover:border-vino/30 hover:text-vino">
+              <PersonajeAvatar personaje={p} clase="h-7 w-7 border-2" tamano={40} />
+              {p.nombre}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</Base>

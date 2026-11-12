@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.playwright-mcp/
+capturas/
+.DS_Store
+*.log
+
+# Material de trabajo (no se publica en el repositorio)
+Respaldos/
+Img/
+Cuentos/
+Home.png
+namecheap-order-*.pdf

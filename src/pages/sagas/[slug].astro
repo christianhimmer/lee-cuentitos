@@ -1,0 +1,165 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import StoryCard from '../../components/StoryCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import PersonajeAvatar from '../../components/PersonajeAvatar.astro';
+import { sagas, arcos, cuentosDeSaga, cuentosDeArco, personajesPorSlug } from '../../lib/cuentos';
+import { imagen } from '../../lib/imagenes';
+
+export async function getStaticPaths() {
+  const deSagas = await Promise.all(
+    sagas.map(async (s) => ({
+      params: { slug: s.slug },
+      props: { tipo: 'saga' as const, entidad: s, cuentos: await cuentosDeSaga(s.slug) },
+    })),
+  );
+  const deArcos = await Promise.all(
+    arcos.map(async (a) => ({
+      params: { slug: a.slug },
+      props: { tipo: 'arco' as const, entidad: a, cuentos: await cuentosDeArco(a.slug) },
+    })),
+  );
+  return [...deSagas, ...deArcos];
+}
+
+const { tipo, entidad, cuentos } = Astro.props;
+const esSaga = tipo === 'saga';
+
+const nombre = entidad.nombre;
+const descripcion = esSaga ? entidad.descripcionLarga : entidad.descripcion;
+const portada = imagen(entidad.portada);
+const sagaPadre = esSaga ? null : sagas.find((s) => s.slug === (entidad as any).saga);
+const arcosPropios = esSaga ? arcos.filter((a) => a.saga === entidad.slug) : [];
+
+const migas = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Sagas', href: '/sagas/' },
+  ...(sagaPadre ? [{ texto: sagaPadre.nombre, href: `/sagas/${sagaPadre.slug}/` }] : []),
+  { texto: nombre },
+];
+
+const personajesDeLaSaga = (esSaga ? entidad.personajes : sagaPadre?.personajes ?? [])
+  .map((p: string) => personajesPorSlug[p])
+  .filter(Boolean);
+
+// Agrupación: arcos primero, luego sueltos
+const porArco = new Map<string, typeof cuentos>();
+for (const c of cuentos) {
+  const clave = c.data.arco ?? '__sueltos';
+  if (!porArco.has(clave)) porArco.set(clave, []);
+  porArco.get(clave)!.push(c);
+}
+for (const [clave, lista] of porArco) {
+  if (clave !== '__sueltos') lista.sort((a, b) => (a.data.parte ?? 0) - (b.data.parte ?? 0));
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': esSaga ? 'CreativeWorkSeries' : 'Book',
+  name: nombre,
+  description: descripcion,
+  url: `https://leecuentitos.com/sagas/${entidad.slug}/`,
+  inLanguage: 'es',
+  image: new URL(portada.src, Astro.site).href,
+  numberOfEpisodes: cuentos.length,
+  author: { '@type': 'Person', name: 'Christian Himmer', url: 'https://christianhimmer.com' },
+  hasPart: cuentos.map((c, i) => ({
+    '@type': 'CreativeWork',
+    name: c.data.title,
+    url: `https://leecuentitos.com/cuentos/${c.data.slug}/`,
+    position: i + 1,
+  })),
+};
+---
+
+<Base
+  titulo={`${nombre} — saga de cuentos`}
+  descripcion={entidad.descripcion}
+  imagen={portada.src}
+  jsonLd={jsonLd}
+>
+  <Header slot="header" />
+  <Footer slot="footer" />
+
+  <!-- HERO DE LA SAGA -->
+  <section class="relative isolate overflow-hidden">
+    <Image
+      src={portada}
+      alt=""
+      width={1920}
+      height={1080}
+      widths={[800, 1400, 1920]}
+      format="webp"
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 -z-20 h-full w-full object-cover"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-vino-oscuro via-vino-oscuro/80 to-vino/40"></div>
+
+    <div class="contenedor pb-12 pt-8 text-white">
+      <div class="[&_a]:text-white/80 [&_a:hover]:text-white [&_span]:text-white/60">
+        <Breadcrumbs items={migas} />
+      </div>
+      <span class="etiqueta bg-ambar text-[#3a2a08]">
+        {esSaga ? `Saga · ${cuentos.length} cuentos` : `Arco · ${cuentos.length} partes`}
+      </span>
+      <h1 class="mt-4 max-w-3xl text-[2.5rem] leading-[1.05] text-white sm:text-5xl lg:text-6xl">{nombre}</h1>
+      <p class="mt-4 max-w-2xl text-[1.1rem] leading-relaxed text-white/85">{descripcion}</p>
+
+      {personajesDeLaSaga.length > 0 && (
+        <div class="mt-6 flex flex-wrap items-center gap-2">
+          {personajesDeLaSaga.map((p: any) => (
+            <a href={`/personajes/${p.slug}/`} class="inline-flex items-center gap-1.5 rounded-full bg-white/12 px-3 py-1 text-[0.82rem] font-bold text-white backdrop-blur transition-colors hover:bg-white/25">
+              <PersonajeAvatar personaje={p} clase="h-6 w-6 border-2 border-white/40" tamano={32} />
+              {p.nombre}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <div class="contenedor py-12">
+    {esSaga && arcosPropios.length > 0 && (
+      <div class="mb-10 grid gap-3">
+        {arcosPropios.map((a) => (
+          <a href={`/sagas/${a.slug}/`} class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-borde bg-white p-4 hover:border-vino/30">
+            <div>
+              <p class="text-[0.72rem] font-extrabold uppercase tracking-wider text-ambar">Arco completo</p>
+              <p class="font-titulo text-xl font-semibold text-vino">{a.nombre}</p>
+              <p class="text-[0.9rem] text-tinta-suave">{a.descripcion}</p>
+            </div>
+            <span class="boton boton-secundario shrink-0">Leer las {a.total} partes <Icon nombre="flecha" tamano={15} /></span>
+          </a>
+        ))}
+      </div>
+    )}
+
+    {[...porArco.entries()].map(([clave, lista]) => {
+      const arco = arcos.find((a) => a.slug === clave);
+      return (
+        <section class="mb-12">
+          {esSaga && clave !== '__sueltos' && (
+            <h2 class="mb-4 text-[1.7rem]">
+              {arco ? arco.nombre : 'Serie'} <span class="text-base font-normal text-tinta-suave">({lista.length} {lista.length === 1 ? 'parte' : 'partes'})</span>
+            </h2>
+          )}
+          {esSaga && clave === '__sueltos' && (
+            <h2 class="mb-4 text-[1.7rem]">Cuentos de la saga</h2>
+          )}
+          <div class="cuadricula-cuentos">
+            {lista.map((c) => <StoryCard cuento={c} compacta />)}
+          </div>
+        </section>
+      );
+    })}
+
+    <AdSlot formato="horizontal" />
+  </div>
+</Base>

@@ -1,0 +1,81 @@
+---
+import Icon from './Icon.astro';
+
+export interface Props {
+  video: string;
+  titulo: string;
+  clase?: string;
+}
+
+const { video, titulo, clase = '' } = Astro.props;
+
+function extraerId(valor: string): string {
+  const v = valor.trim();
+  if (!v) return '';
+  const patrones = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([\w-]{6,})/,
+    /^([\w-]{11})$/,
+  ];
+  for (const p of patrones) {
+    const m = v.match(p);
+    if (m) return m[1];
+  }
+  return v;
+}
+
+const id = extraerId(video);
+const miniatura = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+---
+
+{
+  id && (
+    <figure class={`not-prose my-10 ${clase}`}>
+      <div
+        class="group relative overflow-hidden rounded-2xl border border-borde bg-vino-oscuro shadow-[var(--shadow-suave)]"
+        data-video-youtube={id}
+      >
+        <img
+          src={miniatura}
+          alt={`Miniatura del video: ${titulo}`}
+          width="480"
+          height="360"
+          loading="lazy"
+          decoding="async"
+          class="aspect-video w-full scale-[1.35] object-cover opacity-90 transition-opacity group-hover:opacity-100"
+        />
+        <button
+          type="button"
+          class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-t from-vino-oscuro/80 via-vino/20 to-transparent text-white transition-colors hover:from-vino-oscuro/90"
+          aria-label={`Reproducir el video de YouTube: ${titulo}`}
+        >
+          <span class="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 text-vino shadow-lg transition-transform group-hover:scale-110">
+            <Icon nombre="play" tamano={34} />
+          </span>
+          <span class="rounded-full bg-black/45 px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur">
+            Ver el cuento en video
+          </span>
+        </button>
+      </div>
+      <figcaption class="mt-2 text-center text-[0.8rem] text-tinta-suave">
+        Video del canal de Lee Cuentitos en YouTube · al reproducirlo se conecta con YouTube
+      </figcaption>
+    </figure>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-video-youtube]').forEach((caja) => {
+    const boton = caja.querySelector('button');
+    boton?.addEventListener('click', () => {
+      const id = caja.dataset.videoYoutube;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = boton.getAttribute('aria-label') ?? 'Video de YouTube';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      iframe.className = 'aspect-video w-full';
+      iframe.loading = 'lazy';
+      caja.replaceChildren(iframe);
+    });
+  });
+</script>
