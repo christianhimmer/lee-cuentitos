@@ -9,7 +9,7 @@ content:
     label: Cuentos
     type: collection
     path: src/content/cuentos
-    format: frontmatter
+    format: yaml-frontmatter
     filename: '{fields.slug}.md'
     view:
       fields: [title, date, saga, parte, borrador]
