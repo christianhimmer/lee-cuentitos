@@ -101,6 +101,12 @@ content:
         label: Destacar en la portada
         type: boolean
         default: false
+      - name: body
+        label: Texto del cuento
+        type: rich-text
+        options:
+          format: markdown
+          switcher: true
       - name: borrador
         label: Borrador (no publicar)
         type: boolean
