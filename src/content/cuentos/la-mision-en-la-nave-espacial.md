@@ -2,10 +2,11 @@
 title: "La Misión en la Nave Espacial"
 slug: la-mision-en-la-nave-espacial
 date: 2024-10-08
+actualizado: 2026-11-24
 saga: aventuras-de-damian
 personajes: [damian]
 tags: [among-us, espacio, misterio]
-resumen: "Había una vez, en una nave espacial llamada Skeld, un valiente tripulante llamado Damián."
+resumen: "En la nave Skeld alguien sabotea el oxígeno y un tripulante aparece desmayado. Damián y Verde siguen las pistas, pero el impostor no se deja atrapar."
 portada: "../../assets/cuentos/la-mision-en-la-nave-espacial.webp"
 portadaAlt: "La Misión en la Nave Espacial"
 minutos: 2

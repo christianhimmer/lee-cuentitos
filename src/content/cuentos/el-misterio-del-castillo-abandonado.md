@@ -2,10 +2,11 @@
 title: "El Misterio del Castillo Abandonado"
 slug: el-misterio-del-castillo-abandonado
 date: 2024-11-06
+actualizado: 2026-11-24
 saga: tom-lucas-y-max
 personajes: [tom, lucas, max]
 tags: [misterio, castillo, valentia]
-resumen: "Una tarde de otoño, Lucas, Max y Tom decidieron explorar una parte del bosque que siempre había sido un misterio para ellos."
+resumen: "Nadie se atreve a entrar al castillo del bosque. Cuando Max empuja una puerta cerrada, Lucas y Tom encuentran a una niña atrapada en un espejo."
 portada: "../../assets/cuentos/el-misterio-del-castillo-abandonado.webp"
 portadaAlt: "Lee Cuentitos - El Misterio del Castillo Abandonado"
 minutos: 3

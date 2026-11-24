@@ -2,10 +2,11 @@
 title: "La Aventura de Damián en la Mina Misteriosa"
 slug: la-aventura-de-damian-en-la-mina-misteriosa
 date: 2024-10-09
+actualizado: 2026-11-24
 saga: aventuras-de-damian
 personajes: [damian, sader]
 tags: [minecraft, aventura, valentia]
-resumen: "Damián se despertó temprano una mañana, emocionado por la aventura que le esperaba."
+resumen: "Damián y su lobo Sader bajan a una mina de la que todos hablan. Hay cofres, diamantes y esqueletos, pero lo que espera al final es otra cosa."
 portada: "../../assets/cuentos/la-aventura-de-damian-en-la-mina-misteriosa.webp"
 portadaAlt: "Lee Cuentitos - La Aventura de Damián en la Mina Misteriosa"
 minutos: 2

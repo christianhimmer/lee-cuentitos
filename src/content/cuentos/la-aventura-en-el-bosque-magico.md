@@ -2,10 +2,11 @@
 title: "La Aventura en el Bosque Mágico"
 slug: la-aventura-en-el-bosque-magico
 date: 2024-10-08
+actualizado: 2026-11-24
 saga: aventuras-de-damian
 personajes: [damian, sader, ollie]
 tags: [bosque, animales, amistad]
-resumen: "Había una vez, en una tierra lejana, un bosque mágico lleno de animales que hablaban, ríos brillantes y árboles que tocaban el cielo."
+resumen: "El río del bosque mágico se detuvo y todo empieza a secarse. Damián y Sader suben al árbol más alto a buscar una pluma que concede un deseo."
 portada: "../../assets/cuentos/la-aventura-en-el-bosque-magico.webp"
 portadaAlt: "Lee Cuentitos - La Aventura en el Bosque Mágico"
 minutos: 2

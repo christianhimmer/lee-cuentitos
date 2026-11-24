@@ -8,6 +8,7 @@ const cuentos = defineCollection({
       title: z.string(),
       slug: z.string(),
       date: z.coerce.date(),
+      actualizado: z.coerce.date().optional(),
       saga: z.string().optional(),
       arco: z.string().optional(),
       parte: z.number().optional(),

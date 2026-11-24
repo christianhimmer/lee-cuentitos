@@ -2,10 +2,11 @@
 title: "El Misterio del Tesoro del Bosque Encantado"
 slug: el-misterio-del-tesoro-del-bosque-encantado
 date: 2024-11-27
+actualizado: 2026-11-24
 saga: tom-lucas-y-max
 personajes: [tom, lucas, max]
 tags: [aventura, tesoro, bosque]
-resumen: "Una tarde, Tom, Lucas y Max decidieron explorar el Bosque Encantado, un lugar del que habían oído muchas leyendas."
+resumen: "Un mapa, un roble en medio de un claro y una inscripción que solo se activa si tres amigos se toman de las manos. El tesoro no es lo que esperaban."
 portada: "../../assets/cuentos/el-misterio-del-tesoro-del-bosque-encantado.webp"
 portadaAlt: "Lee Cuentitos - El Misterio del Tesoro del Bosque Encantado"
 minutos: 2

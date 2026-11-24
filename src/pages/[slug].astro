@@ -8,6 +8,7 @@ import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import StoryCard from '../components/StoryCard.astro';
 import AdSlot from '../components/AdSlot.astro';
+import SobreEsteCuento from '../components/SobreEsteCuento.astro';
 import YouTube from '../components/YouTube.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import {
@@ -50,7 +51,7 @@ const jsonLd = [
     name: data.title,
     description: data.resumen,
     datePublished: data.date.toISOString(),
-    dateModified: data.date.toISOString(),
+    dateModified: (data.actualizado ?? data.date).toISOString(),
     inLanguage: 'es',
     url: `https://leecuentitos.com/${data.slug}/`,
     mainEntityOfPage: `https://leecuentitos.com/${data.slug}/`,
@@ -195,6 +196,15 @@ const jsonLd = [
         )}
       </div>
     </div>
+
+    <SobreEsteCuento
+      fecha={data.date}
+      actualizado={data.actualizado}
+      minutos={data.minutos}
+      saga={data.saga}
+      arco={data.arco}
+      parte={data.parte}
+    />
   </article>
 
   {relacionadosLista.length > 0 && (

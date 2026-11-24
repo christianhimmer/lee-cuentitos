@@ -41,6 +41,7 @@ src/
 ├── content/cuentos/       ← un .md por cuento (título, saga, personajes, texto)
 ├── assets/cuentos/        ← portadas 16:9 (webp)
 ├── assets/personajes/     ← retratos con fondo transparente
+├── assets/autor/          ← foto del autor para las fichas y «Nosotros»
 ├── data/sagas.ts          ← sagas y arcos
 ├── data/personajes.ts     ← fichas de personajes
 ├── pages/                 ← rutas del sitio
@@ -63,6 +64,9 @@ src/
 1. Entra a [app.pagescms.org](https://app.pagescms.org) con tu cuenta de GitHub.
 2. Abre el repositorio `lee-cuentitos` → **Cuentos** → **Add entry**.
 3. Completa título, slug, fecha, resumen, portada, saga, personajes y etiquetas.
+   El **resumen** es un gancho corto (menos de 160 caracteres) y no debe repetir el
+   primer párrafo: se usa en las tarjetas, en Google y al compartir.
+   **Última revisión** es opcional y se muestra en la ficha del cuento.
 4. Pega el texto del cuento en el cuerpo.
 5. Guarda. Cloudflare reconstruye el sitio en ~1 minuto.
 

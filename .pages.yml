@@ -31,11 +31,17 @@ content:
         required: true
         options:
           time: false
+      - name: actualizado
+        label: Última revisión
+        type: date
+        options:
+          time: false
+        description: 'Opcional. Se muestra como fecha de revisión en la ficha del cuento.'
       - name: resumen
         label: Resumen
         type: text
         required: true
-        description: 'Una o dos frases. Aparece en las tarjetas, en Google y al compartir.'
+        description: 'Un gancho de una o dos frases, distinto del primer párrafo. Idealmente menos de 160 caracteres: aparece en las tarjetas, en Google y al compartir.'
       - name: portada
         label: Imagen de portada (16:9)
         type: image
