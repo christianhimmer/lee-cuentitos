@@ -49,6 +49,11 @@ src/
 └── styles/global.css      ← colores, tipografía y componentes
 ```
 
+Fuera de `src/`:
+
+- `Proximos cuentos/` — taller de cuentos inéditos (texto base + notas de canon).
+- `Cuentos publicados/` — archivo local de los originales crudos (no se sube al repo).
+
 ## Diseño
 
 - Home con **banner de libro abierto** y 3 destacados manuales (sin autoplay).
