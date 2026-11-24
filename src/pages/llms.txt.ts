@@ -52,7 +52,7 @@ export const GET: APIRoute = async () => {
   lineas.push('');
   lineas.push('## Cómo citar');
   lineas.push(
-    'Lee Cuentitos (2026). Cuentos infantiles originales. https://leecuentitos.com/ — Autor: Christian Himmer.',
+    'Lee Cuentitos (2026). Cuentos infantiles originales. https://leecuentitos.com/ — Dirección editorial: Christian Himmer. Textos creados con inteligencia artificial.',
   );
   lineas.push('');
 

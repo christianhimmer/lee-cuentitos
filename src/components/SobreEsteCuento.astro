@@ -23,7 +23,7 @@ const revisado = actualizado && actualizado.getTime() !== fecha.getTime();
   <div class="grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
     <Image
       src={foto}
-      alt="Retrato de Christian Himmer, autor de Lee Cuentitos"
+      alt="Retrato de Christian Himmer, editor de Lee Cuentitos"
       width={140}
       height={213}
       class="h-[213px] w-[140px] bg-[#f3eadf] object-contain object-bottom"
@@ -33,13 +33,14 @@ const revisado = actualizado && actualizado.getTime() !== fecha.getTime();
     <div>
       <p class="etiqueta" id="sobre-este-cuento">Sobre este cuento</p>
       <p class="mt-1 font-titulo text-xl">
-        Escrito por <a href="/nosotros/#autor" class="font-semibold text-morado underline decoration-linea decoration-1 underline-offset-4 hover:text-carmesi">Christian Himmer</a>
+        Dirección editorial: <a href="/nosotros/#autor" class="font-semibold text-morado underline decoration-linea decoration-1 underline-offset-4 hover:text-carmesi">Christian Himmer</a>
       </p>
       <p class="mt-1 max-w-xl text-[0.92rem] leading-relaxed text-tinta-suave">
-        Papá de Damián y diseñador web. Escribe las historias e ilustra con ayuda de
-        inteligencia artificial.
+        Papá de Damián y diseñador web. Elige, descarta y publica los cuentos; las historias y
+        las portadas se crean con inteligencia artificial.
       </p>
       <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[12px] font-bold uppercase tracking-[0.08em] text-verde">
+        <li>Texto creado con IA</li>
         <li>Publicado el {fechaLarga(fecha)}</li>
         {revisado && actualizado && <li>Revisado el {fechaLarga(actualizado)}</li>}
         <li>{minutos} min de lectura</li>
@@ -57,12 +58,10 @@ const revisado = actualizado && actualizado.getTime() !== fecha.getTime();
   <div class="mt-8 border-t border-linea pt-6">
     <h2 class="font-titulo text-xl text-morado">Cómo se hizo este cuento</h2>
     <p class="mt-2 text-[0.98rem] leading-relaxed text-tinta-suave">
-      Empezó con una petición de Damián, el hijo de Christian: otro cuento para leer esa
-      noche. Christian lo escribió, lo leyó en voz alta y lo corrigió hasta que aguantó la
-      prueba más difícil, que un niño de diez años quisiera seguir leyendo. La portada se
-      ilustró con ayuda de inteligencia artificial y el texto se revisó a mano antes de
-      publicarlo. En la última revisión se ajustaron la presentación, las comillas y la
-      ortografía.
+      Empezó con una petición de Damián: otro cuento para esa noche. Christian le pasó la idea a
+      la IA, la historia volvió hecha un borrador y la portada también se generó así. Después vino
+      lo importante: decidir si valía la pena. Aquí no hay truco ni secreto, solo un papá, un niño
+      y una IA que escribe rápido.
     </p>
   </div>
 </section>

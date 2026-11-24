@@ -56,7 +56,8 @@ const jsonLd = [
     url: `https://leecuentitos.com/${data.slug}/`,
     mainEntityOfPage: `https://leecuentitos.com/${data.slug}/`,
     image: [new URL(portada.src, Astro.site).href],
-    author: { '@type': 'Person', name: 'Christian Himmer', url: 'https://christianhimmer.com' },
+    author: { '@type': 'Organization', name: 'Lee Cuentitos', url: 'https://leecuentitos.com/' },
+    editor: { '@type': 'Person', name: 'Christian Himmer', url: 'https://christianhimmer.com' },
     publisher: { '@type': 'Organization', name: 'Lee Cuentitos', url: 'https://leecuentitos.com/' },
     isAccessibleForFree: true,
     ...(data.parte && data.arco
